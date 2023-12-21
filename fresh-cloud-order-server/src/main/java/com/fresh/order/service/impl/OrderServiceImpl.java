@@ -17,10 +17,8 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 订单管理
- * @author: 作者 huchaojie
- * @create: 2021-10-08 20:46
  */
 @Primary
 @Service

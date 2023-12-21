@@ -11,10 +11,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 用户控制器
- * @author: 作者 huchaojie
- * @create: 2021-10-05 15:15
  */
 @Api(value = "用户相关Controller", tags = {"用户相关Controller"})
 @RequestMapping("/member")

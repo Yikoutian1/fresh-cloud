@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 商品类型控制器
- * @author: 作者 huchaojie
- * @create: 2021-10-05 15:32
  */
 @RequestMapping("/type")
 public interface IGoodsTypeControllerApi {

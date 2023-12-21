@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @program: yc-fresh-cloud
- * @description:
- * @author: 作者 huchaojie
- * @create: 2021-10-08 20:47
+ * @program: fresh-cloud
  */
 @Primary
 @Service

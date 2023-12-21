@@ -9,10 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
- * @program: yc-fresh-cloud
- * @description:
- * @author: 作者 huchaojie
- * @create: 2021-10-05 16:56
+ * @program: fresh-cloud
  */
 //分布式事务管理
 @EnableDistributedTransaction

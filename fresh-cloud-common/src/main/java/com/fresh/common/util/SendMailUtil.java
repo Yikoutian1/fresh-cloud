@@ -13,9 +13,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-/**
- * @author HuChaoJie
- */
+// TODO 此处发送邮箱需要修改
 @Component
 @Configuration
 public class SendMailUtil {

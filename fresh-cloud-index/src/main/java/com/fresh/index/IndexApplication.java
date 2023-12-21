@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description:
  * @author: 作者 huchaojie
  * @create: 2021-10-05 16:55

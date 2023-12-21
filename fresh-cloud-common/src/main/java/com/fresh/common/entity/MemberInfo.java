@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 /**
  * 会员信息
- * 源辰信息
- * @author navy
- * @2019年9月30日
  */
 public class MemberInfo implements Serializable{
 	private static final long serialVersionUID = 64130862947928234L;

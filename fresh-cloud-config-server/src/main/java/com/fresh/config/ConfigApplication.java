@@ -5,10 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
- * @program: yc-res-cloud
+ * @program: fresh-cloud
  * @description:  config 配置中心
- * @author: 作者 huchaojie
- * @create: 2021-09-16 19:53
  */
 @EnableConfigServer
 @SpringBootApplication

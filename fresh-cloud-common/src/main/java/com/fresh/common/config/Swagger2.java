@@ -37,13 +37,13 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("天天生鲜平台 api ")                       // 文档页标题
+                .title("api")                       // 文档页标题
                 .contact(new Contact("yc",
                         "https://www.hyycinfo.com",
                         "xxxxxxxxxxx"))                   // 联系人信息
-                .description("专为天天生鲜平台提供的api文档")      // 详细信息
+                .description("Fresh平台的api文档")      // 详细信息
                 .version("1.0.1")                               // 文档版本号
-                .termsOfServiceUrl("https://www.hyycinfo.com")     // 网站地址
+                .termsOfServiceUrl("https://www.github.com//yikoutian1")     // 网站地址
                 .build();
     }
 }

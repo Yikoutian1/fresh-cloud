@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 商品
- * @author: 作者 huchaojie
- * @create: 2021-10-09 08:55
  */
 @Component
 public class GoodsInfoControllerFallback implements FallbackFactory<IGoodsInfoControllerApi> {

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.yc.cart.mapper.ICartInfoMapper">
+<mapper namespace="com.fresh.cart.mapper.ICartInfoMapper">
 	<insert id="add" parameterType="com.fresh.common.entity.CartInfo">
 		insert into cartinfo values(#{cno}, #{mno}, #{gno}, #{num})
 	</insert>

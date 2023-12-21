@@ -8,10 +8,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 验证码控制器
- * @author: 作者 huchaojie
- * @create: 2021-10-05 16:06
  */
 @RequestMapping("/loadCode")
 public interface ICreateCodeControllerApi {

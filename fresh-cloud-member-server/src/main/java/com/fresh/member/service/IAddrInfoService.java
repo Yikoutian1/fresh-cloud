@@ -5,10 +5,8 @@ import com.fresh.common.entity.AddrInfo;
 import java.util.List;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 收货地址
- * @author: 作者 huchaojie
- * @create: 2021-10-08 20:47
  */
 public interface IAddrInfoService {
 

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.yc.goods.mapper.IGoodsInfoMapper">
+<mapper namespace="com.fresh.goods.mapper.IGoodsInfoMapper">
 	<insert id="add" parameterType="com.fresh.common.entity.GoodsInfo">
 		insert into goodsinfo values(0, #{gname}, #{tno}, #{price}, #{intro}, #{balance}, #{pics}, #{unit}, #{qperied}, #{weight}, #{descr})
 	</insert>

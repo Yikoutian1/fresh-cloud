@@ -7,9 +7,6 @@ import java.io.Serializable;
 
 /**
  * 商品信息
- * 源辰信息
- * @author navy
- * @2019年9月30日
  */
 public class GoodsInfo implements Serializable{
 	private static final long serialVersionUID = -4829575410065352375L;

@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--  对应接口的全路径 -->
-<mapper namespace="com.yc.order.mapper.IOrderItemInfoMapper">
+<mapper namespace="com.fresh.order.mapper.IOrderItemInfoMapper">
 	<insert id="add" parameterType="map">
 		insert into orderItemInfo select 0, #{ono}, cf.gno, num, price, 1 from cartInfo cf, goodsInfo gf where cf.gno=gf.gno and cno in
 		<foreach collection="cnos" open="(" separator="," close=")"  item="item">

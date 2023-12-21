@@ -7,9 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 地址类
- * 源辰信息
- * @author navy
- * @2019年7月27日
  */
 @Mapper
 public interface IAddrInfoMapper {

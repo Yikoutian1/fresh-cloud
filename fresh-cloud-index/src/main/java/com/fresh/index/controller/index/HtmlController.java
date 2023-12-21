@@ -4,10 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 页面跳转控制器
- * @author: 作者 huchaojie
- * @create: 2021-10-06 16:35
  */
 @Controller
 public class HtmlController {

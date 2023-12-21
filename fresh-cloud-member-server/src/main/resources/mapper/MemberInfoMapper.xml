@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.yc.member.mapper.IMemberInfoMapper">
+<mapper namespace="com.fresh.member.mapper.IMemberInfoMapper">
 
 	<insert id="add" parameterType="com.fresh.common.entity.MemberInfo">
 		insert into memberInfo values(0, #{nickName}, '', md5(#{pwd}), #{tel}, #{email}, '', now(), 1)

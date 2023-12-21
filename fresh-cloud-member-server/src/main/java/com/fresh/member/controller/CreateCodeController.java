@@ -14,9 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.fresh.index.controller.member.ICreateCodeControllerApi;
 import org.springframework.stereotype.Controller;
 
-/**
- * @author HuChaoJie
- */
+
 @Controller
 public class CreateCodeController implements ICreateCodeControllerApi {
 	

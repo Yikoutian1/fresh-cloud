@@ -11,10 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @program: yc-fresh-cloud
+ * @program: fresh-cloud
  * @description: 商品控制器
- * @author: 作者 huchaojie
- * @create: 2021-10-05 15:31
  */
 //全局降级
 @FeignClient(value = "goods-server", fallbackFactory = GoodsInfoControllerFallback.class)

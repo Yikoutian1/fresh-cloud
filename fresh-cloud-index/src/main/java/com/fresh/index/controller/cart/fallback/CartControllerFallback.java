@@ -10,13 +10,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-/**
- * @program: yc-fresh-cloud
- * @description:
- * @author: 作者 huchaojie
- * @create: 2021-10-06 20:31
- */
 @Component
 public class CartControllerFallback implements FallbackFactory<ICartInfoControllerApi> {
     @Override
