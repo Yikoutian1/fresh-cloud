@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: zuul-proxy
+  cloud:
+    config: # 配置中心
+      label: master
+      name: zuul # 文件名  zuul-dev
+      profile: dev # 切换 开发 和生产 模式
+      discovery:
+        enabled: true
+        service-id: config-server

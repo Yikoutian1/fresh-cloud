@@ -1,0 +1,15 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka-server
+
+# TODO 需要改nacos
+
+eureka:
+  instance:
+    # eureka 实例的hostname，可以是hostname，也可以自定义配置hostname
+    hostname: eureka
+  server:
+    eviction-interval-timer-in-ms: 5000  # 清理无效节点的时间，可以缩短为5s，默认60s
+    enable-self-preservation: true # 测试时关闭自我保护机制，保证不可用服务及时踢出

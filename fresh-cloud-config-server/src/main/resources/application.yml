@@ -1,0 +1,16 @@
+server:
+  port: 7080
+
+
+# TODO 需要改nacos
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/huchaojie/yc-fresh-cloud-config-server.git  # 码云仓库地址
+          # username: git  # 用户名  仓库开源,不需要用户名密码
+          #  password: git  # 密码
+          default-label: master #配置文件分支
