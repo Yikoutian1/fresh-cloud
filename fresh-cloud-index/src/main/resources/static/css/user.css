@@ -170,7 +170,7 @@
 }
 
 .order_goods_list{
-	border-bottom:1px solid #ddd
+	border-bottom:1px solid #ddd;
 	margin-bottom:-2px;
 }
 .order_goods_list li{
