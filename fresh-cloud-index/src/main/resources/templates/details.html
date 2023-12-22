@@ -1,0 +1,289 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>天天生鲜-商品详情</title>
+<link rel="short icon" href="images/copylogo.png">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/details.css">
+</head>
+
+<body>
+<!-- 头部  -->
+<div id="login_info">
+	<div class="header_con">
+		<div class="header">
+	   		<div class="welcome fl">欢迎来到天天生鲜</div>
+			<div class="fr">
+	           	<div class="login_info fl" v-if="onlogin">欢迎：<em>[ {{loginName}} ]</em></div>
+	            <div class="login_btn fl" v-if="onlogin">
+	               <span> | </span>	<a href="register">注册</a>
+	             </div>
+	             <div class="login_btn fl" v-if="outlogin">
+	               	<a href="login">登录</a><span> | </span><a href="register">注册</a>
+	             </div>
+	           	 <div class="user_link fl">
+	                   <!--<span> | </span><a href="user.html">用户中心</a>-->
+	                   <span> | </span><a href="cart">我的购物车</a>
+	                   <span> | </span><a href="order">我的订单</a>
+				</div>
+			</div>  
+	   	</div>
+	</div>
+
+	<!-- 搜素框 -->
+	<div class="search_bar clearfix">
+		<a href="/" class="logo fl"><img src="images/logo.png"></a>
+		<div class="search_con fl">
+			<form>
+	            <input type="text" class="input_text fl" name="key_words" placeholder="搜索商品">
+	            <input type="submit" class="input_btn fr"  value="搜索">
+	        </form>
+		</div>
+		<div class="guest_cart fr">
+			<a href="cart" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">{{goodsCount}}</div>
+		</div>
+	</div>
+</div>    
+<!-- 全部商品分类 --> 
+<div class="navbar_con">
+	<div class="navbar clearfix">
+    	<!-- 动态下拉框 -->
+		<div class="subnav_con fl">
+        	<h1 class="fl">全商品分类</h1>
+        	<span></span>
+            <ul class="subnav">
+                <li><a href="#model01" class="fruit">新鲜水果</a></li>
+                <li><a href="#" class="sealfood">海鲜水产</a></li>
+                <li><a href="#" class="meet">猪牛羊肉</a></li>
+                <li><a href="#" class="egg">禽类蛋品</a></li>
+                <li><a href="#" class="vegetables">新鲜蔬菜</a></li>
+                <li><a href="#" class="ice">速冻食品</a></li>
+        	</ul>
+        </div>
+		<ul class="navlist fl">
+			<li><a href="/">首页</a></li>
+            <li class="interval">|</li>
+            <li><a href="">手机生鲜</a></li>
+            <li class="interval">|</li>
+            <li><a href="">抽奖</a></li>
+		</ul>
+	</div>
+</div>
+ 
+<!-- 面包屑导航 --> 
+<div class="breadcrumb" id="breadcrumb">
+ 	<a href="javascript:void(0)">全部分类</a>
+    <span>&gt;</span>
+    <a href="javascript:void(0)" id="type_name">新鲜水果</a>
+    <span>&gt;</span>
+    <a href="javascript:void(0)">商品详情</a>
+ </div>
+   
+<div id="app">  
+    <!-- 商品展示 -->
+    <div class="goods_details_con clearfix">
+    	<div class="goods_details_pic fl" id="goods_pics">
+    		<img v-for="pic in pics" :src="pic" />
+    	</div>
+    	<div class="goods_details_list fr">
+        	<h3>{{goods.gname}}</h3>
+        	<p>{{goods.intro}}</p>
+        	<div class="price_bar">
+            	<span class="show_price">&yen;<em>{{goods.price}}</em>元</span>
+                <span class="show_unit">单位：<em>{{goods.unit}}</em></span>
+            </div>
+            <div class="goods_num clearfix">
+				<div class="num_name fl">数量：</div>
+				<div class="num_add fl">
+					<input type="text" class="num_show fl" v-model="nums">
+					<a href="javascript:void(0);" class="add fr" @click="addNum(1)">+</a>
+					<a href="javascript:void(0);" class="minus fr" @click="addNum(-1)">-</a>	
+				</div> 
+				<div class="balance_cls">仓库量 {{goods.balance}} {{goods.unit}}</div>
+			</div>
+			<div class="total">总价：<em>{{goods.price * nums}}</em>元</div>
+			<div class="operate_btn">
+				<a href="javascript:void(0);" class="buy_btn" id="buy_btn">立即购买</a>
+				<a href="javascript:void(0);" class="add_cart" id="add_cart" @click="addCart()">加入购物车</a>				
+			</div>
+        </div>
+    </div>
+    
+    <!-- 商品详情 -->
+    <div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					<li>
+						<a href="#"><img src="images/goods/goods001.jpg"></a>
+						<h4><a href="#">进口柠檬</a></h4>
+						<div class="prize">￥3.90</div>
+					</li>
+					<li>
+						<a href="#"><img src="images/goods/goods002.jpg"></a>
+						<h4><a href="#">玫瑰香葡萄</a></h4>
+						<div class="prize">￥16.80</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li class="active">商品介绍</li>
+				<li>评论</li>
+                <li>推荐</li>
+			</ul>
+
+			<div class="tab_content">
+				<dl>
+					<dt>商品详情：</dt>
+					<dd>{{goods.descr}}<br/>草莓采摘园位于北京大兴区 庞各庄镇四各庄村 ，每年1月-6月面向北京以及周围城市提供新鲜草莓采摘和精品礼盒装草莓，草莓品种多样丰富，个大香甜。所有草莓均严格按照有机标准培育，不使用任何化肥和农药。草莓在采摘期间免洗可以直接食用。欢迎喜欢草莓的市民前来采摘，也欢迎各大单位选购精品有机草莓礼盒，有机草莓礼盒是亲朋馈赠、福利送礼的最佳选择。 </dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>  
+<!-- 版权所有 -->
+<div class="footer">
+	<div class="foot_link">
+    	<a href="#">关于我们</a> <span> | </span>
+        <a href="#">联系我们</a> <span> | </span>
+        <a href="#">招聘广告</a> <span> | </span>
+        <a href="#">友情链接</a>
+    </div>
+	<p>CopyRight &copy; 2019 衡阳市源辰信息科技有限公司 All Rights Reserverd</p>
+    <p>电话：0734-8355998 湘ICP备16015987号</p>
+</div>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/checklogin.js"></script>
+<script type="text/javascript" src="js/qs.js"></script>
+<script>
+let vm = new Vue({
+	el:"#app", // 对应div的id，即这个vue的作用域
+	data: {
+		nums: 1,
+		pics:[], // 商品图片
+		goods: {  // 商品信息
+			
+		}
+	},
+	methods: {
+		addNum: function(num) {
+			if (num == -1 && this.nums == 1) { // 只选了一件，不能再减了
+				return;
+			}
+			
+			if (num == 1 &&this. nums >= this.goods.balance) { // 超过库存不能再加了
+				return;
+			}
+			
+			this.nums = this.nums + num;
+		},
+		addCart: function() {
+			if (!login.$data.loginId) { // 说明没有登录
+				alert("请先登录...");
+				location.href="login";
+				return;
+			}
+			
+			let flag = 0;
+			// 判断该商品是否已经存在 
+			if (login.$data.carts.length > 0) { // 说明购物车中有商品
+				login.$data.carts.forEach((item, index) => {
+					if(item.gno == this.goods.gno) { // 说明这个商品已经购买过
+						flag = 1;
+						axios.post("cartapi/cart/updates", qs.stringify({num:this.nums, gno:this.goods.gno, cno:item.cno}))
+						.then(result => {
+							let data = parseInt($.trim(result.data));
+							if (data > 0) {
+								alert("加入购物车成功....");
+							} else {
+								alert("加入购物车失败，请稍后重试...");
+							}
+						 }) 
+						return;
+					}
+				})
+			}
+			
+			// 能到这里说明这个商品没有买过
+			/*axios.post("cart/add",{num:num, gno:this.goods.gno})
+			.then(function (response) {
+			    console.log(response);
+			 }).catch(function (error) {
+			    console.log(error);
+			 });*/
+			// 默认发送的格式是json格式，需要用qs转化成form表达提交的字符串拼接的格式
+			if (flag == 0) {
+				axios.post("cartapi/cart/add", qs.stringify({num:this.nums, gno:this.goods.gno, mno:login.$data.loginId}))
+				.then(result => {
+					if (result.data.code != 0) {
+						login.$data.goodsCount = login.$data.goodsCount + 1; // 购物车商品种类+1
+						
+						// 将新添加的对象加入到购物车中
+						let newObj = {};
+						newObj.cno = result.data.obj;
+						newObj.gno = this.goods.gno;
+						login.$data.carts.push(newObj);
+						alert("加入购物车成功....");
+					} else {
+						alert("加入购物车失败，请稍后重试...");
+					}
+				 })
+			 }
+		}
+	},
+	mounted:function(){ //数据挂载之前，相当于jquery中的$(function(){})，页面加载完成
+		// 可以同时发送多个请求
+		axios.all([getGoodsInfo()])
+		.then(axios.spread((fn) => {
+			this.goods = fn.data;
+			this.pics = fn.data.pics.split(";");
+			
+			this.$nextTick(function(){
+				showPics(); // 此处填第一次渲染完成后执行的代码
+			});
+		}))
+	},
+	updated:function(){
+        this.$nextTick(function(){
+          //  此处填每次渲染完后执行的代码
+        })
+    }
+})
+
+//获取首页商品信息
+function getGoodsInfo() {
+	var hash = decodeURI(location.hash);  // #1&新鲜水果
+	if (hash == "" || hash.indexOf("&") <= 0) {
+		location.href="/";
+	}
+	
+	hash = hash.replace("#", "").split("&");
+	let gno = hash[0];
+	$("#type_name").text(hash[1]);
+	
+	return axios.get("goodsapi/goods/detail",{params: {gno:gno}});
+}
+
+function showPics() {
+	var imglen = $("#goods_pics>img").length;
+	if (imglen > 1) {
+		var i = 0;
+		setInterval(function(){
+			$("#goods_pics>img").css("display", "none");
+			$("#goods_pics>img:eq("+(i)+")").css("display", "block");
+			i = (i + 1) % imglen;
+		}, 2000);
+	}
+}
+</script>
+</body>
+</html>

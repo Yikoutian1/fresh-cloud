@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: goods-server
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
   redis:
     host: 127.0.0.1
     port: 6379
