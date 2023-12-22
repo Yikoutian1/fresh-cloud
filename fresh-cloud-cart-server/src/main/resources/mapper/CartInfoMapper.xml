@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fresh.cart.mapper.ICartInfoMapper">
+    <insert id="add" parameterType="com.fresh.common.entity.CartInfo">
+        insert into cartinfo
+        values (#{cno}, #{mno}, #{gno}, #{num})
+    </insert>
+
+    <select id="findByMno" parameterType="int" resultType="map">
+        select cno, gno
+        from cartinfo
+        where mno = #{_parameter}
+    </select>
+
+    <select id="finds" parameterType="int" resultType="com.fresh.common.entity.CartInfo">
+        select cno,
+               cf.gno,
+               num,
+               pics,
+               price,
+               gname,
+               unit,
+               weight
+        from cartinfo cf,
+             goodsinfo gf
+        where cf.gno = gf.gno
+          and mno = #{_parameter}
+    </select>
+
+    <select id="findBfreshnos" resultType="com.fresh.common.entity.CartInfo">
+        select cno, cf.gno, num, pics, price, gname, unit, weight from cartinfo cf, goodsinfo gf where cf.gno=gf.gno and
+        cno in
+        <foreach collection="array" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="delete">
+        delete from cartinfo where cno in
+        <foreach collection="array" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBfreshno" parameterType="string">
+        delete
+        from cartinfo
+        where cno = #{_parameter}
+    </delete>
+
+    <update id="update" parameterType="com.fresh.common.entity.CartInfo">
+        update cartinfo
+        set num = num + #{num}
+        where cno = #{cno}
+    </update>
+
+    <update id="updateByMnoAndGno" parameterType="com.fresh.common.entity.CartInfo">
+        update cartinfo
+        set num = num + #{num}
+        where gno = #{gno}
+          and mno = #{mno}
+    </update>
+</mapper>
