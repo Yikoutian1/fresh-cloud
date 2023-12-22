@@ -5,20 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.yc</groupId>
-    <artifactId>fresh-cloud</artifactId>
+    <artifactId>yc-fresh-cloud</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>fresh-cloud-eureka-server</module>
-        <module>fresh-cloud-common</module>
-        <module>fresh-cloud-zuul-server</module>
-        <module>fresh-cloud-config-server</module>
-        <module>fresh-cloud-index</module>
-        <module>fresh-cloud-member-server</module>
-        <module>fresh-cloud-order-server</module>
-        <module>fresh-cloud-goods-server</module>
-        <module>fresh-cloud-cart-server</module>
-        <module>fresh-cloud-txlcn-server</module>
+        <module>yc-fresh-cloud-eureka-server</module>
+        <module>yc-fresh-cloud-common</module>
+        <module>yc-fresh-cloud-zuul-server</module>
+        <module>yc-fresh-cloud-config-server</module>
+        <module>yc-fresh-cloud-index</module>
+        <module>yc-fresh-cloud-member-server</module>
+        <module>yc-fresh-cloud-order-server</module>
+        <module>yc-fresh-cloud-goods-server</module>
+        <module>yc-fresh-cloud-cart-server</module>
+        <module>yc-fresh-cloud-txlcn-server</module>
     </modules>
 
     <!--
@@ -29,8 +29,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
-        <relativePath/>
+        <version>2.2.5.RELEASE</version>
+        <relativePath />
     </parent>
 
     <properties>
