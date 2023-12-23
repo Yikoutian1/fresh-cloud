@@ -72,7 +72,7 @@ public class GoodsInfoServiceImpl implements IGoodsInfoService {
 
 
 	@Override
-	// TODO 事务
+	// TODO 分布式事务
 //	@LcnTransaction(propagation = DTXPropagation.SUPPORTS)
 	@Transactional
 	public int updateStore(String[] cno) {

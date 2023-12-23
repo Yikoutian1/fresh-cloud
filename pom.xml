@@ -16,6 +16,7 @@
         <module>fresh-cloud-order-server</module>
         <module>fresh-cloud-index-server</module>
         <module>fresh-cloud-gateway-server</module>
+        <module>fresh-cloud-api</module>
     </modules>
 
     <!--

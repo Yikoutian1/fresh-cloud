@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/addr")
-//TODO 前端地址修改
 public class AddrInfoController{
 
 	@Autowired

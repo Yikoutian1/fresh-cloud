@@ -1,6 +1,8 @@
 package com.fresh.order.service.impl;
 
 
+import com.fresh.client.CartInfoClient;
+import com.fresh.client.GoodsInfoClient;
 import com.fresh.common.entity.OrderInfo;
 import com.fresh.common.util.StringUtil;
 import com.fresh.order.mapper.IOrderInfoMapper;
@@ -28,12 +30,11 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private IOrderItemInfoMapper itemMapper;
 
-    // TODO 购物车和商品的远程调用接入
-//    @Autowired
-//    private ICartInfoControllerApi iCartInfoControllerApi;
-//
-//    @Autowired
-//    private IGoodsInfoControllerApi iGoodsInfoControllerApi;
+    @Autowired
+    private CartInfoClient iCartInfoControllerApi;
+
+    @Autowired
+    private GoodsInfoClient iGoodsInfoControllerApi;
 
     /*
      * service层需要进行的操作
@@ -45,7 +46,7 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     // TODO 分布式事务
-//    @LcnTransaction
+    // @LcnTransaction
     public int add(OrderInfo of) {
         if (StringUtil.checkNull(of.getOno(), of.getAno())) {
             return -2;
@@ -62,9 +63,10 @@ public class OrderServiceImpl implements IOrderService {
         map.put("cnos", cnos.split(","));
         result = itemMapper.add(map);
 
-//        result = iGoodsInfoControllerApi.compileStore(cnos);
-//
-//        result = iCartInfoControllerApi.decrease(cnos.split(","));
+        result = iGoodsInfoControllerApi.compileStore(cnos);
+
+        result = iCartInfoControllerApi.decrease(cnos.split(","));
+
         return result;
     }
 

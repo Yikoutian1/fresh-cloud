@@ -1,6 +1,7 @@
 package com.fresh.member.controller;
 
 
+import com.fresh.client.CartInfoClient;
 import com.fresh.common.entity.CartInfo;
 import com.fresh.common.entity.MemberInfo;
 import com.fresh.common.util.SendMailUtil;
@@ -25,9 +26,8 @@ public class MemberInfoController {
     @Autowired
     private IMemberInfoService service;
 
-    // TODO 远程调用
-//	@Autowired
-//	private ICartInfoControllerApi iCartInfoControllerApi;
+	@Autowired
+	private CartInfoClient cartInfoClient;
 
     @PostMapping("/code")
     public int code(String receive, String name, HttpSession session) {
@@ -95,9 +95,7 @@ public class MemberInfoController {
             return 0;
         }
         System.out.println(memberInfo.getMno());
-        // TODO 远程调用
-//		List<CartInfo> cartInfoList = iCartInfoControllerApi.findMnoByCnos(String.valueOf(memberInfo.getMno()));
-        List<CartInfo> cartInfoList = null;
+		List<CartInfo> cartInfoList = cartInfoClient.findMnoByCnos(String.valueOf(memberInfo.getMno()));
         System.out.println(cartInfoList.size());
         session.setAttribute("cartInfos", cartInfoList);
         session.setAttribute("loginMember", memberInfo);

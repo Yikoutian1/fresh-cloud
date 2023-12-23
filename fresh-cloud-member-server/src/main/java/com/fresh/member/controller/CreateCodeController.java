@@ -16,7 +16,6 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/loadCode")
-//TODO 前端地址修改
 public class CreateCodeController {
 
     @GetMapping("/getCode")
