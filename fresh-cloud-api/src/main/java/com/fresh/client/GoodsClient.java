@@ -2,6 +2,7 @@ package com.fresh.client;
 
 
 import com.fresh.common.entity.GoodsInfo;
+import com.fresh.common.entity.GoodsType;
 import com.fresh.config.ClientConfiguration;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,7 @@ import java.util.Map;
 
 
 @FeignClient(name = "goods-server", configuration = ClientConfiguration.class)
-
-public interface GoodsInfoClient {
-
+public interface GoodsClient {
     @PostMapping("/goods/upload")
     Map<String, Object> add(@RequestParam("upload") MultipartFile pic, HttpServletRequest request);
 
@@ -25,7 +24,7 @@ public interface GoodsInfoClient {
     int addGood(@RequestParam("pic")MultipartFile[] pics, HttpServletRequest request);
 
     @GetMapping("/goods/finds")
-    public Map<String, Object> finds();
+    public Map<String, Object> finds1();
 
     @GetMapping("/goods/findByFirst")
     public Map<String, Object> findByFirst(@RequestParam Integer tno,@RequestParam  Integer rows,@RequestParam  Integer page);
@@ -42,4 +41,11 @@ public interface GoodsInfoClient {
     @GetMapping("/goodsHello")
     public String goodsHello();
 
+
+
+    // == //
+    @GetMapping("/type/finds2")
+    List<GoodsType> finds();
+    @PostMapping("/type/add")
+    int add(@RequestParam("photo") MultipartFile pic, HttpServletRequest request, String tname);
 }

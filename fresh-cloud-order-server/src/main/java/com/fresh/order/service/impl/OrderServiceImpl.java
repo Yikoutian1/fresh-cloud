@@ -2,7 +2,6 @@ package com.fresh.order.service.impl;
 
 
 import com.fresh.client.CartInfoClient;
-import com.fresh.client.GoodsInfoClient;
 import com.fresh.common.entity.OrderInfo;
 import com.fresh.common.util.StringUtil;
 import com.fresh.order.mapper.IOrderInfoMapper;

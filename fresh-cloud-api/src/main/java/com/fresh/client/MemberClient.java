@@ -14,9 +14,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @ClassName MemberClient
+ * @Description Member
+ * @Author Calyee
+ * @DATE 2023/12/23 023 16:34
+ * @Version 1.0
+ */
 @FeignClient(name = "member-server", configuration = ClientConfiguration.class)
-public interface AddrInfoClient {
-
+public interface MemberClient {
     // addr controller
     @RequestMapping("/addr/add")
     public int add(HttpSession session, AddrInfo af);
@@ -41,4 +47,10 @@ public interface AddrInfoClient {
 
     @GetMapping("/member/check")
     Map<String, Object> checkLogin(HttpSession session);
+
+
+    @GetMapping("/loadCode/getCode")
+    void createCode(HttpSession session, HttpServletResponse response) throws IOException;
+
+
 }
