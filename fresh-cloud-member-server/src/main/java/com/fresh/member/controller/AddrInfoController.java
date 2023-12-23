@@ -14,7 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addr")
+@RequestMapping("member/addr")
+//TODO 前端地址修改
 public class AddrInfoController{
 
 	@Autowired

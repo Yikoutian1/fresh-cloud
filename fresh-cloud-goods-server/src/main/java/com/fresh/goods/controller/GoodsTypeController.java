@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/goods/type")
+//TODO 前端地址修改
 public class GoodsTypeController{
 
 	@Autowired

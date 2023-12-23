@@ -1,7 +1,7 @@
 package com.fresh.common.util;
 
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+//import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -47,14 +47,14 @@ public class SendMailUtil {
 		this.pwd = pwd;
 	}
 
-	/**
-	 * 发送html格式的邮件
-	 * @param receiveEmail：接收者邮箱
-	 * @param name：昵称
-	 * @param code：验证码
-	 * @return
-	 * @throws MessagingException
-	 */
+//	/**
+//	 * 发送html格式的邮件
+//	 * @param receiveEmail：接收者邮箱
+//	 * @param name：昵称
+//	 * @param code：验证码
+//	 * @return
+//	 * @throws MessagingException
+//	 */
 	public boolean sendHtmlMail(String receiveEmail, String name, String code) {
 		if (StringUtil.checkNull(receiveEmail, name, code)) {
 			return false;
