@@ -192,7 +192,7 @@ var vm = new Vue({
 			page = idx;
 			this.pageNo = idx;
 			axios({
-				url:"goodsapi/goods/findByPage",
+				url:"/goods/findByPage",
 				method:"post",
 				params:{tno:tno, page:page, rows:rows}
 			}).then(result => {
@@ -212,7 +212,7 @@ var vm = new Vue({
 				login.$data.carts.forEach((item, index) => {
 					if(item.gno == this.goods.gno) { // 说明这个商品已经购买过
 						flag = 1;
-						axios.post("cartapi/cart/updates", qs.stringify({num:1, gno:gno, cno:item.cno}))
+						axios.post("/cart/updates", qs.stringify({num:1, gno:gno, cno:item.cno}))
 						.then(result => {
 							let data = parseInt($.trim(result.data));
 							if (data > 0) {
@@ -228,7 +228,7 @@ var vm = new Vue({
 
 			// 默认发送的格式是json格式，需要用qs转化成form表达提交的字符串拼接的格式
 			if (flag == 0) {
-				axios.post("cartapi/cart/add", qs.stringify({num:1, gno:gno, mno:login.$data.loginId}))
+				axios.post("/cart/add", qs.stringify({num:1, gno:gno, mno:login.$data.loginId}))
 				.then(result => {
 					let data = $.trim(result.data);
 					if (result.data.code != 0) {
@@ -272,7 +272,7 @@ function getGoodsInfo() {
 	$("#type_name").text(hash[1]);
 	
 	return axios({
-		url:"goodsapi/goods/findByFirst",
+		url:"/goods/findByFirst",
 		method:"get",
 		params:{tno:tno, page:page, rows:rows}
 	})

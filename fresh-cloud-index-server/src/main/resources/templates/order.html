@@ -172,7 +172,7 @@
 	$(function(){
 		// 获取下单的购物车信息
 		var cno = location.hash.replace("#","");
-		$.post("cartapi/cart/findByCnos", {cno:cno}, function(data) {
+		$.post("/cart/findByCnos", {cno:cno}, function(data) {
 			var total = 0;
 			var totalPrice =0;
 			var str = '';
@@ -191,7 +191,7 @@
 		},'json');
 
 		// 查询收货地址
-		$.post("memberapi/addr/findByMno", null, function(data) {
+		$.post("/addr/findByMno", null, function(data) {
 			var str = "";
 			var temp = ""
 			$.each(data, function(index,item){
@@ -215,7 +215,7 @@
 			var realPrice = $("#real_price").text().replace("元","");
 			var cno = location.hash.replace("#","");
 
-			$.post("orderapi/order/add", {ano:ano, price:realPrice, ono:cno}, function(data) {
+			$.post("/order/add", {ano:ano, price:realPrice, ono:cno}, function(data) {
 				data = parseInt($.trim(data));
 				if (data > 0) {
 					$('.popup_con').fadeIn('fast', function() {
@@ -242,7 +242,7 @@
 		if ($("#default_addr").val() != "") {
 			anos += "," + $("#default_addr").val();
 		}
-		$.post("memberapi/addr/update", {addrs: anos }, function(data) {
+		$.post("/addr/update", {addrs: anos }, function(data) {
 			data = parseInt($.trim(data)) ;
 			if (data > 0) {
 				// 修改隐藏域中的值
@@ -304,7 +304,7 @@
 		var ano = new Date().getTime();
 		obj+="&ano="+ano;
 
-		$.post("memberapi/addr/add", obj, function(data){
+		$.post("/addr/add", obj, function(data){
 			data = parseInt($.trim(data));
 			if (data > 0) {
 				var str ='<dd>' + $.trim($("#province").val()) +" " + $.trim($("#city").val()) + " " + $.trim($("#area").val()) +" ";

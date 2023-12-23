@@ -199,7 +199,7 @@ let vm = new Vue({
 				login.$data.carts.forEach((item, index) => {
 					if(item.gno == this.goods.gno) { // 说明这个商品已经购买过
 						flag = 1;
-						axios.post("cartapi/cart/updates", qs.stringify({num:this.nums, gno:this.goods.gno, cno:item.cno}))
+						axios.post("/cart/updates", qs.stringify({num:this.nums, gno:this.goods.gno, cno:item.cno}))
 						.then(result => {
 							let data = parseInt($.trim(result.data));
 							if (data > 0) {
@@ -222,7 +222,7 @@ let vm = new Vue({
 			 });*/
 			// 默认发送的格式是json格式，需要用qs转化成form表达提交的字符串拼接的格式
 			if (flag == 0) {
-				axios.post("cartapi/cart/add", qs.stringify({num:this.nums, gno:this.goods.gno, mno:login.$data.loginId}))
+				axios.post("/cart/add", qs.stringify({num:this.nums, gno:this.goods.gno, mno:login.$data.loginId}))
 				.then(result => {
 					if (result.data.code != 0) {
 						login.$data.goodsCount = login.$data.goodsCount + 1; // 购物车商品种类+1
@@ -270,7 +270,7 @@ function getGoodsInfo() {
 	let gno = hash[0];
 	$("#type_name").text(hash[1]);
 	
-	return axios.get("goodsapi/goods/detail",{params: {gno:gno}});
+	return axios.get("/goods/detail",{params: {gno:gno}});
 }
 
 function showPics() {

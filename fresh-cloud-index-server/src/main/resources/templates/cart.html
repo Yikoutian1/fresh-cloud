@@ -107,7 +107,7 @@
 <script src="js/car.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$.post("cartapi/cart/finds", null, function(data) {
+		$.post("/cart/finds", null, function(data) {
 			$("#show_count").text(data.length);
 			var total = 0;
 			var str = '';

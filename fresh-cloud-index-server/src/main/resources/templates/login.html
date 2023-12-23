@@ -41,7 +41,7 @@
                             <li>
                             	<div>
                                 <input type="text" name="yzm" id="yzm" class="yzm_input mpt" @blur="checkInfo(2)"  v-model="code" placeholder="请输入验证码"/>
-                                <img class="code" src="memberapi/loadCode/getCode" onclick="refreshCode(this)">
+                                <img class="code" src="/loadCode/getCode" onclick="refreshCode(this)">
                                 </div>
                                 <div class="code_error"><span v-if="status[2]">{{info}}</span></div>
                             </li>
@@ -79,7 +79,7 @@
 <script>
 //切换验证码
 function refreshCode(obj){
-	obj.src="memberapi/loadCode/getCode?"+Math.random();
+	obj.src="/loadCode/getCode?"+Math.random();
 }
 
 
@@ -131,7 +131,7 @@ let vm = new Vue({
 
 				// 发送登录请求
 				axios({
-					url:"memberapi/member/login",
+					url:"/member/login",
 					method:"post",
 					params:{nickName:this.account, pwd:this.pwd, realName:this.code}
 				}).then(result => {
