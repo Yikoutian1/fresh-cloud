@@ -5,7 +5,7 @@ function add(obj, cno){
 	var num = $(obj).prev().val();
 	num++;
 	
-	$.post("cartapi/cart/update", {cno:cno, num:1}, function(data) {
+	$.post("/cart/update", {cno:cno, num:1}, function(data) {
 		data = parseInt($.trim(data));
 		if (data > 0) {
 			//数量写入标签中
@@ -51,7 +51,7 @@ function delGoods(obj, cno){
 		return;
 	}
 	
-	$.post("cartapi/cart/decrease", {cno:cno}, function(data){
+	$.post("/cart/decrease", {cno:cno}, function(data){
 		data = parseInt($.trim(data));
 		if (data > 0) {
 			var num = $(obj).parent().parent().find("input[type='text']").val();
@@ -86,7 +86,7 @@ function lost(obj, cno){
 	}
 	num--;
 	
-	$.post("cartapi/cart/update", {cno:cno, num:-1}, function(data) {
+	$.post("/cart/update", {cno:cno, num:-1}, function(data) {
 		data = parseInt($.trim(data));
 		if (data > 0) {
 			//数量写入标签中

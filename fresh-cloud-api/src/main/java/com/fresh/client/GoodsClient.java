@@ -41,7 +41,7 @@ public interface GoodsClient {
     @GetMapping("/goodsHello")
     public String goodsHello();
 
-
+    //
 
     // == //
 //    @GetMapping("/type/finds2")

@@ -10,7 +10,7 @@ let login = new Vue({
 	},
 	mounted:function(){ //数据挂载之前，相当于jquery中的$(function(){})，页面加载完成
 		axios({
-			url:"memberapi/member/check",
+			url:"/member/check",
 			method:"get"
 		}).then(result => {
 			if (result.data.member) { // 说明登录了

@@ -157,7 +157,7 @@ function sendCode(){
 	
 	$("#getCode").attr("disabled", "true"); // 不允许再点击
 	//请求方式  地址  参数  回调函数
-	$.post("memberapi/member/code",{receive:email, name:nickName},function(data){
+	$.post("/member/code",{receive:email, name:nickName},function(data){
 		data = parseInt($.trim(data));
 		if(data > 0){
 			// 倒计时
@@ -210,7 +210,7 @@ function checkRegister(){
 		}
 	}
 	
-	$.post("memberapi/member/reg", $("#myform").serialize(), function(data){
+	$.post("/member/reg", $("#myform").serialize(), function(data){
 		data = parseInt($.trim(data));
 		if (data == -2) {
 			$("#errmsg").text("验证码已过期，请重新获取...").show();
