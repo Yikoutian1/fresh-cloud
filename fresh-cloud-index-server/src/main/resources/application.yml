@@ -7,9 +7,14 @@ spring:
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
-      username: nacos
-      password: nacos
+
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
+
+# mybatis sql日志
+logging:
+  level:
+    com.fresh.member.mapper: debug
+    org.springframework: debug

@@ -26,7 +26,7 @@ spring:
         - id: fresh-member
           uri: lb://member-server
           predicates:
-            - Path=/member/**,/memberapi/member/**
+            - Path=/member/**,/addr/**,/loadCode/**
 
         - id: fresh-order
           uri: lb://order-server
@@ -41,8 +41,8 @@ spring:
 
 
 
-management:                                #通过 actuator暴露此服务的管理端口
+management: #通过 actuator暴露此服务的管理端口
   endpoints:
-    web:                                   #通过web来暴露管理API,
+    web: #通过web来暴露管理API,
       exposure:
         include: "*"                      #  * 代表将所有的端口暴露   一定要加"",因为 *是特殊字符，加""防止转义

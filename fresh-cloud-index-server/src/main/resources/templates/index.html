@@ -169,13 +169,13 @@
 
     // 检查登录的方法
     function checkLogin() {
-        return axios.get("memberapi/member/check");
+        return axios.get("/member/check");
     }
 
     // 获取首页商品信息
     function getGoodsInfo() {
         return axios({
-            url: "goodsapi/goods/finds",
+            url: "/goods/finds",
             method: "get",
             params: {}
         })

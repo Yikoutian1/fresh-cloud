@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Random;
 
 @RestController
-@RequestMapping("member/loadCode")
+@RequestMapping("/loadCode")
 //TODO 前端地址修改
 public class CreateCodeController {
 
