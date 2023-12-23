@@ -14,22 +14,22 @@
 	<!-- 头部  -->
 	<div class="header_con">
 		<div class="header">
-	   		<div class="welcome fl">欢迎来到天天生鲜</div>
+			<div class="welcome fl">欢迎来到天天生鲜</div>
 			<div class="fr">
-	           	<div class="login_info fl" v-if="onlogin">欢迎：<em>[ {{loginName}} ]</em></div>
-	            <div class="login_btn fl" v-if="onlogin">
-	               <span> | </span>	<a href="register">注册</a>
-	             </div>
-	             <div class="login_btn fl" v-if="outlogin">
-	               	<a href="login">登录</a><span> | </span><a href="register">注册</a>
-	             </div>
-	           	 <div class="user_link fl">
-					 <!--<span> | </span><a href="user.html">用户中心</a>-->
-	                   <span> | </span><a href="cart.html">我的购物车</a>
-	                   <span> | </span><a href="order.html">我的订单</a>
+				<div class="login_info fl" v-if="onlogin">欢迎：<em>[ {{loginName}} ]</em></div>
+				<div class="login_btn fl" v-if="onlogin">
+					<span> | </span>	<a href="register">注册</a>
 				</div>
-			</div>  
-	   	</div>
+				<div class="login_btn fl" v-if="outlogin">
+					<a href="login">登录</a><span> | </span><a href="register">注册</a>
+				</div>
+				<div class="user_link fl">
+					<!--<span> | </span><a href="user.html">用户中心</a>-->
+					<span> | </span><a href="icart">我的购物车</a>
+					<span> | </span><a href="iorder">我的订单</a>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<!-- 搜素框 -->

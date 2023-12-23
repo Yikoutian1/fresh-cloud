@@ -25,8 +25,8 @@
                 </div>
                 <div class="user_link fl">
                     <!--<span> | </span><a href="user.html">用户中心</a>-->
-                    <span> | </span><a href="/cart">我的购物车</a>
-                    <span> | </span><a href="/order">我的订单</a>
+                    <span> | </span><a href="/icart">我的购物车</a>
+                    <span> | </span><a href="/iorder">我的订单</a>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
             </form>
         </div>
         <div class="guest_cart fr">
-            <a href="/cart" class="cart_name fl">我的购物车</a>
+            <a href="/icart" class="cart_name fl">我的购物车</a>
             <div class="goods_count fl" id="show_count">{{goodsCount}}</div>
         </div>
     </div>
@@ -98,7 +98,7 @@
                 <span>|</span>
                 <a :href="'details#'+good.gno" v-for="good in goods" v-if="good.tno == type.tno" target="_blank">{{good.gname}}</a>
             </div>
-            <a :href="'goods#'+type.tno+'&' + type.tname" class="goods_more fr" target="_blank">查看更多</a>
+            <a :href="'igoods#'+type.tno+'&' + type.tname" class="goods_more fr" target="_blank">查看更多</a>
         </div>
 
         <div class="goods_con clearfix">
