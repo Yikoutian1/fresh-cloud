@@ -44,8 +44,8 @@ public interface GoodsClient {
 
 
     // == //
-    @GetMapping("/type/finds2")
-    List<GoodsType> finds();
-    @PostMapping("/type/add")
-    int add(@RequestParam("photo") MultipartFile pic, HttpServletRequest request, String tname);
+//    @GetMapping("/type/finds2")
+//    List<GoodsType> finds();
+//    @PostMapping("/type/add")
+//    int add(@RequestParam("photo") MultipartFile pic, HttpServletRequest request, String tname);
 }
