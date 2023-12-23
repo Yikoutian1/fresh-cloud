@@ -2,6 +2,7 @@ package com.fresh.order.service.impl;
 
 
 import com.fresh.client.CartInfoClient;
+import com.fresh.client.GoodsClient;
 import com.fresh.common.entity.OrderInfo;
 import com.fresh.common.util.StringUtil;
 import com.fresh.order.mapper.IOrderInfoMapper;
@@ -33,7 +34,7 @@ public class OrderServiceImpl implements IOrderService {
     private CartInfoClient iCartInfoControllerApi;
 
     @Autowired
-    private GoodsInfoClient iGoodsInfoControllerApi;
+    private GoodsClient iGoodsInfoControllerApi;
 
     /*
      * service层需要进行的操作
