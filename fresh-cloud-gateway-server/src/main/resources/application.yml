@@ -1,0 +1,32 @@
+server:
+  port: 20001
+
+spring:
+  application:
+    name: frush-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+
+
+    gateway: #基础的路由转发配置
+      routes: #查看配置源码  routes是一个有序的list集合
+        - id: flush-cart
+          uri: lb://cart-server
+          predicates:
+            - Path=/cart/**
+        - id: flush-goods
+          uri: lb://goods-server
+          predicates:
+            - Path=/goods/**
+
+
+
+management:                                #通过 actuator暴露此服务的管理端口
+  endpoints:
+    web:                                   #通过web来暴露管理API,
+      exposure:
+        include: "*"                      #  * 代表将所有的端口暴露   一定要加"",因为 *是特殊字符，加""防止转义

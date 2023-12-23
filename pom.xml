@@ -14,7 +14,8 @@
         <module>fresh-cloud-goods-server</module>
         <module>fresh-cloud-member-server</module>
         <module>fresh-cloud-order-server</module>
-        <module>fresh-cloud-index</module>
+        <module>fresh-cloud-index-server</module>
+        <module>fresh-cloud-gateway-server</module>
     </modules>
 
     <!--

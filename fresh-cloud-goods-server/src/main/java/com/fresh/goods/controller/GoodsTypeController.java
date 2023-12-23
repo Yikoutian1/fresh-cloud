@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("/type")
+@RequestMapping("/goods/type")
 public class GoodsTypeController{
 
 	@Autowired
