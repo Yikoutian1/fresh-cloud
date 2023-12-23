@@ -22,7 +22,7 @@ import java.util.Random;
  */
 @Primary
 @Service
-public class OrderServiceImpl implements IOrderService {
+public class  OrderServiceImpl implements IOrderService {
 
     @Autowired
     private IOrderInfoMapper orderMapper;
