@@ -9,8 +9,21 @@ spring:
       username: nacos
       password: nacos
   redis:
-    host: 127.0.0.1
+    host: localhost  # docker 后修改
     port: 6379
+    #password:123456
+    database: 0 #0是0号数据库，redis默认开启的16个数据库
+    timeout: 5000 #超时时间
+    jedis:
+      #Redis连接池配置
+      pool:
+        max-active: 8 #最大连接数
+        max-wait: 1ms #连接池最大阻塞等待时间
+        max-idle: 4 #连接池中最大空闲连接
+        min-idle: 0 #连接池中最小空闲连接
+    cache:
+      redis:
+        time-to-live: 1800000 #设置缓存有效期1800秒 1800 000毫秒
   # 数据库连接池配置 druid
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
