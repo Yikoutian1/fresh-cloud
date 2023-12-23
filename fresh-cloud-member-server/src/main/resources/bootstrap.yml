@@ -7,7 +7,7 @@ spring:
         group: DEFAULT_GROUP
         username: nacos #底层应用了security验证
         password: nacos
-        prefix: cartServer #这里是Data Id的前缀也是你注册的服务名
+        prefix: memberServer #这里是Data Id的前缀也是你注册的服务名
         file-extension: yml # Data Id的后缀
         shared-configs:
           - { data-id: 'mysql-prod.yml',refresh: true }
