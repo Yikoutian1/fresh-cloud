@@ -14,3 +14,4 @@ spring:
           - { data-id: 'redis-prod.yml',refresh: true }
   profiles:
     active: prod #开发环境
+
