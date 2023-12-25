@@ -30,7 +30,7 @@
           and mno = #{_parameter}
     </select>
 
-    <select id="findBfreshnos" resultType="com.fresh.common.entity.CartInfo">
+    <select id="findByCnos" resultType="com.fresh.common.entity.CartInfo">
         select cno, cf.gno, num, pics, price, gname, unit, weight from cartinfo cf, goodsinfo gf where cf.gno=gf.gno and
         cno in
         <foreach collection="array" open="(" close=")" separator="," item="item">
