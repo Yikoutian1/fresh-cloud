@@ -1,7 +1,6 @@
-## 模块介绍
-
-### back-management模块包括两个部分
-- back-management(后台管理模块)
-- web (前端模块)
-### chat模块
-聊天模块
+顶级管理员账号(账号 密码)
+admin admin123
+后台账号(账号 密码)
+yaya 123456
+calyee 123456
+along 123456

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fresh.system.mapper.OrderiteminfoMapper">
+    
+    <resultMap type="Orderiteminfo" id="OrderiteminfoResult">
+        <result property="ino"    column="ino"    />
+        <result property="ono"    column="ono"    />
+        <result property="gno"    column="gno"    />
+        <result property="nums"    column="nums"    />
+        <result property="price"    column="price"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectOrderiteminfoVo">
+        select ino, ono, gno, nums, price, status from orderiteminfo
+    </sql>
+
+    <select id="selectOrderiteminfoList" parameterType="Orderiteminfo" resultMap="OrderiteminfoResult">
+        <include refid="selectOrderiteminfoVo"/>
+        <where>  
+            <if test="ono != null  and ono != ''"> and ono = #{ono}</if>
+            <if test="gno != null "> and gno = #{gno}</if>
+            <if test="nums != null "> and nums = #{nums}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderiteminfoByIno" parameterType="Long" resultMap="OrderiteminfoResult">
+        <include refid="selectOrderiteminfoVo"/>
+        where ino = #{ino}
+    </select>
+        
+    <insert id="insertOrderiteminfo" parameterType="Orderiteminfo" useGeneratedKeys="true" keyProperty="ino">
+        insert into orderiteminfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ono != null">ono,</if>
+            <if test="gno != null">gno,</if>
+            <if test="nums != null">nums,</if>
+            <if test="price != null">price,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ono != null">#{ono},</if>
+            <if test="gno != null">#{gno},</if>
+            <if test="nums != null">#{nums},</if>
+            <if test="price != null">#{price},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderiteminfo" parameterType="Orderiteminfo">
+        update orderiteminfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ono != null">ono = #{ono},</if>
+            <if test="gno != null">gno = #{gno},</if>
+            <if test="nums != null">nums = #{nums},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where ino = #{ino}
+    </update>
+
+    <delete id="deleteOrderiteminfoByIno" parameterType="Long">
+        delete from orderiteminfo where ino = #{ino}
+    </delete>
+
+    <delete id="deleteOrderiteminfoByInos" parameterType="String">
+        delete from orderiteminfo where ino in 
+        <foreach item="ino" collection="array" open="(" separator="," close=")">
+            #{ino}
+        </foreach>
+    </delete>
+</mapper>

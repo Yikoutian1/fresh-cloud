@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fresh.system.mapper.AdmininfoMapper">
+    
+    <resultMap type="Admininfo" id="AdmininfoResult">
+        <result property="aid"    column="aid"    />
+        <result property="aname"    column="aname"    />
+        <result property="pwd"    column="pwd"    />
+        <result property="tel"    column="tel"    />
+    </resultMap>
+
+    <sql id="selectAdmininfoVo">
+        select aid, aname, pwd, tel from admininfo
+    </sql>
+
+    <select id="selectAdmininfoList" parameterType="Admininfo" resultMap="AdmininfoResult">
+        <include refid="selectAdmininfoVo"/>
+        <where>  
+            <if test="aname != null  and aname != ''"> and aname like concat('%', #{aname}, '%')</if>
+            <if test="pwd != null  and pwd != ''"> and pwd = #{pwd}</if>
+            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
+        </where>
+    </select>
+    
+    <select id="selectAdmininfoByAid" parameterType="Long" resultMap="AdmininfoResult">
+        <include refid="selectAdmininfoVo"/>
+        where aid = #{aid}
+    </select>
+        
+    <insert id="insertAdmininfo" parameterType="Admininfo" useGeneratedKeys="true" keyProperty="aid">
+        insert into admininfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="aname != null and aname != ''">aname,</if>
+            <if test="pwd != null and pwd != ''">pwd,</if>
+            <if test="tel != null">tel,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="aname != null and aname != ''">#{aname},</if>
+            <if test="pwd != null and pwd != ''">#{pwd},</if>
+            <if test="tel != null">#{tel},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAdmininfo" parameterType="Admininfo">
+        update admininfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="aname != null and aname != ''">aname = #{aname},</if>
+            <if test="pwd != null and pwd != ''">pwd = #{pwd},</if>
+            <if test="tel != null">tel = #{tel},</if>
+        </trim>
+        where aid = #{aid}
+    </update>
+
+    <delete id="deleteAdmininfoByAid" parameterType="Long">
+        delete from admininfo where aid = #{aid}
+    </delete>
+
+    <delete id="deleteAdmininfoByAids" parameterType="String">
+        delete from admininfo where aid in 
+        <foreach item="aid" collection="array" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+    </delete>
+</mapper>

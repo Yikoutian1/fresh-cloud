@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fresh.system.mapper.OrderinfoMapper">
+    
+    <resultMap type="Orderinfo" id="OrderinfoResult">
+        <result property="ono"    column="ono"    />
+        <result property="odate"    column="odate"    />
+        <result property="ano"    column="ano"    />
+        <result property="sdate"    column="sdate"    />
+        <result property="rdate"    column="rdate"    />
+        <result property="status"    column="status"    />
+        <result property="price"    column="price"    />
+        <result property="invoice"    column="invoice"    />
+    </resultMap>
+
+    <sql id="selectOrderinfoVo">
+        select ono, odate, ano, sdate, rdate, status, price, invoice from orderinfo
+    </sql>
+
+    <select id="selectOrderinfoList" parameterType="Orderinfo" resultMap="OrderinfoResult">
+        <include refid="selectOrderinfoVo"/>
+        <where>  
+            <if test="odate != null "> and odate = #{odate}</if>
+            <if test="ano != null  and ano != ''"> and ano = #{ano}</if>
+            <if test="sdate != null "> and sdate = #{sdate}</if>
+            <if test="rdate != null "> and rdate = #{rdate}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="invoice != null "> and invoice = #{invoice}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderinfoByOno" parameterType="String" resultMap="OrderinfoResult">
+        <include refid="selectOrderinfoVo"/>
+        where ono = #{ono}
+    </select>
+        
+    <insert id="insertOrderinfo" parameterType="Orderinfo">
+        insert into orderinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ono != null">ono,</if>
+            <if test="odate != null">odate,</if>
+            <if test="ano != null">ano,</if>
+            <if test="sdate != null">sdate,</if>
+            <if test="rdate != null">rdate,</if>
+            <if test="status != null">status,</if>
+            <if test="price != null">price,</if>
+            <if test="invoice != null">invoice,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ono != null">#{ono},</if>
+            <if test="odate != null">#{odate},</if>
+            <if test="ano != null">#{ano},</if>
+            <if test="sdate != null">#{sdate},</if>
+            <if test="rdate != null">#{rdate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="price != null">#{price},</if>
+            <if test="invoice != null">#{invoice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderinfo" parameterType="Orderinfo">
+        update orderinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="odate != null">odate = #{odate},</if>
+            <if test="ano != null">ano = #{ano},</if>
+            <if test="sdate != null">sdate = #{sdate},</if>
+            <if test="rdate != null">rdate = #{rdate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="invoice != null">invoice = #{invoice},</if>
+        </trim>
+        where ono = #{ono}
+    </update>
+
+    <delete id="deleteOrderinfoByOno" parameterType="String">
+        delete from orderinfo where ono = #{ono}
+    </delete>
+
+    <delete id="deleteOrderinfoByOnos" parameterType="String">
+        delete from orderinfo where ono in 
+        <foreach item="ono" collection="array" open="(" separator="," close=")">
+            #{ono}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fresh.system.mapper.GoodstypeMapper">
+    
+    <resultMap type="Goodstype" id="GoodstypeResult">
+        <result property="tno"    column="tno"    />
+        <result property="tname"    column="tname"    />
+        <result property="pic"    column="pic"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectGoodstypeVo">
+        select tno, tname, pic, status from goodstype
+    </sql>
+
+    <select id="selectGoodstypeList" parameterType="Goodstype" resultMap="GoodstypeResult">
+        <include refid="selectGoodstypeVo"/>
+        <where>  
+            <if test="tname != null  and tname != ''"> and tname like concat('%', #{tname}, '%')</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectGoodstypeByTno" parameterType="Long" resultMap="GoodstypeResult">
+        <include refid="selectGoodstypeVo"/>
+        where tno = #{tno}
+    </select>
+        
+    <insert id="insertGoodstype" parameterType="Goodstype" useGeneratedKeys="true" keyProperty="tno">
+        insert into goodstype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tname != null and tname != ''">tname,</if>
+            <if test="pic != null">pic,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tname != null and tname != ''">#{tname},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGoodstype" parameterType="Goodstype">
+        update goodstype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tname != null and tname != ''">tname = #{tname},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where tno = #{tno}
+    </update>
+
+    <delete id="deleteGoodstypeByTno" parameterType="Long">
+        delete from goodstype where tno = #{tno}
+    </delete>
+
+    <delete id="deleteGoodstypeByTnos" parameterType="String">
+        delete from goodstype where tno in 
+        <foreach item="tno" collection="array" open="(" separator="," close=")">
+            #{tno}
+        </foreach>
+    </delete>
+</mapper>

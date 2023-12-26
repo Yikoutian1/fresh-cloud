@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fresh.system.mapper.CartinfoMapper">
+    
+    <resultMap type="Cartinfo" id="CartinfoResult">
+        <result property="cno"    column="cno"    />
+        <result property="mno"    column="mno"    />
+        <result property="gno"    column="gno"    />
+        <result property="num"    column="num"    />
+    </resultMap>
+
+    <sql id="selectCartinfoVo">
+        select cno, mno, gno, num from cartinfo
+    </sql>
+
+    <select id="selectCartinfoList" parameterType="Cartinfo" resultMap="CartinfoResult">
+        <include refid="selectCartinfoVo"/>
+        <where>  
+            <if test="mno != null "> and mno = #{mno}</if>
+            <if test="gno != null "> and gno = #{gno}</if>
+            <if test="num != null "> and num = #{num}</if>
+        </where>
+    </select>
+    
+    <select id="selectCartinfoByCno" parameterType="String" resultMap="CartinfoResult">
+        <include refid="selectCartinfoVo"/>
+        where cno = #{cno}
+    </select>
+        
+    <insert id="insertCartinfo" parameterType="Cartinfo">
+        insert into cartinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cno != null">cno,</if>
+            <if test="mno != null">mno,</if>
+            <if test="gno != null">gno,</if>
+            <if test="num != null">num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cno != null">#{cno},</if>
+            <if test="mno != null">#{mno},</if>
+            <if test="gno != null">#{gno},</if>
+            <if test="num != null">#{num},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCartinfo" parameterType="Cartinfo">
+        update cartinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mno != null">mno = #{mno},</if>
+            <if test="gno != null">gno = #{gno},</if>
+            <if test="num != null">num = #{num},</if>
+        </trim>
+        where cno = #{cno}
+    </update>
+
+    <delete id="deleteCartinfoByCno" parameterType="String">
+        delete from cartinfo where cno = #{cno}
+    </delete>
+
+    <delete id="deleteCartinfoByCnos" parameterType="String">
+        delete from cartinfo where cno in 
+        <foreach item="cno" collection="array" open="(" separator="," close=")">
+            #{cno}
+        </foreach>
+    </delete>
+</mapper>
