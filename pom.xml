@@ -17,6 +17,8 @@
         <module>fresh-cloud-index-server</module>
         <module>fresh-cloud-gateway-server</module>
         <module>fresh-cloud-api</module>
+        <module>fresh-cloud-back-management</module>
+        <module>fresh-cloud-chat</module>
     </modules>
 
     <!--
