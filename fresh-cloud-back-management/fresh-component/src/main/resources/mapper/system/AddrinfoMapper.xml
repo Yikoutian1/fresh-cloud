@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fresh.system.mapper.AddrinfoMapper">
+    
+    <resultMap type="Addrinfo" id="AddrinfoResult">
+        <result property="ano"    column="ano"    />
+        <result property="mno"    column="mno"    />
+        <result property="name"    column="name"    />
+        <result property="tel"    column="tel"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="addr"    column="addr"    />
+        <result property="flag"    column="flag"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectAddrinfoVo">
+        select ano, mno, name, tel, province, city, area, addr, flag, status from addrinfo
+    </sql>
+
+    <select id="selectAddrinfoList" parameterType="Addrinfo" resultMap="AddrinfoResult">
+        <include refid="selectAddrinfoVo"/>
+        <where>  
+            <if test="mno != null "> and mno = #{mno}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="addr != null  and addr != ''"> and addr = #{addr}</if>
+            <if test="flag != null "> and flag = #{flag}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectAddrinfoByAno" parameterType="String" resultMap="AddrinfoResult">
+        <include refid="selectAddrinfoVo"/>
+        where ano = #{ano}
+    </select>
+        
+    <insert id="insertAddrinfo" parameterType="Addrinfo">
+        insert into addrinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ano != null">ano,</if>
+            <if test="mno != null">mno,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="tel != null and tel != ''">tel,</if>
+            <if test="province != null and province != ''">province,</if>
+            <if test="city != null and city != ''">city,</if>
+            <if test="area != null and area != ''">area,</if>
+            <if test="addr != null and addr != ''">addr,</if>
+            <if test="flag != null">flag,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ano != null">#{ano},</if>
+            <if test="mno != null">#{mno},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="tel != null and tel != ''">#{tel},</if>
+            <if test="province != null and province != ''">#{province},</if>
+            <if test="city != null and city != ''">#{city},</if>
+            <if test="area != null and area != ''">#{area},</if>
+            <if test="addr != null and addr != ''">#{addr},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAddrinfo" parameterType="Addrinfo">
+        update addrinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mno != null">mno = #{mno},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="tel != null and tel != ''">tel = #{tel},</if>
+            <if test="province != null and province != ''">province = #{province},</if>
+            <if test="city != null and city != ''">city = #{city},</if>
+            <if test="area != null and area != ''">area = #{area},</if>
+            <if test="addr != null and addr != ''">addr = #{addr},</if>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where ano = #{ano}
+    </update>
+
+    <delete id="deleteAddrinfoByAno" parameterType="String">
+        delete from addrinfo where ano = #{ano}
+    </delete>
+
+    <delete id="deleteAddrinfoByAnos" parameterType="String">
+        delete from addrinfo where ano in 
+        <foreach item="ano" collection="array" open="(" separator="," close=")">
+            #{ano}
+        </foreach>
+    </delete>
+</mapper>
