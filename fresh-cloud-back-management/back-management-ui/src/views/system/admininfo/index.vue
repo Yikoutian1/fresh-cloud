@@ -9,14 +9,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="密码" prop="pwd">
+      <!-- <el-form-item label="密码" prop="pwd">
         <el-input
           v-model="queryParams.pwd"
           placeholder="请输入密码"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="电话号码" prop="tel">
         <el-input
           v-model="queryParams.tel"
@@ -81,7 +81,10 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="编号" align="center" prop="aid" />
       <el-table-column label="姓名" align="center" prop="aname" />
-      <el-table-column label="密码" align="center" prop="pwd" />
+      <!-- <el-table-column label="密码" align="center" prop="pwd" /> -->
+      <el-table-column label="密码" align="center">
+        <span>******</span>
+      </el-table-column>
       <el-table-column label="电话号码" align="center" prop="tel" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">

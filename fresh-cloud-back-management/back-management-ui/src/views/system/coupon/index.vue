@@ -1,30 +1,37 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="优惠卷标题" prop="title">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="120px"
+    >
+      <el-form-item label="优惠卷名" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入优惠卷标题"
+          placeholder="请输入优惠卷名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="优惠卷的图片信息" prop="img">
+      <!-- <el-form-item label="优惠卷图片信息" prop="img">
         <el-input
           v-model="queryParams.img"
-          placeholder="请输入优惠卷的图片信息"
+          placeholder="优惠卷的图片信息"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="优惠卷的金额" prop="money">
+      </el-form-item> -->
+      <!-- <el-form-item label="优惠金额" prop="money">
         <el-input
           v-model="queryParams.money"
-          placeholder="请输入优惠卷的金额"
+          placeholder="请输入优惠金额"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="优惠卷描述" prop="desc">
         <el-input
           v-model="queryParams.desc"
@@ -33,41 +40,53 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="用户能抢到的最大数量" prop="limitnum">
+      <!-- <el-form-item label="用户能抢到的最大数量" prop="limitnum">
         <el-input
           v-model="queryParams.limitnum"
           placeholder="请输入用户能抢到的最大数量"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="使用优惠券的最低金额" prop="limit">
+      </el-form-item> -->
+      <!-- <el-form-item label="最低使用优惠券金额" prop="limit">
         <el-input
           v-model="queryParams.limit"
           placeholder="请输入使用优惠券的最低金额"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="优惠卷开始时间" prop="start">
-        <el-date-picker clearable
+        <el-date-picker
+          clearable
           v-model="queryParams.start"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择优惠卷开始时间">
+          type="datetime"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          placeholder="请选择优惠卷开始时间"
+        >
         </el-date-picker>
       </el-form-item>
       <el-form-item label="优惠卷到期时间" prop="end">
-        <el-date-picker clearable
+        <el-date-picker
+          clearable
           v-model="queryParams.end"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择优惠卷到期时间">
+          type="datetime"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          placeholder="请选择优惠卷到期时间"
+        >
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
@@ -80,7 +99,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:coupon:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -91,7 +111,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:coupon:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -102,7 +123,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:coupon:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -112,31 +134,57 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['system:coupon:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="couponList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="couponList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="优惠券编号" align="center" prop="id" />
       <el-table-column label="优惠卷标题" align="center" prop="title" />
       <el-table-column label="优惠卷的图片信息" align="center" prop="img" />
       <el-table-column label="优惠卷的金额" align="center" prop="money" />
       <el-table-column label="优惠卷描述" align="center" prop="desc" />
-      <el-table-column label="用户能抢到的最大数量" align="center" prop="limitnum" />
-      <el-table-column label="使用优惠券的最低金额" align="center" prop="limit" />
-      <el-table-column label="优惠卷开始时间" align="center" prop="start" width="180">
+      <!-- <el-table-column label="用户能抢到的最大数量" align="center" prop="limitnum" /> -->
+      <el-table-column
+        label="使用优惠券的最低金额"
+        align="center"
+        prop="limit"
+      />
+      <el-table-column
+        label="优惠卷开始时间"
+        align="center"
+        prop="start"
+        width="180"
+      >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.start, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.start, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="优惠卷到期时间" align="center" prop="end" width="180">
+      <el-table-column
+        label="优惠卷到期时间"
+        align="center"
+        prop="end"
+        width="180"
+      >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.end, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.end, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -144,20 +192,22 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:coupon:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:coupon:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -165,13 +215,13 @@
     />
 
     <!-- 添加或修改优惠券对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
         <el-form-item label="优惠卷标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入优惠卷标题" />
         </el-form-item>
-        <el-form-item label="优惠卷的图片信息" prop="img">
-          <el-input v-model="form.img" placeholder="请输入优惠卷的图片信息" />
+        <el-form-item label="优惠卷图片链接" prop="img">
+          <el-input v-model="form.img" placeholder="请输入优惠卷图片链接" />
         </el-form-item>
         <el-form-item label="优惠卷的金额" prop="money">
           <el-input v-model="form.money" placeholder="请输入优惠卷的金额" />
@@ -179,26 +229,33 @@
         <el-form-item label="优惠卷描述" prop="desc">
           <el-input v-model="form.desc" placeholder="请输入优惠卷描述" />
         </el-form-item>
-        <el-form-item label="用户能抢到的最大数量" prop="limitnum">
+        <!-- <el-form-item label="用户能抢到的最大数量" prop="limitnum">
           <el-input v-model="form.limitnum" placeholder="请输入用户能抢到的最大数量" />
-        </el-form-item>
-        <el-form-item label="使用优惠券的最低金额" prop="limit">
-          <el-input v-model="form.limit" placeholder="请输入使用优惠券的最低金额" />
+        </el-form-item> -->
+        <el-form-item label="最低使用优惠券金额" prop="limit">
+          <el-input
+            v-model="form.limit"
+            placeholder="请输入最低使用优惠券金额"
+          />
         </el-form-item>
         <el-form-item label="优惠卷开始时间" prop="start">
-          <el-date-picker clearable
+          <el-date-picker
+            clearable
             v-model="form.start"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择优惠卷开始时间">
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="请选择优惠卷开始时间"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="优惠卷到期时间" prop="end">
-          <el-date-picker clearable
+          <el-date-picker
+            clearable
             v-model="form.end"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择优惠卷到期时间">
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="请选择优惠卷到期时间"
+          >
           </el-date-picker>
         </el-form-item>
       </el-form>
@@ -211,7 +268,13 @@
 </template>
 
 <script>
-import { listCoupon, getCoupon, delCoupon, addCoupon, updateCoupon } from "@/api/system/coupon";
+import {
+  listCoupon,
+  getCoupon,
+  delCoupon,
+  addCoupon,
+  updateCoupon,
+} from "@/api/system/coupon";
 
 export default {
   name: "Coupon",
@@ -243,16 +306,15 @@ export default {
         img: null,
         money: null,
         desc: null,
-        limitnum: null,
+        // limitnum: null,
         limit: null,
         start: null,
-        end: null
+        end: null,
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {},
     };
   },
   created() {
@@ -262,7 +324,7 @@ export default {
     /** 查询优惠券列表 */
     getList() {
       this.loading = true;
-      listCoupon(this.queryParams).then(response => {
+      listCoupon(this.queryParams).then((response) => {
         this.couponList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -281,10 +343,10 @@ export default {
         img: null,
         money: null,
         desc: null,
-        limitnum: null,
+        // limitnum: null,
         limit: null,
         start: null,
-        end: null
+        end: null,
       };
       this.resetForm("form");
     },
@@ -300,9 +362,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.id);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -313,8 +375,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id || this.ids
-      getCoupon(id).then(response => {
+      const id = row.id || this.ids;
+      getCoupon(id).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改优惠券";
@@ -322,16 +384,16 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.id != null) {
-            updateCoupon(this.form).then(response => {
+            updateCoupon(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addCoupon(this.form).then(response => {
+            addCoupon(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -343,19 +405,32 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除优惠券编号为"' + ids + '"的数据项？').then(function() {
-        return delCoupon(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除优惠券编号为"' + ids + '"的数据项？')
+        .then(function () {
+          return delCoupon(ids);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/coupon/export', {
-        ...this.queryParams
-      }, `coupon_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "system/coupon/export",
+        {
+          ...this.queryParams,
+        },
+        `coupon_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>
+<style scoped>
+.el-time-spinner__wrapper {
+  width: 100% !important;
+}
+</style>
