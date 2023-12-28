@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848 #nacos端口
+        namespace: fresh-cloud #命名空间的名称
+        group: DEFAULT_GROUP
+        username: nacos #底层应用了security验证
+        password: nacos
+        prefix: couponServer #这里是Data Id的前缀也是你注册的服务名
+        file-extension: yml # Data Id的后缀
+        shared-configs:
+          - { data-id: 'mysql-prod.yml',refresh: true }
+          - { data-id: 'redis-prod.yml',refresh: true }
+  profiles:
+    active: prod #开发环境

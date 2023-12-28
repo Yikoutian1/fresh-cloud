@@ -19,6 +19,7 @@
         <module>fresh-cloud-api</module>
         <module>fresh-cloud-back-management</module>
         <module>fresh-cloud-chat</module>
+        <module>fresh-cloud-coupons-server</module>
     </modules>
 
     <!--
