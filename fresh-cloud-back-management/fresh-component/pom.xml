@@ -15,6 +15,9 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+    <description>
+        这个模块用于构建后台管理其他的功能, 例如优惠券,会员...(名字没取好)
+    </description>
     <dependencies>
         <dependency>
             <groupId>com.fresh</groupId>
