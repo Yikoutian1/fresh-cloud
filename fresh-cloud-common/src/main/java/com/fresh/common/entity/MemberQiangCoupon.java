@@ -21,4 +21,8 @@ public class MemberQiangCoupon implements Serializable {
     public Integer uid;
     public Integer cid;
     public Integer num;
+    /**
+     *  0 未使用 1已使用 2已过期
+     */
+    public Integer status;
 }

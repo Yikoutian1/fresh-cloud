@@ -4,6 +4,7 @@ import com.fresh.coupon.config.CouponConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,22 +27,25 @@ public class CouponController {
     public RabbitTemplate rabbitTemplate;
     @Autowired
     public CouponConfig couponConfig;
-    @RequestMapping(value = "/qiangCoupon",method = RequestMethod.POST)
+    @RequestMapping(value = "/qiangCoupon",method ={RequestMethod.POST,RequestMethod.GET})
     public Map<String,Object> CouponService( String uid, String cid) {
-        Map<String, Object> map = new HashMap<>();;
-
-
+        Map<String, Object> map = new HashMap<>();
         if (!redisTemplate.hasKey(this.couponConfig.COUPON_CID_+cid)){
-            redisTemplate.opsForHash().put(this.couponConfig.COUPON_CID_+cid, this.couponConfig.COUPON_CID_NUM_, 100);
-            // 将内层键设置在外层键的集合中
+            map.put("msg","暂未该优惠卷相关的活动");
+            return map;
+        }
+        Long time = (Long) redisTemplate.opsForHash().get(this.couponConfig.COUPON_CID_ + cid, "time");
+
+        long time1 = new Date().getTime();
+        if (time1<time){
+            map.put("msg","优惠卷活动并未开启,请在活动规定时间内参加");
+            return map;
         }
         Integer num = (Integer) redisTemplate.opsForHash().get(this.couponConfig.COUPON_CID_ + cid, this.couponConfig.COUPON_CID_NUM_);
-
         if (num<=0){
             map.put("msg","手慢了，优惠卷已被抢光");
             return map;
         }
-
         if (redisTemplate.opsForHash().get(this.couponConfig.COUPON_CID_+cid,this.couponConfig.COUPON_GRAB_UID_+uid)==null) {
             String script = "local newTotalNumber=redis.call('HINCRBY',KEYS[1],KEYS[2], -ARGV[1]); " +
                     "if (newTotalNumber<0) then " +
@@ -56,20 +60,14 @@ public class CouponController {
             redisScript.setResultType(Long.class);
             Long totalNumber = (Long) redisTemplate.execute(redisScript, keys, 1);
             if (totalNumber != null && totalNumber > -1) {
-                //Todo 向redis里加用户id
                 redisTemplate.opsForHash().put(this.couponConfig.COUPON_CID_+cid, this.couponConfig.COUPON_GRAB_UID_+uid, uid);
+                String exchange="fresh.direct"; //自己创建的fanout
+                Map<String,Object> msg=new HashMap<>();
+                msg.put("cid",cid);
+                msg.put("uid",uid);
+                this.rabbitTemplate.convertAndSend(exchange,"addMAndC",msg);
             }
-                map.put("msg", "恭喜你抢到一张优惠卷");
-
-//            Map<String, Object> msg = new HashMap<>();
-//            msg.put("uid", uid);
-//            msg.put("cid", cid);
-//            String exchange = "fresh.direct";
-//            try {
-//                this.rabbitTemplate.convertAndSend(exchange, "addMAndC", msg);
-//            } catch (Exception e) {
-//                log.info("遇到错误，错误为：" + e.getMessage());
-//            }
+                map.put("msg", "恭喜你抢到一张优惠卷,系统稍后会将优惠卷发送到你的账户上");
         }else{
             map.put("msg","你已经领过了不要太贪心哟");
         }

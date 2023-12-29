@@ -1,5 +1,7 @@
 package com.fresh.coupon.service;
 
+import org.springframework.stereotype.Service;
+
 import java.util.Map;
 
 /**
@@ -8,8 +10,7 @@ import java.util.Map;
  * @author: ChestnutDuck
  * @create: 2023-12-27 20:21
  **/
+@Service
 public interface CouponService{
-
-
 
 }

@@ -6,6 +6,8 @@ import com.fresh.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -70,15 +72,15 @@ public class Coupon extends BaseEntity {
     /**
      * 优惠卷开始时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "优惠卷开始时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @Excel(name = "优惠卷开始时间", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
     private Date start;
 
     /**
      * 优惠卷到期时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "优惠卷到期时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @Excel(name = "优惠卷到期时间", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
     private Date end;
 
     public void setId(Long id) {
@@ -140,7 +142,7 @@ public class Coupon extends BaseEntity {
     public void setStart(Date start) {
         this.start = start;
     }
-
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public Date getStart() {
         return start;
     }

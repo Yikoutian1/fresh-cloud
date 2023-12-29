@@ -24,7 +24,6 @@ public class Coupon implements Serializable {
     private String img;
     private String  money;
     private String desc;
-    private String limitnum; //领取数量
     private String limit; //使用限制
     private Date start; //开始时间
     private Integer num;//卷的数量
@@ -32,7 +31,6 @@ public class Coupon implements Serializable {
     public Date getStart() {
         return start;
     }
-
     public void setStart(Date start) {
         DateFormat dateFormat=new SimpleDateFormat("yyyy MM dd HH:mm:ss");
         String format = dateFormat.format(start);

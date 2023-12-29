@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,14 +39,10 @@ public class MemberQiangCouponServiceImpl implements MemberQiangCouponService {
             exchange = @Exchange(name = "fresh.direct",type= ExchangeTypes.DIRECT),
             key = {"addMAndC"}
     ))
-    public void addMemberQiangCoupon(Map<String,Object> data) {
-        String uid = data.get("uid")+"";
-        String cid = data.get("cid") + "";
-        System.err.println("收到的参数为"+data);
-        MemberQiangCoupon memberQiangCoupon=new MemberQiangCoupon(Integer.parseInt(uid),Integer.parseInt(cid),1);
+    public void addMemberQiangCoupon(Map<String,Object> msg) {
+        String uid=String.valueOf(msg.get("uid"));
+        String cid=String.valueOf(msg.get("cid"));
+        MemberQiangCoupon memberQiangCoupon=new MemberQiangCoupon(Integer.parseInt(uid),Integer.parseInt(cid),1,null);
         this.memberQiangCouponMapper.insert(memberQiangCoupon);
-        String exchange="fresh.direct";
-        String msg="一张优惠卷以入库";
-        this.rabbitTemplate.convertAndSend(exchange,"userMsg",msg); //会根据你提供的不同的RoutingKey 去决定发
     }
 }

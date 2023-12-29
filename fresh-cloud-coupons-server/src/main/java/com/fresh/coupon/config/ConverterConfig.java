@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class ConverterConfig {
     @Bean
     public MessageConverter jacksonMessageConvertor(){
-        return new Jackson2JsonMessageConverter();
+        return new Jackson2JsonMessageConverter(); //json序列化
     }
 
 }
