@@ -57,6 +57,8 @@ public class CouponSchedule {
                 if (coupon.getNum() != 0) {
                     redisTemplate.opsForHash().put(unique,
                             StaticEnums.c_num, coupon.getNum()); // 存放数量
+                    redisTemplate.opsForHash().put(unique,
+                            StaticEnums.start_time, coupon.getStart()); // 开始时间
                     log.info("[CouponSchedule Success], put coupon id:{},num:{}",
                             coupon.getId(), coupon.getNum());
                 }

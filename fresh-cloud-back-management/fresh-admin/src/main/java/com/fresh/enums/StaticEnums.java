@@ -21,6 +21,10 @@ public class StaticEnums {
      * 优惠券数量
      */
     public final static String c_num = "COUPON_CID_NUM_";
+    /**
+     * 优惠券开始时间
+     */
+    public final static String start_time = "time";
 
     /**
      * 分钟标识
