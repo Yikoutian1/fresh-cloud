@@ -1,13 +1,13 @@
-package com.fresh.coupon.Controller;
+package com.fresh.coupon.controller;
 
 import com.fresh.coupon.config.CouponConfig;
-import feign.Param;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -26,7 +26,7 @@ public class CouponController {
     public RabbitTemplate rabbitTemplate;
     @Autowired
     public CouponConfig couponConfig;
-    @RequestMapping("/qiangCoupon")
+    @RequestMapping(value = "/qiangCoupon",method = RequestMethod.POST)
     public Map<String,Object> CouponService( String uid, String cid) {
         Map<String, Object> map = new HashMap<>();;
 
@@ -35,8 +35,8 @@ public class CouponController {
             redisTemplate.opsForHash().put(this.couponConfig.COUPON_CID_+cid, this.couponConfig.COUPON_CID_NUM_, 100);
             // 将内层键设置在外层键的集合中
         }
-        Integer num =
-                (Integer) redisTemplate.opsForHash().get(this.couponConfig.COUPON_CID_ + cid, this.couponConfig.COUPON_CID_NUM_);
+        Integer num = (Integer) redisTemplate.opsForHash().get(this.couponConfig.COUPON_CID_ + cid, this.couponConfig.COUPON_CID_NUM_);
+
         if (num<=0){
             map.put("msg","手慢了，优惠卷已被抢光");
             return map;

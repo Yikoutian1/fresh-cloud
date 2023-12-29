@@ -27,8 +27,7 @@ public class Coupon implements Serializable {
     private String limitnum; //领取数量
     private String limit; //使用限制
     private Date start; //开始时间
-
-
+    private Integer num;//卷的数量
     private Date end; //结束时间
     public Date getStart() {
         return start;
