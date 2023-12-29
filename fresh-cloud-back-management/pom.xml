@@ -187,15 +187,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <dependencies>
-
-        <!-- 通用工具-->
-        <dependency>
-            <groupId>com.fresh</groupId>
-            <artifactId>back-fresh-common</artifactId>
-        </dependency>
-
-    </dependencies>
+<!--    <dependencies>-->
+<!--        &lt;!&ndash; 通用工具&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.fresh</groupId>-->
+<!--            <artifactId>back-fresh-common</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
     <build>
         <plugins>
             <plugin>

@@ -25,8 +25,8 @@ import com.fresh.common.core.page.TableDataInfo;
 /**
  * 优惠券Controller
  *
- * @author ruoyi
- * @date 2023-12-26
+ * @author calyee
+ * @date 2023-12-29
  */
 @RestController
 @RequestMapping("/system/coupon")
@@ -49,7 +49,7 @@ public class CouponController extends BaseController {
      * 导出优惠券列表
      */
     @PreAuthorize("@ss.hasPermi('system:coupon:export')")
-    @Log(title = "优惠券" , businessType = BusinessType.EXPORT)
+    @Log(title = "优惠券", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Coupon coupon) {
         List<Coupon> list = couponService.selectCouponList(coupon);
@@ -70,7 +70,7 @@ public class CouponController extends BaseController {
      * 新增优惠券
      */
     @PreAuthorize("@ss.hasPermi('system:coupon:add')")
-    @Log(title = "优惠券" , businessType = BusinessType.INSERT)
+    @Log(title = "优惠券", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Coupon coupon) {
         return toAjax(couponService.insertCoupon(coupon));
@@ -80,7 +80,7 @@ public class CouponController extends BaseController {
      * 修改优惠券
      */
     @PreAuthorize("@ss.hasPermi('system:coupon:edit')")
-    @Log(title = "优惠券" , businessType = BusinessType.UPDATE)
+    @Log(title = "优惠券", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Coupon coupon) {
         return toAjax(couponService.updateCoupon(coupon));
@@ -90,7 +90,7 @@ public class CouponController extends BaseController {
      * 删除优惠券
      */
     @PreAuthorize("@ss.hasPermi('system:coupon:remove')")
-    @Log(title = "优惠券" , businessType = BusinessType.DELETE)
+    @Log(title = "优惠券", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(couponService.deleteCouponByIds(ids));

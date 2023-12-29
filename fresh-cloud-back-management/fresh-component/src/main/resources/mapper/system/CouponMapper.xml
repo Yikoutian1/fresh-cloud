@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fresh.system.mapper.CouponMapper">
-    
+
     <resultMap type="Coupon" id="CouponResult">
-        <result property="id"    column="id"    />
-        <result property="title"    column="title"    />
-        <result property="img"    column="img"    />
-        <result property="money"    column="money"    />
-        <result property="desc"    column="desc"    />
-        <result property="limitnum"    column="limitnum"    />
-        <result property="limit"    column="limit"    />
-        <result property="start"    column="start"    />
-        <result property="end"    column="end"    />
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="img" column="img"/>
+        <result property="money" column="money"/>
+        <result property="desc" column="desc"/>
+        <result property="limit" column="limit"/>
+        <result property="start" column="start"/>
+        <result property="end" column="end"/>
+        <result property="num" column="num"/>
     </resultMap>
 
     <sql id="selectCouponVo">
-        select id, title, img, money, desc, limitnum, limit, start, end from coupon
+        select id,
+               title,
+               img,
+               money,
+               `desc`,
+               `limit`,
+               `start`,
+               `end`,
+               num
+        from coupon
     </sql>
 
     <select id="selectCouponList" parameterType="Coupon" resultMap="CouponResult">
         <include refid="selectCouponVo"/>
-        <where>  
-            <if test="title != null  and title != ''"> and title = #{title}</if>
-            <if test="img != null  and img != ''"> and img = #{img}</if>
-            <if test="money != null  and money != ''"> and money = #{money}</if>
-            <if test="desc != null  and desc != ''"> and desc = #{desc}</if>
-            <if test="limitnum != null  and limitnum != ''"> and limitnum = #{limitnum}</if>
-            <if test="limit != null  and limit != ''"> and limit = #{limit}</if>
-            <if test="start != null "> and start = #{start}</if>
-            <if test="end != null "> and end = #{end}</if>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="title != null  and title != ''">and title = #{title}</if>
+            <if test="money != null  and money != ''">and money = #{money}</if>
+            <if test="desc != null  and desc != ''">and desc = #{desc}</if>
+            <if test="start != null ">and start >= #{start}</if>
+            <if test="end != null ">and end <![CDATA[<= #{end}]]></if>
         </where>
     </select>
-    
+
     <select id="selectCouponById" parameterType="Long" resultMap="CouponResult">
         <include refid="selectCouponVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="getMatchConditionCouponList" parameterType="Coupon" resultMap="CouponResult">
+        <include refid="selectCouponVo"/>
+        where <![CDATA[`start`< DATE_ADD(NOW(),INTERVAL ${time} HOUR)]]>
+    </select>
+
     <insert id="insertCoupon" parameterType="Coupon" useGeneratedKeys="true" keyProperty="id">
         insert into coupon
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -46,21 +58,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="img != null">img,</if>
             <if test="money != null">money,</if>
             <if test="desc != null">desc,</if>
-            <if test="limitnum != null">limitnum,</if>
             <if test="limit != null">limit,</if>
             <if test="start != null">start,</if>
             <if test="end != null">end,</if>
-         </trim>
+            <if test="num != null">num,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null">#{title},</if>
             <if test="img != null">#{img},</if>
             <if test="money != null">#{money},</if>
             <if test="desc != null">#{desc},</if>
-            <if test="limitnum != null">#{limitnum},</if>
             <if test="limit != null">#{limit},</if>
             <if test="start != null">#{start},</if>
             <if test="end != null">#{end},</if>
-         </trim>
+            <if test="num != null">#{num},</if>
+        </trim>
     </insert>
 
     <update id="updateCoupon" parameterType="Coupon">
@@ -70,20 +82,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="img != null">img = #{img},</if>
             <if test="money != null">money = #{money},</if>
             <if test="desc != null">desc = #{desc},</if>
-            <if test="limitnum != null">limitnum = #{limitnum},</if>
             <if test="limit != null">limit = #{limit},</if>
             <if test="start != null">start = #{start},</if>
             <if test="end != null">end = #{end},</if>
+            <if test="num != null">num = #{num},</if>
         </trim>
         where id = #{id}
     </update>
 
     <delete id="deleteCouponById" parameterType="Long">
-        delete from coupon where id = #{id}
+        delete
+        from coupon
+        where id = #{id}
     </delete>
 
     <delete id="deleteCouponByIds" parameterType="String">
-        delete from coupon where id in 
+        delete from coupon where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

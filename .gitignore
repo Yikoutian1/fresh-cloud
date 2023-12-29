@@ -46,3 +46,4 @@ build/
 ###  vue  ###
 **/node_modules/**
 
+/logs/

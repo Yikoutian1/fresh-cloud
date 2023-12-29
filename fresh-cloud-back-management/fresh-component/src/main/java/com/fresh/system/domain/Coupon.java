@@ -49,8 +49,9 @@ public class Coupon extends BaseEntity {
     /**
      * 用户能抢到的最大数量
      */
-    @Excel(name = "用户能抢到的最大数量")
-    private String limitnum;
+    //    @Excel(name = "用户能抢到的最大数量")
+    // 废弃字段
+//    private String limitnum;
 
     /**
      * 使用优惠券的最低金额
@@ -58,18 +59,26 @@ public class Coupon extends BaseEntity {
     @Excel(name = "使用优惠券的最低金额")
     private String limit;
 
+
+    /**
+     * 优惠券数量
+     */
+    @Excel(name = "优惠券数量")
+    private Integer num;
+
+
     /**
      * 优惠卷开始时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "优惠卷开始时间" , width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "优惠卷开始时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date start;
 
     /**
      * 优惠卷到期时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "优惠卷到期时间" , width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "优惠卷到期时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date end;
 
     public void setId(Long id) {
@@ -112,13 +121,13 @@ public class Coupon extends BaseEntity {
         return desc;
     }
 
-    public void setLimitnum(String limitnum) {
-        this.limitnum = limitnum;
-    }
-
-    public String getLimitnum() {
-        return limitnum;
-    }
+//    public void setLimitnum(String limitnum) {
+//        this.limitnum = limitnum;
+//    }
+//
+//    public String getLimitnum() {
+//        return limitnum;
+//    }
 
     public void setLimit(String limit) {
         this.limit = limit;
@@ -144,18 +153,26 @@ public class Coupon extends BaseEntity {
         return end;
     }
 
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("id" , getId())
-                .append("title" , getTitle())
-                .append("img" , getImg())
-                .append("money" , getMoney())
-                .append("desc" , getDesc())
-                .append("limitnum" , getLimitnum())
-                .append("limit" , getLimit())
-                .append("start" , getStart())
-                .append("end" , getEnd())
+                .append("id", getId())
+                .append("title", getTitle())
+                .append("img", getImg())
+                .append("money", getMoney())
+                .append("desc", getDesc())
+                .append("num", getNum())
+                .append("limit", getLimit())
+                .append("start", getStart())
+                .append("end", getEnd())
                 .toString();
     }
 }

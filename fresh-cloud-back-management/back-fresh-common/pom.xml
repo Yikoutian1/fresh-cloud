@@ -10,6 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>back-fresh-common</artifactId>
+    <version>1.0</version>
 
     <description>
         common通用工具

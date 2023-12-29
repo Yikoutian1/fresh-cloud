@@ -1,3 +1,7 @@
+# 刷新时间
+time:
+  matchconditiontime: 2
+
 # 项目相关配置
 ruoyi:
   # 名称
