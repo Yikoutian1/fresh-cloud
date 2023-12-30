@@ -151,6 +151,7 @@ public class Coupon extends BaseEntity {
         this.end = end;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public Date getEnd() {
         return end;
     }

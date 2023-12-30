@@ -27,6 +27,11 @@ public class StaticEnums {
     public final static String start_time = "time";
 
     /**
+     * 优惠券结束时间
+     */
+    public final static String end_time = "END_TIME";
+
+    /**
      * 分钟标识
      */
     public final static String minute = "5";
