@@ -74,4 +74,9 @@ public class CartInfoServiceImpl implements ICartInfoService {
     public List<CartInfo> findByCnos(String[] cnos) {
         return mapper.findByCnos(cnos);
     }
+
+    @Override
+    public int updateCartNum(String cno, Integer num) {
+        return mapper.update(cno,num);
+    }
 }

@@ -172,7 +172,7 @@
 	$(function(){
 		// 获取下单的购物车信息
 		var cno = location.hash.replace("#","");
-		$.post("/cart/findByCnos", {cno:cno}, function(data) {
+		$.post("/cart/getSessionCart", {cno:cno}, function(data) {
 			var total = 0;
 			var totalPrice =0;
 			var str = '';
@@ -213,9 +213,8 @@
 			// 获取参数
 			var ano = $("#current_addr").val();
 			var realPrice = $("#real_price").text().replace("元","");
-			var cno = location.hash.replace("#","");
 
-			$.post("/order/add", {ano:ano, price:realPrice, ono:cno}, function(data) {
+			$.post("/order/add", {ano:ano, price:realPrice}, function(data) {
 				data = parseInt($.trim(data));
 				if (data > 0) {
 					$('.popup_con').fadeIn('fast', function() {

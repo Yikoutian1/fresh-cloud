@@ -52,4 +52,5 @@ public interface IGoodsInfoService {
 	 */
 	public int updateStore(String[] cno);
 
+	public int updateGoodsNum(Integer gno,Integer num);
 }

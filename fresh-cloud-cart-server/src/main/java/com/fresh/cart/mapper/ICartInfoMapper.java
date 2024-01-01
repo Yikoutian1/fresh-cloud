@@ -64,4 +64,6 @@ public interface ICartInfoMapper {
 	 * @return
 	 */
 	public List<CartInfo> findByCnos(String[] cnos);
+
+	int update(String cno, Integer num);
 }

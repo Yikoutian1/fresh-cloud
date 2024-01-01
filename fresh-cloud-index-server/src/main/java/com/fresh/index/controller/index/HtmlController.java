@@ -69,5 +69,8 @@ public class HtmlController {
         return "order";
     }
 
-
+    @RequestMapping("/icoupon")
+    public String coupon(){
+        return "coupon";
+    }
 }

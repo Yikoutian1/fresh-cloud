@@ -17,6 +17,9 @@ import java.util.Map;
 
 @FeignClient(name = "goods-server", configuration = ClientConfiguration.class)
 public interface GoodsClient {
+    @PostMapping("/goods/updateGoodsNum")
+    int updateGoodsNum(@RequestParam("gno") Integer gno, @RequestParam("num") Integer num);
+
     @PostMapping("/goods/upload")
     Map<String, Object> add(@RequestParam("upload") MultipartFile pic, HttpServletRequest request);
 
@@ -38,7 +41,7 @@ public interface GoodsClient {
     @PostMapping("/goods/compileStore")
     public int compileStore(@RequestParam String cno);
 
-    @GetMapping("/goodsHello")
+    @GetMapping("/goods/goodsHello")
     public String goodsHello();
 
     //

@@ -57,4 +57,14 @@ public interface ICartInfoService {
 	 * @return
 	 */
 	public List<CartInfo> findByCnos(String[] cnos);
+
+	/**
+	 * 根据购物车编号修改数量
+	 * @param cno
+	 * @param num
+	 * @return
+	 */
+	public int updateCartNum(String cno,Integer num);
+
+
 }

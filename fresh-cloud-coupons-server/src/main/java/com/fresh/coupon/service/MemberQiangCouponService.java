@@ -1,7 +1,10 @@
 package com.fresh.coupon.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.fresh.common.entity.MemberQiangCoupon;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,8 +13,9 @@ import java.util.Map;
  * @author: ChestnutDuck
  * @create: 2023-12-28 15:02
  **/
-@Service
-public interface MemberQiangCouponService {
+
+public interface MemberQiangCouponService extends IService<MemberQiangCoupon> {
     void addMemberQiangCoupon(Map<String,Object> msg);
+    Map<String,Object> getCouponByUid(Integer uid);
 
 }

@@ -79,4 +79,9 @@ public class GoodsInfoServiceImpl implements IGoodsInfoService {
 		int  result = mapper.updateStore(cno);
 		return result;
 	}
+
+	@Override
+	public int updateGoodsNum(Integer gno,Integer num) {
+		return  mapper.updateGoodsNum(gno,num);
+	}
 }

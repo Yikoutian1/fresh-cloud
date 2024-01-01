@@ -1,8 +1,10 @@
 package com.fresh.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -25,28 +27,14 @@ public class Coupon implements Serializable {
     private String  money;
     private String desc;
     private String limit; //使用限制
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date start; //开始时间
     private Integer num;//卷的数量
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date end; //结束时间
-    public Date getStart() {
-        return start;
-    }
-    public void setStart(Date start) {
-        DateFormat dateFormat=new SimpleDateFormat("yyyy MM dd HH:mm:ss");
-        String format = dateFormat.format(start);
-        Date date=new Date(format);
-        this.start = date;
-    }
 
-    public Date getEnd() {
-        return end;
-    }
-
-    public void setEnd(Date end) {
-        DateFormat dateFormat=new SimpleDateFormat("yyyy MM dd HH:mm:ss");
-        String format = dateFormat.format(end);
-        Date date=new Date(format);
-        this.end = date;
-    }
 
 }

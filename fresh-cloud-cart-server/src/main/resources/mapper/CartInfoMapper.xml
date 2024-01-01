@@ -50,6 +50,12 @@
         from cartinfo
         where cno = #{_parameter}
     </delete>
+    <delete id="deleteByCno" parameterType="string">
+        delete
+        from cartinfo
+        where cno = #{cno}
+    </delete>
+
 
     <update id="update" parameterType="com.fresh.common.entity.CartInfo">
         update cartinfo

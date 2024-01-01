@@ -1,6 +1,7 @@
 // JavaScript Document
 //商品数量的添加
-function add(obj, cno){	
+function add(obj, cno){
+	alert(cno)
 	//获取购物车中点击的商品数量
 	var num = $(obj).prev().val();
 	num++;

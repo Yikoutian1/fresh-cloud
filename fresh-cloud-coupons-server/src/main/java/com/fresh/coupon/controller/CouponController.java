@@ -1,6 +1,8 @@
 package com.fresh.coupon.controller;
 
 import com.fresh.coupon.config.CouponConfig;
+import com.fresh.coupon.mapper.MemberQiangCouponMapper;
+import com.fresh.coupon.service.MemberQiangCouponService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,10 @@ public class CouponController {
     public RabbitTemplate rabbitTemplate;
     @Autowired
     public CouponConfig couponConfig;
+    @Autowired
+    public MemberQiangCouponService memberQiangCouponService;
     @RequestMapping(value = "/qiangCoupon",method ={RequestMethod.POST,RequestMethod.GET})
-    public Map<String,Object> CouponService( String uid, String cid) {
+    public Map<String,Object> CouponService( Integer uid, String cid) {
         Map<String, Object> map = new HashMap<>();
         if (!redisTemplate.hasKey(this.couponConfig.COUPON_CID_+cid)){
             map.put("msg","暂未该优惠卷相关的活动");
@@ -72,5 +76,15 @@ public class CouponController {
             map.put("msg","你已经领过了不要太贪心哟");
         }
         return map;
+    }
+
+    /**
+     * 通过uid查用户拥有的卷数量
+     * @param uid
+     * @return
+     */
+    @RequestMapping(value = "/getCouponByUid",method ={RequestMethod.POST,RequestMethod.GET})
+    public Map<String,Object> getCouponByUid(Integer uid){
+        return  this.memberQiangCouponService.getCouponByUid(uid);
     }
 }

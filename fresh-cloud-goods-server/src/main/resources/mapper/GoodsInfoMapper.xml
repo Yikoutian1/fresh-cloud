@@ -38,6 +38,10 @@
 			update goodsInfo set balance=balance-(select num from cartInfo where cno=#{item}) where gno = (select gno from cartInfo where cno=#{item});
 		</foreach>
 	</update>-->
+	<update id="updateGoodsNum">
+		update goodsinfo set `balance` = `balance` - #{param2}
+		where gno= #{param1}
+	</update>
 	
 	<update id="updateStore">
 		update goodsinfo set

@@ -49,6 +49,49 @@ public class CartInfoController {
         return service.update(cf);
     }
 
+    /**
+     * 根据购物车编号修该数量
+     * @param cno
+     * @param num
+     * @return
+     */
+    @PostMapping(value = "/updateCartNum")
+    public int updateCartNum(@RequestParam("cno") String cno ,@RequestParam("num") Integer num){
+        return service.updateCartNum(cno,num);
+    }
+
+    /**
+     * 通过session存购物车勾选的列表
+     * @param cnos
+     * @return
+     */
+    @PostMapping(value = "/addSessionCart")
+    public Map<String,Object> addSessionCart(@RequestParam("cnos") String cnos,HttpSession session ){
+        List<CartInfo> cartInfos = service.findByCnos(cnos.split(","));
+        session.setAttribute("cartInfos",cartInfos);
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        return map;
+    }
+    @PostMapping(value = "/getSessionCart")
+    public  List<CartInfo> getSessionCart(HttpSession session ){
+        List<CartInfo> cartInfos = (List<CartInfo>) session.getAttribute("cartInfos");
+        return cartInfos;
+    }
+
+    @PostMapping(value = "/deleteCartGoodsByCno")
+    public Map<String,Object> deleteCartGoodsByCno(@RequestParam("cno") String cno ){
+        Map<String,Object> map=new HashMap<>();
+        if (service.deleteByCno(cno)>0){
+            map.put("code",0);
+            map.put("msg","您的该商品已从购物车移除");
+        }else {
+            map.put("code",1);
+            map.put("mag","系统繁忙，请稍后再试");
+        }
+        return map;
+    }
+
     @PostMapping("/add")
     public Map<String, Object> add(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -92,7 +135,7 @@ public class CartInfoController {
         return service.delete(cno);
     }
 
-    @PostMapping("/findByCnos")
+    @PostMapping("/")
     public List<CartInfo> findByCnos(String cno) {
         return service.findByCnos(cno.split(","));
     }

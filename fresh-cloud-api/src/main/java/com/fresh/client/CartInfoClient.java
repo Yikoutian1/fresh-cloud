@@ -12,6 +12,17 @@ import java.util.Map;
 
 @FeignClient(value = "cart-server", configuration = ClientConfiguration.class)
 public interface CartInfoClient {
+   @PostMapping(value = "/cart/updateCartNum")
+    int updateCartNum( @RequestParam("cno") String cno ,@RequestParam("num") Integer num);
+
+    @PostMapping(value = "/cart/addSessionCart")
+   Map<String,Object> addSessionCart(@RequestParam("cnos") String cnos,HttpSession session );
+
+    @PostMapping(value = "/cart/getSessionCart")
+    List<CartInfo> getSessionCart(HttpSession session );
+
+    @PostMapping(value = "/cart/deleteCartGoodsByCno")
+     Map<String,Object> deleteCartGoodsByCno(@RequestParam("cno") String cno );
 
     @PostMapping("/cart/getInfo")
     List<Map<String, Object>> getInfo(HttpSession session);
@@ -29,7 +40,7 @@ public interface CartInfoClient {
     List<CartInfo> finds(HttpSession session);
 
     @PostMapping("/cart/decrease")
-    int decrease(@RequestParam String[] cno);
+    int decrease(@RequestParam String cno);
 
     @PostMapping("/cart/findByCnos")
     List<CartInfo> findByCnos(@RequestParam String cno);

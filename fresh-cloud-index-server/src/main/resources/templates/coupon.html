@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天天生鲜-我的卡包</title>
+    <link rel="short icon" href="images/copylogo.png">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/details.css">
+    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+</head>
+<body>
+<div id="login_info">
+    <!-- 头部  -->
+    <div class="header_con">
+        <div class="header">
+            <div class="welcome fl">欢迎来到天天生鲜</div>
+            <div class="fr">
+                <div class="login_info fl" v-if="onlogin">欢迎：<em>[ {{loginName}} ]</em></div>
+                <div class="login_btn fl" v-if="onlogin">
+                    <span> | </span> <a href="register">注册</a>
+                </div>
+                <div class="login_btn fl" v-if="outlogin">
+                    <a href="login">登录</a><span> | </span><a href="register">注册</a>
+                </div>
+                <div class="user_link fl">
+                    <!--<span> | </span><a href="user.html">用户中心</a>-->
+                    <span> | </span><a href="icart">我的购物车</a>
+                    <span> | </span><a href="iorder">我的订单</a>
+                    <span> | </span><a href="icoupon">我的卡包</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

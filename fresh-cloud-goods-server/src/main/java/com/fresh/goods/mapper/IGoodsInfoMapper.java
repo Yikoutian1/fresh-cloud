@@ -48,5 +48,7 @@ public interface IGoodsInfoMapper {
 	 * @return
 	 */
 	public int updateStore(String[] cno);
+
+	public int updateGoodsNum(Integer gno,Integer num);
 	
 }

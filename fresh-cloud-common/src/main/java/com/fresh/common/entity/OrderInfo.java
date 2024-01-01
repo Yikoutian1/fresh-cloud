@@ -1,6 +1,10 @@
 package com.fresh.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 订单表
@@ -8,12 +12,21 @@ import java.io.Serializable;
 public class OrderInfo implements Serializable{
 	private static final long serialVersionUID = 3234667992435869278L;
 	private String ono;
-	private String odate; // 下单日期
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date odate; // 下单日期
 	private String ano; // 收货地址
-	private String sdate; // 发货日期
-	private String rdate; // 收货日期
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sdate; // 发货日期
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date rdate; // 收货日期
 	private Integer status; // 订单状态
 	private Double price; // 订单总额
+	/**
+	 * 0 没开 1开了
+	 */
 	private Integer invoice; //  是否已开发票
 	
 	@Override
@@ -30,11 +43,11 @@ public class OrderInfo implements Serializable{
 		this.ono = ono;
 	}
 
-	public String getOdate() {
+	public Date getOdate() {
 		return odate;
 	}
 
-	public void setOdate(String odate) {
+	public void setOdate(Date odate) {
 		this.odate = odate;
 	}
 
@@ -46,19 +59,19 @@ public class OrderInfo implements Serializable{
 		this.ano = ano;
 	}
 
-	public String getSdate() {
+	public Date getSdate() {
 		return sdate;
 	}
 
-	public void setSdate(String sdate) {
+	public void setSdate(Date sdate) {
 		this.sdate = sdate;
 	}
 
-	public String getRdate() {
+	public Date getRdate() {
 		return rdate;
 	}
 
-	public void setRdate(String rdate) {
+	public void setRdate(Date rdate) {
 		this.rdate = rdate;
 	}
 
@@ -86,7 +99,7 @@ public class OrderInfo implements Serializable{
 		this.invoice = invoice;
 	}
 
-	public OrderInfo(String ono, String odate, String ano, String sdate, String rdate, Integer status, Double price,
+	public OrderInfo(String ono, Date odate, String ano, Date sdate, Date rdate, Integer status, Double price,
 			Integer invoice) {
 		super();
 		this.ono = ono;

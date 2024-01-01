@@ -1,6 +1,7 @@
 package com.fresh.order.mapper;
 
 
+import com.fresh.common.entity.OrderItemInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
@@ -10,8 +11,8 @@ public interface IOrderItemInfoMapper {
 
 	/**
 	 * 添加订单详细
-	 * @param map
+	 * @param orderItemInfo
 	 * @return
 	 */
-	public int add(Map<String, Object> map);
+	public int add(OrderItemInfo orderItemInfo);
 }

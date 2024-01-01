@@ -5,6 +5,6 @@
 <!--  对应接口的全路径 -->
 <mapper namespace="com.fresh.order.mapper.IOrderInfoMapper">
 	<insert id="add" parameterType="com.fresh.common.entity.OrderInfo">
-		insert into orderInfo values(#{ono}, now(), #{ano},null, null, 1, #{price}, 0);
+		insert into orderInfo values(#{ono}, now(), #{ano} ,null, null, 1, #{price}, 0);
 	</insert>
 </mapper>

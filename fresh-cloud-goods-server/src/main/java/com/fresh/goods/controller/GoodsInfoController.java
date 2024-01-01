@@ -51,6 +51,10 @@ public class GoodsInfoController  {
 		}
 		return map;
 	}
+	@PostMapping("/updateGoodsNum")
+	public  int updateGoodsNum(@RequestParam("gno") Integer gno, @RequestParam("num") Integer num){
+		return service.updateGoodsNum(gno,num);
+	}
 
 	@PostMapping("/addGood")
 	public int addGood(@RequestParam("pic")MultipartFile[] pics, HttpServletRequest request) {

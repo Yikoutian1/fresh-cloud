@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @program: fresh-cloud
  * @description: 订单控制器
@@ -21,8 +23,8 @@ public class OrderInfoController{
     private IOrderService service;
 
     @PostMapping("/add")
-    public int add(OrderInfo of) {
-        return service.add(of);
+    public int add(OrderInfo of, HttpSession session) {
+        return service.add(of,session);
     }
 
     @GetMapping("/as")
