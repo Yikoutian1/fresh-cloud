@@ -2,6 +2,7 @@ package com.fresh.coupon.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fresh.common.entity.Coupon;
 import com.fresh.common.entity.MemberInfo;
 import com.fresh.common.entity.MemberQiangCoupon;
 import com.fresh.common.model.CouponModel;
@@ -78,6 +79,30 @@ public class MemberQiangCouponServiceImpl extends ServiceImpl<MemberQiangCouponM
         });
         map.put("data",modelList);
         return map;
+    }
+
+    @Override
+    public Map<String, Object> selectFirstCoupon() {
+        Map<String,Object> map=new HashMap<>();
+
+        Coupon coupon = this.memberQiangCouponMapper.selectFirstCoupon();
+        long start = coupon.getStart().getTime();
+        long date=new Date().getTime();
+        long end = coupon.getEnd().getTime();
+        if (date>start&&date<end){
+            map.put("data",coupon);
+            map.put("code",1); //活动已开始
+            return map;
+        }
+        if (date<start){
+            map.put("data",coupon);
+            map.put("code",2); //活动未开始
+            return map;
+        }
+        map.put("code",0); //暂无活动
+        return map;
+
+
     }
 
 

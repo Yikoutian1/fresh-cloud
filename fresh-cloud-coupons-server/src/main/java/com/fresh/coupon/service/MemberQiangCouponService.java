@@ -18,5 +18,5 @@ import java.util.Map;
 public interface MemberQiangCouponService extends IService<MemberQiangCoupon> {
     void addMemberQiangCoupon(Map<String,Object> msg);
     Map<String,Object> getCouponByUid(HttpSession session);
-
+    Map<String,Object> selectFirstCoupon();
 }
