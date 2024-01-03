@@ -12,14 +12,17 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/order.css">
     <script src="js/checklogin.js"></script>
-    <script type="text/javascript" src='js/addr.js'></script>
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/axios.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 
 <body>
 <div id="app">
+
     <!-- 头部  -->
     <div class="header_con">
         <div class="header">
@@ -41,6 +44,22 @@
             </div>
         </div>
     </div>
+    <div style="width: 100%; display: inline-block; " v-if="CouponStatus===2">
+        <el-statistic :value="deadline2"  @finish="hilarity" time-indices :title="info" >
+            <template slot="suffix">
+                抢卷活动即将开始
+            </template>
+        </el-statistic>
+    </div>
+    <div style="width: 100%; display: inline-block; " v-if="CouponStatus===1">
+        <el-statistic  :title="info">
+            <template slot="suffix">
+                抢卷活动进行中
+                <el-button @click="qiangCoupon">点击抢卷</el-button>
+            </template>
+        </el-statistic>
+    </div>
+
 
     <!-- 搜素框 -->
     <div class="search_bar clearfix">
@@ -100,6 +119,7 @@
         </div>
     </div>
 
+
     <!-- 商品展示 -->
     <div class="list_model" v-for="type in types">
         <div class="list_title clearfix">
@@ -133,18 +153,22 @@
     <p>电话：0734-8355998 湘ICP备16015987号-1</p>
 </div>
 
-<script type="text/javascript" th:src="@{js/jquery-3.4.1.min.js}"></script>
 <script type="text/javascript" th:src="@{js/jquery-ui.min.js}"></script>
 <script type="text/javascript" th:src="@{js/slide.js}"></script>
-<script type="text/javascript" th:src="@{js/vue.js}"></script>
-<script type="text/javascript" th:src="@{js/axios.js}"></script>
+
 <script>
     let vm = new Vue({
         el: "#app", // 对应div的id，即这个vue的作用域
         data: {
             onlogin: false,
             outlogin: true,
+            deadline2: null,
+            deadline: null,
+            CouponStatus:0, //优惠卷状态 0 未开始 1 一开始 2 未开始
             loginName: "匿名",
+            limit:"",
+            money:"",
+            info:"",
             goods: {  // 商品信息
             },
             types: { // 商品类型信息
@@ -152,7 +176,37 @@
             goodsCount: 0,
             carts: {} // 购物车信息
         },
-        methods: {},
+        methods: {
+            //时间到
+            hilarity() {
+                this.CouponStatus=1
+            },
+            qiangCoupon(){
+                axios.post("/coupon/qiangCoupon").then(res=>{
+                    this.$message({
+                        message: res.data.msg,
+                        type: 'info'
+                    });
+                })
+            },
+            //查询活动剩余时间
+            selectFirstCoupon(){
+                axios.post("/coupon/selectFirstCoupon").then(res=>{
+                    if (res.data.code==2){
+                        this.info="🎉 满"+res.data.data.limit+"减"+res.data.data.money+"的优惠卷发放🎉"
+                        var date = new Date(res.data.data.start+"");
+                        this.deadline2=date.getTime()
+                        this.CouponStatus=2
+                        // this.CouponStatus=1
+                    }else if (res.data.code==1){
+                        this.info="🎉 满"+res.data.data.limit+"减"+res.data.data.money+"的优惠卷发放🎉"
+                        this.CouponStatus=1
+                    }else{
+                        this.CouponStatus=0
+                    }
+                })
+            }
+        },
         mounted: function () { //数据挂载之前，相当于jquery中的$(function(){})，页面加载完成
             // 同时发送多个请求
             axios.all([checkLogin(), getGoodsInfo()])
@@ -173,10 +227,11 @@
                     })*/
                     this.goods = fn2.data.goods;
                     this.types = fn2.data.types;
-                }))
-        }
-    })
+                })),
+            this.selectFirstCoupon()
+        },
 
+    })
     // 检查登录的方法
     function checkLogin() {
         return axios.get("/member/check");

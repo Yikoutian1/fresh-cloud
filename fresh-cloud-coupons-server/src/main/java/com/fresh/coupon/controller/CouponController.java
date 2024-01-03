@@ -32,6 +32,7 @@ public class CouponController {
     public CouponConfig couponConfig;
     @Autowired
     public MemberQiangCouponService memberQiangCouponService;
+
     @RequestMapping(value = "/qiangCoupon",method ={RequestMethod.POST,RequestMethod.GET})
     public Map<String,Object> CouponService( Integer uid, String cid) {
         Map<String, Object> map = new HashMap<>();
@@ -84,8 +85,13 @@ public class CouponController {
      * @param session
      * @return
      */
+
     @RequestMapping(value = "/getCouponByUid",method ={RequestMethod.POST,RequestMethod.GET})
     public Map<String,Object> getCouponByUid(HttpSession session){
         return  this.memberQiangCouponService.getCouponByUid(session);
+    }
+    @RequestMapping(value = "/selectFirstCoupon",method ={RequestMethod.POST,RequestMethod.GET})
+    public Map<String,Object> selectFirstCoupon(){
+        return this.memberQiangCouponService.selectFirstCoupon();
     }
 }
