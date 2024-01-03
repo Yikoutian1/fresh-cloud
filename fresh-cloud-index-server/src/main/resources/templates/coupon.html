@@ -3,14 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>天天生鲜-我的卡包</title>
-    <link rel="short icon" href="images/copylogo.png">
+    <link rel="shortcut icon" href="images/logo1.png">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/details.css">
-    <script src="js/jquery-1.9.1.js"></script>
+    <link rel="stylesheet" href="css/cart.css">
+
+    <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/axios.js"></script>
+    <script src="js/car.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
+<style>
+    body,html,#app {
+        width: 1200px;
+        margin: auto;
+    }
+</style>
 <body>
 <div id="login_info">
     <!-- 头部  -->
@@ -22,9 +33,6 @@
                 <div class="login_btn fl" v-if="onlogin">
                     <span> | </span> <a href="register">注册</a>
                 </div>
-                <div class="login_btn fl" v-if="outlogin">
-                    <a href="login">登录</a><span> | </span><a href="register">注册</a>
-                </div>
                 <div class="user_link fl">
                     <!--<span> | </span><a href="user.html">用户中心</a>-->
                     <span> | </span><a href="icart">我的购物车</a>
@@ -34,6 +42,149 @@
             </div>
         </div>
     </div>
+    <div id="app">
+        <div >
+            <template>
+                <el-tabs v-model="activeName" @tab-click="handleClick" type="border-card">
+                    <el-tab-pane label="未使用" name="first">
+                        <div v-for="v in MemberHaveCouponList" style="display: inline-block ;cursor: pointer;background-color: rgb(222,91,58);border-radius: 3%;margin-right:60px;margin-top: 10px ">
+                            <div style="width: 500px ;height: 200px;margin: 5px;border:1px #ddd solid;display: flex;
+                                        overflow: hidden;color: white;font-family: 楷体;">
+                                <div style="margin-top: 20px ;margin-left:10px;font-size: 50px;width: 100px">
+                                    <span> 优 <br> 惠 <br> 卷</span>
+                                </div>
+                                <div style="margin-top: 20px; width: 300px">
+                                    <span style="font-size: 80px">{{v.coupon.money}}</span>
+                                    <span style="font-size: 20px">元</span>
+                                    <br>
+                                    <span style="font-size: 20px">全场满{{v.coupon.limit}}元可用</span>
+                                    <br>
+                                    <span style="font-size: 20px">有效期至{{v.coupon.end}}</span>
+                                    <br>
+                                    <span style="font-size: 20px">{{v.coupon.desc}}</span>
+                                </div>
+                                <div style="margin-top: 80px ;margin-left:10px;font-size: 20px;width: 100px">
+                                        <a href="/" style="color: navajowhite">去使用</a>
+                                </div>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="已使用" name="second" >
+                        <div v-for="v in MemberApplyCouponList" style="display: inline-block ;cursor: pointer">
+                            <div style="width: 500px ;height: 200px;margin: 5px;border:1px #ddd solid;display: flex;
+                                        overflow: hidden;color: #a8a8a8;font-family: 楷体; background-color: #ffffff">
+                                <div style="margin-top: 20px ;margin-left:10px;font-size: 50px;width: 100px">
+                                    <span> 优 <br> 惠 <br> 卷</span>
+                                </div>
+                                <div style="margin-top: 20px;">
+                                    <span style="font-size: 80px">{{v.coupon.money}}</span>
+                                    <span style="font-size: 20px">元</span>
+                                    <br>
+                                    <span style="font-size: 20px">全场满{{v.coupon.limit}}元可用</span>
+                                    <br>
+                                    <span style="font-size: 20px">有效期至{{v.coupon.end}}</span>
+                                    <br>
+                                    <span style="font-size: 20px">{{v.coupon.desc}}</span>
+
+                                </div>
+                                <div style="margin-top: 80px ;margin-left:10px;font-size: 20px;width: 100px">
+                                    <span>已使用</span>
+                                </div>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="已过期" name="third">
+                        <div v-for="v in MemberOverdueCouponList" style="display: inline-block ;cursor: pointer;" >
+                            <div style="width: 500px ;height: 200px;margin: 5px;border:1px #ddd solid;display: flex;
+                                        overflow: hidden;color: #a8a8a8;font-family: 楷体; background-color:  #ffffff ">
+                                <div style="margin-top: 20px ;margin-left:10px;font-size: 50px;width: 100px">
+                                    <span> 优 <br> 惠 <br> 卷</span>
+                                </div>
+                                <div style="margin-top: 20px;">
+                                    <span style="font-size: 80px">{{v.coupon.money}}</span>
+                                    <span style="font-size: 20px">元</span>
+                                    <br>
+                                    <span style="font-size: 20px">全场满{{v.coupon.limit}}元可用</span>
+                                    <br>
+                                    <span style="font-size: 20px">有效期至{{v.coupon.end}}</span>
+                                    <br>
+                                    <span style="font-size: 20px">{{v.coupon.desc}}</span>
+
+                                </div>
+                                <div style="margin-top: 80px ;margin-left:10px;font-size: 20px;width: 100px">
+                                    <span>已失效</span>
+                                </div>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </template>
+        </div>
+
+    </div>
 </div>
 </body>
+<script>
+    new Vue({
+        el: "#login_info",
+        data() {
+            return {
+                activeName: 'first',
+                MemberHaveCouponList: [] ,//未使用
+                MemberOverdueCouponList: [], //已过期
+                MemberApplyCouponList: [],// 已使用
+                onlogin: false,
+                outlogin: true,
+                loginName: "匿名",
+                loginId:"",
+                carts:[],
+                goodsCount: 0
+            }
+        },
+        methods: {
+            isMemberLogin(){
+                axios({
+                    url:"/member/check",
+                    method:"get"
+                }).then(result => {
+                    if (result.data.member) { // 说明登录了
+                        this.onlogin = true;
+                        this.outlogin = false;
+                        this.loginName = result.data.member.nickName;
+                        this.loginId = result.data.member.mno;
+                        if (result.data.carts) {
+                            this.carts = result.data.carts;
+                            this.goodsCount = result.data.carts.length;
+                        }
+                    } else { // 说明没有登录
+                        this.onlogin = false;
+                        this.outlogin = true;
+                    }
+                })
+            },
+            handleClick(tab, event) {
+                // console.log(tab, event);
+            },
+            findCouponByMid() {
+                axios.post("/coupon/getCouponByUid").then(res => {
+                    res.data.data.map(result => {
+                        if (result.status == 0) {
+                            this.MemberHaveCouponList.push(result)
+                        } else if (result.status == 1) {
+                            this.MemberApplyCouponList.push(result)
+                        } else {
+                            this.MemberOverdueCouponList.push(result)
+                        }
+                    })
+                })
+            }
+        },
+        mounted() {
+            this.findCouponByMid(),
+                this.isMemberLogin()
+        }
+    })
+</script>
+
+
 </html>

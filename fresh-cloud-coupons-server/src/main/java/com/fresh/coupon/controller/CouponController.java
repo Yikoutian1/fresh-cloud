@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -80,11 +81,11 @@ public class CouponController {
 
     /**
      * 通过uid查用户拥有的卷数量
-     * @param uid
+     * @param session
      * @return
      */
     @RequestMapping(value = "/getCouponByUid",method ={RequestMethod.POST,RequestMethod.GET})
-    public Map<String,Object> getCouponByUid(Integer uid){
-        return  this.memberQiangCouponService.getCouponByUid(uid);
+    public Map<String,Object> getCouponByUid(HttpSession session){
+        return  this.memberQiangCouponService.getCouponByUid(session);
     }
 }

@@ -2,7 +2,9 @@ package com.fresh.goods.service;
 
 
 import com.fresh.common.entity.GoodsInfo;
+import com.fresh.common.model.GoodModel;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +53,7 @@ public interface IGoodsInfoService {
 	 * @return
 	 */
 	public int updateStore(String[] cno);
+	public List<GoodModel> addSessionGoods(Integer gno, Integer nums, HttpSession session);
 
 	public int updateGoodsNum(Integer gno,Integer num);
 }

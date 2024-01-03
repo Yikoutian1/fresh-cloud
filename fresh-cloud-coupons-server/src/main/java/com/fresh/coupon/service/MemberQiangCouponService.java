@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.fresh.common.entity.MemberQiangCoupon;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,6 @@ import java.util.Map;
 
 public interface MemberQiangCouponService extends IService<MemberQiangCoupon> {
     void addMemberQiangCoupon(Map<String,Object> msg);
-    Map<String,Object> getCouponByUid(Integer uid);
+    Map<String,Object> getCouponByUid(HttpSession session);
 
 }

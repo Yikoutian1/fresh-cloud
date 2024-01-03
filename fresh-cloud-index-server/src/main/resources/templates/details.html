@@ -27,6 +27,7 @@
 	                   <!--<span> | </span><a href="user.html">用户中心</a>-->
 	                   <span> | </span><a href="icart">我的购物车</a>
 	                   <span> | </span><a href="iorder">我的订单</a>
+					 <span> | </span><a href="icoupon">我的卡包</a>
 				</div>
 			</div>  
 	   	</div>
@@ -106,7 +107,7 @@
 			</div>
 			<div class="total">总价：<em>{{goods.price * nums}}</em>元</div>
 			<div class="operate_btn">
-				<a href="javascript:void(0);" class="buy_btn" id="buy_btn">立即购买</a>
+				<a href="javascript:void(0);" class="buy_btn" id="buy_btn" @click="JumpOrder">立即购买</a>
 				<a href="javascript:void(0);" class="add_cart" id="add_cart" @click="addCart()">加入购物车</a>				
 			</div>
         </div>
@@ -175,6 +176,18 @@ let vm = new Vue({
 		}
 	},
 	methods: {
+		JumpOrder(){
+			var param=new URLSearchParams();
+			param.append("gno",this.goods.gno)
+			param.append("nums",this.nums)
+			axios.post("/goods/addSessionGoods",param).then(res=>{
+				if (res.data.code==0){
+					setTimeout(() => {
+						window.location.href = 'iorder';
+					}, 1500); // 1500 milliseconds = 1.5 seconds
+				}
+			})
+		},
 		addNum: function(num) {
 			if (num == -1 && this.nums == 1) { // 只选了一件，不能再减了
 				return;

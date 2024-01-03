@@ -3,6 +3,7 @@ package com.fresh.goods.service.impl;
 
 import com.fresh.common.entity.GoodsInfo;
 import com.fresh.common.entity.GoodsType;
+import com.fresh.common.model.GoodModel;
 import com.fresh.common.util.StringUtil;
 import com.fresh.goods.mapper.IGoodsInfoMapper;
 import com.fresh.goods.mapper.IGoodsTypeMapper;
@@ -12,6 +13,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +81,23 @@ public class GoodsInfoServiceImpl implements IGoodsInfoService {
 	public int updateStore(String[] cno) {
 		int  result = mapper.updateStore(cno);
 		return result;
+	}
+
+	@Override
+	public List<GoodModel> addSessionGoods(Integer gno, Integer nums, HttpSession session) {
+		GoodsInfo byGno = mapper.findByGno(gno);
+		GoodModel goodModel=new GoodModel();
+		goodModel.setGno(gno);
+		goodModel.setNum(nums);
+		goodModel.setGname(byGno.getGname());
+		goodModel.setPics(byGno.getPics());
+		goodModel.setPrice(byGno.getPrice());
+		goodModel.setUnit(byGno.getUnit());
+		goodModel.setWeight(byGno.getWeight());
+		List<GoodModel> goodModelList=new ArrayList<>();
+		goodModelList.add(goodModel);
+		return goodModelList;
+
 	}
 
 	@Override

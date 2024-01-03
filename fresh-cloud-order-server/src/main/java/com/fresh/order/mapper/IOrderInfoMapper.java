@@ -13,4 +13,6 @@ public interface IOrderInfoMapper {
 	 * @return
 	 */
 	public int add(OrderInfo of);
+
+	public int addOrder(OrderInfo of);
 }

@@ -3,6 +3,7 @@ package com.fresh.order.service;
 import com.fresh.common.entity.OrderInfo;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * @program: yc-fresh-cloud
@@ -14,5 +15,6 @@ public interface IOrderService {
      * @param of
      * @return
      */
-    public int add(OrderInfo of, HttpSession session);
+    public Map<String,Object> add(OrderInfo of, HttpSession session);
+
 }

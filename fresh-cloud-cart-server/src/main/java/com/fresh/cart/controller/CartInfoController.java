@@ -3,6 +3,7 @@ package com.fresh.cart.controller;
 import com.fresh.cart.service.ICartInfoService;
 import com.fresh.common.entity.CartInfo;
 import com.fresh.common.entity.MemberInfo;
+import com.fresh.common.model.GoodModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,9 +75,13 @@ public class CartInfoController {
         return map;
     }
     @PostMapping(value = "/getSessionCart")
-    public  List<CartInfo> getSessionCart(HttpSession session ){
-        List<CartInfo> cartInfos = (List<CartInfo>) session.getAttribute("cartInfos");
-        return cartInfos;
+    public  List getSessionCart(HttpSession session ){
+        if ( session.getAttribute("orderInfos")!=null){
+            return (List<GoodModel>) session.getAttribute("orderInfos");
+        }else {
+            List<CartInfo> cartInfos = (List<CartInfo>) session.getAttribute("cartInfos");
+            return cartInfos;
+        }
     }
 
     @PostMapping(value = "/deleteCartGoodsByCno")

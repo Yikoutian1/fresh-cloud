@@ -1,13 +1,16 @@
 package com.fresh.goods.controller;
 
 
+import com.fresh.common.entity.CartInfo;
 import com.fresh.common.entity.GoodsInfo;
+import com.fresh.common.model.GoodModel;
 import com.fresh.goods.service.IGoodsInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -56,6 +59,20 @@ public class GoodsInfoController  {
 		return service.updateGoodsNum(gno,num);
 	}
 
+	/**
+	 * 直接下单
+	 * @param gno
+	 * @param session
+	 * @return
+	 */
+	@PostMapping(value = "/addSessionGoods")
+	public Map<String,Object> addSessionGoods(@RequestParam("gno") Integer gno,@RequestParam("nums") Integer nums, HttpSession session ){
+		List<GoodModel> goodModelList = service.addSessionGoods(gno, nums, session);
+		session.setAttribute("orderInfos",goodModelList);
+		Map<String,Object> map=new HashMap<>();
+		map.put("code",0);
+		return map;
+	}
 	@PostMapping("/addGood")
 	public int addGood(@RequestParam("pic")MultipartFile[] pics, HttpServletRequest request) {
 		GoodsInfo gf = new GoodsInfo();

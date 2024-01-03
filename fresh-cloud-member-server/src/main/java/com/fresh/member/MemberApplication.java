@@ -21,7 +21,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @ComponentScan(basePackages ={"com.fresh"})
 @MapperScan(basePackages = {"com.fresh.member"})
 public class MemberApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MemberApplication.class,args);
     }

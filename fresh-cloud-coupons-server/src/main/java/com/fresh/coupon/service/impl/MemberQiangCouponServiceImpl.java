@@ -2,6 +2,7 @@ package com.fresh.coupon.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fresh.common.entity.MemberInfo;
 import com.fresh.common.entity.MemberQiangCoupon;
 import com.fresh.common.model.CouponModel;
 import com.fresh.coupon.mapper.MemberQiangCouponMapper;
@@ -18,10 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 /**
  * @program: fresh-cloud
@@ -54,7 +53,9 @@ public class MemberQiangCouponServiceImpl extends ServiceImpl<MemberQiangCouponM
     }
 
     @Override
-    public Map<String, Object> getCouponByUid(Integer uid) {
+    public Map<String, Object> getCouponByUid(HttpSession session) {
+        MemberInfo member = (MemberInfo) session.getAttribute("loginMember");
+        Integer uid=member.getMno();
         Map<String, Object> map = new HashMap<>();
         LambdaQueryWrapper<MemberQiangCoupon> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(MemberQiangCoupon::getUid,uid);
@@ -67,10 +68,17 @@ public class MemberQiangCouponServiceImpl extends ServiceImpl<MemberQiangCouponM
 
             Integer cid = result.getCid();
             couponModel.setCoupon(couponService.getCouponInfoByCid(cid));
+            Date date=new Date();
+            long nowTime = date.getTime();
+            long endTime = couponModel.getCoupon().getEnd().getTime();
+            if (nowTime>endTime){
+                this.memberQiangCouponMapper.updateCouponStatus(uid,cid,2);
+            }
             modelList.add(couponModel);
         });
         map.put("data",modelList);
         return map;
     }
+
 
 }

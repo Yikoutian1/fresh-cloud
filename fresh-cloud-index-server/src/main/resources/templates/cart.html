@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/cart.css">
     <!-- 引入样式 -->
-
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div id="login_info">
@@ -51,7 +55,7 @@
 </div>
 
 <!-- 购物车 -->
-<div class="cart_con" id="app">
+<div class="cart_con" id="app" v-cloak>
     <h2 class="total_count">全部商品<em id="goods_nums"></em></h2>
     <div class="cart_list_th clearfix">
         <ul>
@@ -111,51 +115,7 @@
 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script type="text/javascript">
-    // $(function () {
-    //     $.post("/cart/finds", null, function (data) {
-    //         $("#show_count").text(data.length);
-    //         var total = 0;
-    //         var str = '';
-    //         // $.each(data, function (index, item) {
-    //         //     str += '<ul><li class="col01"><input type="checkbox" checked value="' + item.cno + '"></li><li class="col02"><img src="../../' + item.pics.split(";")[0] + '"></li>';
-    //         //     str += '<li class="col03">' + item.gname + '<br><em>' + item.weight + '/' + item.unit + '</em></li><li class="col04">' + item.weight + '</li><li class="col05">' + item.price.toFixed(2) + '</li>';
-    //         //     str += '<li class="col06"><div class="num_add"><a href="javascript:void(0)" onclick="lost(this, ' + item.cno + ')" class="minus fl">-</a>';
-    //         //     str += '<input type="text" value="' + item.num + '" class="num_show fl"><a href="javascript:void(0)" onclick="add(this, ' + item.cno + ')" class="add fl">+</a>';
-    //         //     str += '</div></li><li class="col07">' + (item.num * item.price).toFixed(2) + '</li><li class="col08"><a href="javascript:;" onclick="delGoods(this, ' + item.cno + ')">删除</a></li></ul>';
-    //         //     total += item.num;
-    //         // });
-    //
-    //         $("#goods_nums").text(total);
-    //         $("#cart_infos").append($(str));
-    //         productCount();
-    //
-    //         var checkboxs = $("#cart_infos input[type='checkbox']");
-    //         var len = checkboxs.length;
-    //         for (var i = 0; i < len; i++) {
-    //             checkboxs[i].onclick = function () {
-    //                 productCount();
-    //                 for (var j = 0; j < len; j++) {
-    //                     if (!checkboxs[j].checked) {
-    //                         $("#all").prop("checked", false);
-    //                         return;
-    //                     }
-    //                 }
-    //                 $("#all").prop("checked", true);
-    //             }
-    //         }
-    //         $("#all").prop("checked", true);
-    //     }, 'json');
-    // })
 
-    // function checkAll(val) {
-    //     $("#cart_infos input[type='checkbox']").each(function () {
-    //         $(this).prop("checked", val);
-    //     });
-    // }
-
-
-</script>
 <script>
     var v = new Vue(
         {
