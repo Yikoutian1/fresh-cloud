@@ -1,20 +1,19 @@
 package com.fresh.system.mapper;
 
-import com.fresh.system.domain.Orderinfo;
-
 import java.util.List;
+
+import com.fresh.system.domain.Orderinfo;
 
 /**
  * 订单信息Mapper接口
- * 
+ *
  * @author calyee
- * @date 2023-12-26
+ * @date 2024-01-03
  */
-public interface OrderinfoMapper 
-{
+public interface OrderinfoMapper {
     /**
      * 查询订单信息
-     * 
+     *
      * @param ono 订单信息主键
      * @return 订单信息
      */
@@ -22,7 +21,7 @@ public interface OrderinfoMapper
 
     /**
      * 查询订单信息列表
-     * 
+     *
      * @param orderinfo 订单信息
      * @return 订单信息集合
      */
@@ -30,7 +29,7 @@ public interface OrderinfoMapper
 
     /**
      * 新增订单信息
-     * 
+     *
      * @param orderinfo 订单信息
      * @return 结果
      */
@@ -38,7 +37,7 @@ public interface OrderinfoMapper
 
     /**
      * 修改订单信息
-     * 
+     *
      * @param orderinfo 订单信息
      * @return 结果
      */
@@ -46,7 +45,7 @@ public interface OrderinfoMapper
 
     /**
      * 删除订单信息
-     * 
+     *
      * @param ono 订单信息主键
      * @return 结果
      */
@@ -54,7 +53,7 @@ public interface OrderinfoMapper
 
     /**
      * 批量删除订单信息
-     * 
+     *
      * @param onos 需要删除的数据主键集合
      * @return 结果
      */

@@ -1,4 +1,4 @@
-package com.fresh.system.domain;
+package com.fresh.system.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fresh.common.annotation.Excel;
@@ -6,17 +6,17 @@ import com.fresh.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 优惠券对象 coupon
- *
- * @author ruoyi
- * @date 2023-12-26
+ * @ClassName CouponVo
+ * @Description 优惠券Vo列表
+ * @Author Calyee
+ * @DATE 2024/01/03 003 18:09
+ * @Version 1.0
  */
-public class Coupon extends BaseEntity {
+
+public class CouponVo extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -95,6 +95,19 @@ public class Coupon extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @Excel(name = "优惠卷到期时间", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
     private Date end;
+
+    /**
+     * 使用的数据
+     */
+    private Integer useNum;
+
+    public Integer getUseNum() {
+        return useNum;
+    }
+
+    public void setUseNum(Integer useNum) {
+        this.useNum = useNum;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -188,6 +201,7 @@ public class Coupon extends BaseEntity {
                 .append("num", getNum())
                 .append("total", getTotal())
                 .append("limit", getLimit())
+                .append("useNum", getUseNum())
                 .append("start", getStart())
                 .append("end", getEnd())
                 .toString();

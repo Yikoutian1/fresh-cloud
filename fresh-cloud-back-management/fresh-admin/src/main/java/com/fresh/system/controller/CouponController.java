@@ -3,6 +3,7 @@ package com.fresh.system.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fresh.system.domain.vo.CouponVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ import com.fresh.common.core.page.TableDataInfo;
  * 优惠券Controller
  *
  * @author calyee
- * @date 2023-12-29
+ * @date 2024-01-03
  */
 @RestController
 @RequestMapping("/system/coupon")
@@ -41,7 +42,7 @@ public class CouponController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Coupon coupon) {
         startPage();
-        List<Coupon> list = couponService.selectCouponList(coupon);
+        List<CouponVo> list = couponService.selectCouponCardList(coupon);
         return getDataTable(list);
     }
 

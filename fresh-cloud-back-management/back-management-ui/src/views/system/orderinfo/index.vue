@@ -9,42 +9,50 @@
           placeholder="请选择下单时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="地址编号" prop="ano">
+      <el-form-item label="收货地址编号" prop="ano">
         <el-input
           v-model="queryParams.ano"
-          placeholder="请输入地址编号"
+          placeholder="请输入收货地址编号"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="下单日期?" prop="sdate">
+      <el-form-item label="发货日期" prop="sdate">
         <el-date-picker clearable
           v-model="queryParams.sdate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择下单日期?">
+          placeholder="请选择发货日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="预计送达时间?" prop="rdate">
+      <el-form-item label="收货日期" prop="rdate">
         <el-date-picker clearable
           v-model="queryParams.rdate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择预计送达时间?">
+          placeholder="请选择收货日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="总价" prop="price">
+      <el-form-item label="订单总额" prop="price">
         <el-input
           v-model="queryParams.price"
-          placeholder="请输入总价"
+          placeholder="请输入订单总额"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发票" prop="invoice">
+      <!-- <el-form-item label="优惠卷价格" prop="couponprice">
         <el-input
-          v-model="queryParams.invoice"
-          placeholder="请输入发票"
+          v-model="queryParams.couponprice"
+          placeholder="请输入优惠卷价格"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item> -->
+      <el-form-item label="卷后价格" prop="realprice">
+        <el-input
+          v-model="queryParams.realprice"
+          placeholder="请输入卷后价格"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -103,26 +111,29 @@
 
     <el-table v-loading="loading" :data="orderinfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="ono" />
+      <el-table-column label="订单编号" align="center" prop="ono" />
       <el-table-column label="下单时间" align="center" prop="odate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.odate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="地址编号" align="center" prop="ano" />
-      <el-table-column label="下单日期?" align="center" prop="sdate" width="180">
+      <el-table-column label="收货地址编号" align="center" prop="ano" />
+      <el-table-column label="发货日期" align="center" prop="sdate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.sdate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="预计送达时间?" align="center" prop="rdate" width="180">
+      <el-table-column label="收货日期" align="center" prop="rdate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.rdate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="订单状态" align="center" prop="status" />
-      <el-table-column label="总价" align="center" prop="price" />
-      <el-table-column label="发票" align="center" prop="invoice" />
+      <el-table-column label="订单总额" align="center" prop="price" />
+      <el-table-column label="是否已开发票" align="center" prop="invoice" />
+      <el-table-column label="是否使用优惠卷" align="center" prop="iscoupon" />
+      <el-table-column label="优惠卷价格" align="center" prop="couponprice" />
+      <el-table-column label="卷后价格" align="center" prop="realprice" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -142,7 +153,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -152,8 +163,8 @@
     />
 
     <!-- 添加或修改订单信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="160px">
         <el-form-item label="下单时间" prop="odate">
           <el-date-picker clearable
             v-model="form.odate"
@@ -162,30 +173,39 @@
             placeholder="请选择下单时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="地址编号" prop="ano">
-          <el-input v-model="form.ano" placeholder="请输入地址编号" />
+        <el-form-item label="收货地址编号" prop="ano">
+          <el-input v-model="form.ano" placeholder="请输入收货地址编号" />
         </el-form-item>
-        <el-form-item label="下单日期?" prop="sdate">
+        <el-form-item label="发货日期" prop="sdate">
           <el-date-picker clearable
             v-model="form.sdate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择下单日期?">
+            placeholder="请选择发货日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="预计送达时间?" prop="rdate">
+        <el-form-item label="收货日期" prop="rdate">
           <el-date-picker clearable
             v-model="form.rdate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择预计送达时间?">
+            placeholder="请选择收货日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="总价" prop="price">
-          <el-input v-model="form.price" placeholder="请输入总价" />
+        <el-form-item label="订单总额" prop="price">
+          <el-input v-model="form.price" placeholder="请输入订单总额" />
         </el-form-item>
-        <el-form-item label="发票" prop="invoice">
-          <el-input v-model="form.invoice" placeholder="请输入发票" />
+        <el-form-item label="是否已开发票" prop="invoice">
+          <el-input v-model="form.invoice" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="是否使用优惠卷" prop="iscoupon">
+          <el-input v-model="form.iscoupon" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="优惠卷价格" prop="couponprice">
+          <el-input v-model="form.couponprice" placeholder="请输入优惠卷价格" />
+        </el-form-item>
+        <el-form-item label="卷后价格" prop="realprice">
+          <el-input v-model="form.realprice" placeholder="请输入卷后价格" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -231,7 +251,10 @@ export default {
         rdate: null,
         status: null,
         price: null,
-        invoice: null
+        invoice: null,
+        iscoupon: null,
+        couponprice: null,
+        realprice: null
       },
       // 表单参数
       form: {},
@@ -268,7 +291,10 @@ export default {
         rdate: null,
         status: null,
         price: null,
-        invoice: null
+        invoice: null,
+        iscoupon: null,
+        couponprice: null,
+        realprice: null
       };
       this.resetForm("form");
     },

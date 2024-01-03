@@ -43,29 +43,37 @@ public class CouponSchedule {
     public void addMatchConditionCouponToRedis() {
         log.info("[CouponSchedule Start]");
         List<Coupon> couponList = couponMapper.getMatchConditionCouponList(matchConditionTime);
+        // 时间
+        Long judgeAddRedisNowTime = new Date().getTime();
         // log.info("[CouponSchedule] fresh time: {}, couponList: {}", matchConditionTime, couponList);
         for (Coupon coupon : couponList) {
-            // Redis中判断没有存在此优惠券
-            if (!redisTemplate.hasKey(StaticEnums.c_cid + coupon.getId())) {
-                // 空置零
-                if (coupon.getNum() == null) {
-                    coupon.setNum(0);
-                }
-                // 最外层唯一标识
-                String unique = StaticEnums.c_cid + coupon.getId();
-                // 如果数据库中此优惠券数量不为0
-                if (coupon.getNum() != 0) {
-                    // 存放数量
-                    redisTemplate.opsForHash().put(unique,
-                            StaticEnums.c_num, coupon.getNum());
-                    // 开始时间
-                    redisTemplate.opsForHash().put(unique,
-                            StaticEnums.start_time, coupon.getStart().getTime());
-                    // 结束时间
-                    redisTemplate.opsForHash().put(unique,
-                            StaticEnums.end_time, coupon.getEnd().getTime());
-                    log.info("[CouponSchedule Success], put coupon id:{}, num:{}, start time:{}, end time:{}.",
-                            coupon.getId(), coupon.getNum(), coupon.getStart().getTime(), coupon.getEnd().getTime());
+            Long judgeAddRedisEndTime = coupon.getEnd().getTime();
+            // 如果优惠券超过时间则不需要添加到缓存
+            if (judgeAddRedisNowTime > judgeAddRedisEndTime) {
+                break;
+            } else {
+                // Redis中判断没有存在此优惠券
+                if (!redisTemplate.hasKey(StaticEnums.c_cid + coupon.getId())) {
+                    // 空置零
+                    if (coupon.getNum() == null) {
+                        coupon.setNum(0);
+                    }
+                    // 最外层唯一标识
+                    String unique = StaticEnums.c_cid + coupon.getId();
+                    // 如果数据库中此优惠券数量不为0
+                    if (coupon.getNum() != 0) {
+                        // 存放数量
+                        redisTemplate.opsForHash().put(unique,
+                                StaticEnums.c_num, coupon.getNum());
+                        // 开始时间
+                        redisTemplate.opsForHash().put(unique,
+                                StaticEnums.start_time, coupon.getStart().getTime());
+                        // 结束时间
+                        redisTemplate.opsForHash().put(unique,
+                                StaticEnums.end_time, coupon.getEnd().getTime());
+                        log.info("[CouponSchedule Success], put coupon id:{}, num:{}, start time:{}, end time:{}.",
+                                coupon.getId(), coupon.getNum(), coupon.getStart().getTime(), coupon.getEnd().getTime());
+                    }
                 }
             }
         }
@@ -88,7 +96,7 @@ public class CouponSchedule {
             long nowTime = new Date().getTime();
             // 1. 活动还未过期,数量还有 -> 什么都不需要处理
             // 2. 活动还未过期,数量0   -> 数量原用缓存的数量,缓存删除
-            // 3. 活动已经过期,数量还有 -> 数量原用缓存的数量,缓存删除
+            // 3. 活动已经过期, 有 -> 数量原用缓存的数量,缓存删除
             // 4. 活动已经过期,数量0   -> 数量原用缓存的数量,缓存删除
             Coupon coupon = new Coupon();
             String id = couponKey.substring(StaticEnums.c_cid.length());

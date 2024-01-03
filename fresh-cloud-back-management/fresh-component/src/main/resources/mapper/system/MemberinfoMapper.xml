@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fresh.system.mapper.MemberinfoMapper">
-    
+
     <resultMap type="Memberinfo" id="MemberinfoResult">
-        <result property="mno"    column="mno"    />
-        <result property="nickName"    column="nickName"    />
-        <result property="realName"    column="realName"    />
-        <result property="pwd"    column="pwd"    />
-        <result property="tel"    column="tel"    />
-        <result property="email"    column="email"    />
-        <result property="photo"    column="photo"    />
-        <result property="regDate"    column="regDate"    />
-        <result property="status"    column="status"    />
+        <result property="mno" column="mno"/>
+        <result property="nickName" column="nickName"/>
+        <result property="realName" column="realName"/>
+        <result property="pwd" column="pwd"/>
+        <result property="tel" column="tel"/>
+        <result property="email" column="email"/>
+        <result property="photo" column="photo"/>
+        <result property="regDate" column="regDate"/>
+        <result property="status" column="status"/>
     </resultMap>
 
     <sql id="selectMemberinfoVo">
-        select mno, nickName, realName, pwd, tel, email, photo, regDate, status from memberinfo
+        select mno,
+               nickName,
+               realName,
+               pwd,
+               tel,
+               email,
+               photo,
+               regDate,
+               status
+        from memberinfo
     </sql>
 
     <select id="selectMemberinfoList" parameterType="Memberinfo" resultMap="MemberinfoResult">
         <include refid="selectMemberinfoVo"/>
-        <where>  
-            <if test="nickName != null  and nickName != ''"> and nickName like concat('%', #{nickName}, '%')</if>
-            <if test="realName != null  and realName != ''"> and realName like concat('%', #{realName}, '%')</if>
-            <if test="pwd != null  and pwd != ''"> and pwd = #{pwd}</if>
-            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
-            <if test="email != null  and email != ''"> and email = #{email}</if>
-            <if test="photo != null  and photo != ''"> and photo = #{photo}</if>
-            <if test="regDate != null "> and regDate = #{regDate}</if>
-            <if test="status != null "> and status = #{status}</if>
+        <where>
+            <if test="nickName != null  and nickName != ''">and nickName like concat('%', #{nickName}, '%')</if>
+            <if test="realName != null  and realName != ''">and realName like concat('%', #{realName}, '%')</if>
+            <if test="tel != null  and tel != ''">and tel = #{tel}</if>
+            <if test="email != null  and email != ''">and email = #{email}</if>
+            <if test="photo != null  and photo != ''">and photo = #{photo}</if>
+            <if test="regDate != null ">and regDate = #{regDate}</if>
+            <if test="status != null ">and status = #{status}</if>
         </where>
     </select>
-    
+
     <select id="selectMemberinfoByMno" parameterType="Long" resultMap="MemberinfoResult">
         <include refid="selectMemberinfoVo"/>
         where mno = #{mno}
     </select>
-        
+
     <insert id="insertMemberinfo" parameterType="Memberinfo" useGeneratedKeys="true" keyProperty="mno">
         insert into memberinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -50,25 +58,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="photo != null">photo,</if>
             <if test="regDate != null">regDate,</if>
             <if test="status != null">status,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="nickName != null and nickName != ''">#{nickName},</if>
             <if test="realName != null">#{realName},</if>
-            <if test="pwd != null and pwd != ''">#{pwd},</if>
+            <if test="pwd != null and pwd != ''">md5(#{pwd}),</if>
             <if test="tel != null and tel != ''">#{tel},</if>
             <if test="email != null and email != ''">#{email},</if>
             <if test="photo != null">#{photo},</if>
             <if test="regDate != null">#{regDate},</if>
             <if test="status != null">#{status},</if>
-         </trim>
+        </trim>
     </insert>
-
     <update id="updateMemberinfo" parameterType="Memberinfo">
         update memberinfo
         <trim prefix="SET" suffixOverrides=",">
             <if test="nickName != null and nickName != ''">nickName = #{nickName},</if>
             <if test="realName != null">realName = #{realName},</if>
-            <if test="pwd != null and pwd != ''">pwd = #{pwd},</if>
+            <if test="pwd != null and pwd != ''">pwd = md5(#{pwd}),</if>
             <if test="tel != null and tel != ''">tel = #{tel},</if>
             <if test="email != null and email != ''">email = #{email},</if>
             <if test="photo != null">photo = #{photo},</if>
@@ -79,11 +86,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteMemberinfoByMno" parameterType="Long">
-        delete from memberinfo where mno = #{mno}
+        delete
+        from memberinfo
+        where mno = #{mno}
     </delete>
 
     <delete id="deleteMemberinfoByMnos" parameterType="String">
-        delete from memberinfo where mno in 
+        delete from memberinfo where mno in
         <foreach item="mno" collection="array" open="(" separator="," close=")">
             #{mno}
         </foreach>
