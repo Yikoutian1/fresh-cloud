@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="aname != null and aname != ''">#{aname},</if>
-            <if test="pwd != null and pwd != ''">#{pwd},</if>
+            <if test="pwd != null and pwd != ''">md5(#{pwd}),</if>
             <if test="tel != null">#{tel},</if>
          </trim>
     </insert>
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update admininfo
         <trim prefix="SET" suffixOverrides=",">
             <if test="aname != null and aname != ''">aname = #{aname},</if>
-            <if test="pwd != null and pwd != ''">pwd = #{pwd},</if>
+            <if test="pwd != null and pwd != ''">pwd = md5(#{pwd}),</if>
             <if test="tel != null">tel = #{tel},</if>
         </trim>
         where aid = #{aid}

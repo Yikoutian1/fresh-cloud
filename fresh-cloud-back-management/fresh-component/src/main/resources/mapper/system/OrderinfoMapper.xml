@@ -13,22 +13,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status"    column="status"    />
         <result property="price"    column="price"    />
         <result property="invoice"    column="invoice"    />
+        <result property="iscoupon"    column="iscoupon"    />
+        <result property="couponprice"    column="couponprice"    />
+        <result property="realprice"    column="realprice"    />
     </resultMap>
 
     <sql id="selectOrderinfoVo">
-        select ono, odate, ano, sdate, rdate, status, price, invoice from orderinfo
+        select ono, odate, ano, sdate, rdate, status, price, invoice, iscoupon, couponprice, realprice from orderinfo
     </sql>
 
     <select id="selectOrderinfoList" parameterType="Orderinfo" resultMap="OrderinfoResult">
         <include refid="selectOrderinfoVo"/>
         <where>  
-            <if test="odate != null "> and odate = #{odate}</if>
+            <if test="odate != null "> and odate &gt;= #{odate}</if>
             <if test="ano != null  and ano != ''"> and ano = #{ano}</if>
-            <if test="sdate != null "> and sdate = #{sdate}</if>
-            <if test="rdate != null "> and rdate = #{rdate}</if>
+            <if test="sdate != null "> and sdate &gt;= #{sdate}</if>
+            <if test="rdate != null "> and rdate &lt;= #{rdate}</if>
             <if test="status != null "> and status = #{status}</if>
             <if test="price != null "> and price = #{price}</if>
             <if test="invoice != null "> and invoice = #{invoice}</if>
+            <if test="iscoupon != null "> and iscoupon = #{iscoupon}</if>
+            <if test="couponprice != null "> and couponprice = #{couponprice}</if>
+            <if test="realprice != null "> and realprice = #{realprice}</if>
         </where>
     </select>
     
@@ -48,6 +54,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">status,</if>
             <if test="price != null">price,</if>
             <if test="invoice != null">invoice,</if>
+            <if test="iscoupon != null">iscoupon,</if>
+            <if test="couponprice != null">couponprice,</if>
+            <if test="realprice != null">realprice,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="ono != null">#{ono},</if>
@@ -58,6 +67,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">#{status},</if>
             <if test="price != null">#{price},</if>
             <if test="invoice != null">#{invoice},</if>
+            <if test="iscoupon != null">#{iscoupon},</if>
+            <if test="couponprice != null">#{couponprice},</if>
+            <if test="realprice != null">#{realprice},</if>
          </trim>
     </insert>
 
@@ -71,6 +83,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">status = #{status},</if>
             <if test="price != null">price = #{price},</if>
             <if test="invoice != null">invoice = #{invoice},</if>
+            <if test="iscoupon != null">iscoupon = #{iscoupon},</if>
+            <if test="couponprice != null">couponprice = #{couponprice},</if>
+            <if test="realprice != null">realprice = #{realprice},</if>
         </trim>
         where ono = #{ono}
     </update>

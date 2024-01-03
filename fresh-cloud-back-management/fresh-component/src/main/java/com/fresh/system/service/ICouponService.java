@@ -3,6 +3,7 @@ package com.fresh.system.service;
 import java.util.List;
 
 import com.fresh.system.domain.Coupon;
+import com.fresh.system.domain.vo.CouponVo;
 
 /**
  * 优惠券Service接口
@@ -27,6 +28,13 @@ public interface ICouponService {
      */
     public List<Coupon> selectCouponList(Coupon coupon);
 
+    /**
+     * 查询优惠券列表
+     *
+     * @param coupon 优惠券
+     * @return 优惠券集合
+     */
+    public List<CouponVo> selectCouponCardList(Coupon coupon);
     /**
      * 新增优惠券
      *

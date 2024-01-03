@@ -3,6 +3,7 @@ package com.fresh.system.mapper;
 import java.util.List;
 
 import com.fresh.system.domain.Coupon;
+import com.fresh.system.domain.CouponCard;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -64,8 +65,16 @@ public interface CouponMapper {
 
     /**
      * 获取满足条件的优惠券信息
+     *
      * @return 结果
      */
 
     List<Coupon> getMatchConditionCouponList(@Param("time") Integer matchConditionTime);
+
+    /**
+     * 获取卡包数据(已经使用的)
+     * @return 结果
+     */
+
+    List<CouponCard> getCouponCards();
 }

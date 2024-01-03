@@ -1,14 +1,13 @@
 package com.fresh.system.service;
 
-import com.fresh.system.domain.Orderinfo;
-
 import java.util.List;
+import com.fresh.system.domain.Orderinfo;
 
 /**
  * 订单信息Service接口
  * 
  * @author calyee
- * @date 2023-12-26
+ * @date 2024-01-03
  */
 public interface IOrderinfoService 
 {

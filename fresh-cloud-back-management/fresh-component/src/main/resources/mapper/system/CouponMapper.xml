@@ -14,6 +14,7 @@
         <result property="start" column="start"/>
         <result property="end" column="end"/>
         <result property="num" column="num"/>
+        <result property="total" column="total"/>
     </resultMap>
 
     <sql id="selectCouponVo">
@@ -25,7 +26,8 @@
                `limit`,
                `start`,
                `end`,
-               num
+               num,
+               `total`
         from coupon
     </sql>
 
@@ -50,6 +52,12 @@
         <include refid="selectCouponVo"/>
         where <![CDATA[`start`< DATE_ADD(NOW(),INTERVAL ${time} HOUR)]]>
     </select>
+    <select id="getCouponCards" resultType="com.fresh.system.domain.CouponCard">
+        select count(cid) `sum`, uid, cid, num, status
+        from memberqiangcoupon
+        where status = 1
+        group by cid, uid, num, status
+    </select>
 
     <insert id="insertCoupon" parameterType="Coupon" useGeneratedKeys="true" keyProperty="id">
         insert into coupon
@@ -57,11 +65,12 @@
             <if test="title != null">title,</if>
             <if test="img != null">img,</if>
             <if test="money != null">money,</if>
-            <if test="desc != null">desc,</if>
-            <if test="limit != null">limit,</if>
-            <if test="start != null">start,</if>
-            <if test="end != null">end,</if>
+            <if test="desc != null">`desc`,</if>
+            <if test="limit != null">`limit`,</if>
+            <if test="start != null">`start`,</if>
+            <if test="end != null">`end`,</if>
             <if test="num != null">num,</if>
+            <if test="num != null">total,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null">#{title},</if>
@@ -71,6 +80,7 @@
             <if test="limit != null">#{limit},</if>
             <if test="start != null">#{start},</if>
             <if test="end != null">#{end},</if>
+            <if test="num != null">#{num},</if>
             <if test="num != null">#{num},</if>
         </trim>
     </insert>

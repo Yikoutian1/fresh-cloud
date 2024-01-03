@@ -131,18 +131,16 @@
       v-loading="loading"
       :data="couponList"
       @selection-change="handleSelectionChange"
+      border
+      style="width: 100%"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="" align="center" prop="id" />
+      <el-table-column label="优惠券编号" align="center" prop="id" fixed />
       <el-table-column label="优惠卷标题" align="center" prop="title" />
       <el-table-column label="优惠卷图片地址" align="center" prop="img" />
       <el-table-column label="优惠卷金额" align="center" prop="money" />
       <el-table-column label="优惠卷描述" align="center" prop="desc" />
-      <el-table-column
-        label="使用优惠券最低使用金额"
-        align="center"
-        prop="limit"
-      />
+      <el-table-column label="最低使用金额" align="center" prop="limit" />
       <el-table-column
         label="优惠卷开始时间"
         align="center"
@@ -162,10 +160,33 @@
         width="180"
       >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.end, "{y}-{m}-{d} {h}:{m}:{s}") }}</span>
+          <span v-if="parseTime(Date.now()) <= parseTime(scope.row.end)">
+            {{ parseTime(scope.row.end, "{y}-{m}-{d} {h}:{m}:{s}") }}
+          </span>
+          <el-tag v-else type="danger">优惠券已过期</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="数量" align="center" prop="num" />
+      <el-table-column label="发放总数" align="center" prop="total" />
+      <el-table-column label="剩余数量" align="center" prop="num" />
+      <el-table-column label="剩余百分比" align="center" width="160">
+        <template slot-scope="scope">
+          <el-progress
+            :percentage="(scope.row.num / scope.row.total).toFixed(2) * 100"
+            :color="customColors"
+          ></el-progress>
+        </template>
+      </el-table-column>
+      <el-table-column label="使用百分百" align="center" width="160">
+        <template slot-scope="scope">
+          <el-progress
+            :percentage="
+              (((scope.row.useNum * 100) / scope.row.total) * 100).toFixed(2) /
+              100
+            "
+            :color="customColors"
+          ></el-progress>
+        </template>
+      </el-table-column>
       <el-table-column
         label="操作"
         align="center"
@@ -215,11 +236,8 @@
         <el-form-item label="优惠卷描述" prop="desc">
           <el-input v-model="form.desc" placeholder="请输入优惠卷描述" />
         </el-form-item>
-        <el-form-item label="使用优惠券最低使用金额" prop="limit">
-          <el-input
-            v-model="form.limit"
-            placeholder="请输入使用优惠券最低使用金额"
-          />
+        <el-form-item label="最低使用金额" prop="limit">
+          <el-input v-model="form.limit" placeholder="请输入最低使用金额" />
         </el-form-item>
         <el-form-item label="优惠卷开始时间" prop="start">
           <el-date-picker
@@ -299,6 +317,16 @@ export default {
       form: {},
       // 表单校验
       rules: {},
+      // 进度条颜色
+      customColor: "#5cb87a",
+      customColors: [
+        { color: "#EB3324", percentage: 10 },
+        { color: "#D2E61F", percentage: 20 },
+        { color: "#e6a23c", percentage: 40 },
+        { color: "#F08650", percentage: 60 },
+        { color: "#1989fa", percentage: 80 },
+        { color: "#5cb87a", percentage: 100 },
+      ],
     };
   },
   created() {
@@ -410,6 +438,17 @@ export default {
         `coupon_${new Date().getTime()}.xlsx`
       );
     },
+    timeCompare(endtime) {
+      // let a = parseTime(endtime, "{y}{m}{d}{h}{m}{s}");
+      // let b = parseTime(new Date(), "{y}{m}{d}{h}{m}{s}");
+      let a = endtime.getTime();
+      let b = new Date().getTime();
+      // 结束小于现在时间则true
+      console.info("a=" + a + ",b=" + b);
+      if (a <= b) return true;
+      else return false;
+    },
   },
+  computed: {},
 };
 </script>
