@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fresh.system.domain.Coupon;
 import com.fresh.system.domain.CouponCard;
+import com.fresh.system.domain.vo.CouponMiddle;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -73,8 +74,13 @@ public interface CouponMapper {
 
     /**
      * 获取卡包数据(已经使用的)
+     *
      * @return 结果
      */
 
     List<CouponCard> getCouponCards();
+
+    List<Coupon> selectAll(@Param("time") Integer time);
+
+    List<CouponMiddle> selectByStatus(@Param("status") Integer status);
 }

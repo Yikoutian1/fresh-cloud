@@ -58,6 +58,18 @@
         where status = 1
         group by cid, uid, num, status
     </select>
+    <select id="selectAll" resultType="com.fresh.system.domain.Coupon">
+        <include refid="selectCouponVo"/>
+        where
+        <![CDATA[`start` >= DATE_SUB(NOW(),INTERVAL ${time} DAY) and `end` <= DATE_ADD(NOW(),INTERVAL ${time} DAY)]]>
+    </select>
+    <select id="selectByStatus" resultType="com.fresh.system.domain.vo.CouponMiddle">
+        select cid, count(`num`) as `countnum`
+        from memberqiangcoupon
+        where status = #{status}
+        group by cid
+    </select>
+
 
     <insert id="insertCoupon" parameterType="Coupon" useGeneratedKeys="true" keyProperty="id">
         insert into coupon

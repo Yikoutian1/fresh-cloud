@@ -112,4 +112,10 @@ public class CouponServiceImpl implements ICouponService {
     public int deleteCouponById(Long id) {
         return couponMapper.deleteCouponById(id);
     }
+
+    @Override
+    public List<Coupon> selectAll(Integer time) {
+        return couponMapper.selectAll(time);
+    }
+
 }

@@ -48,7 +48,7 @@ import javax.websocket.server.PathParam;
 @Controller
 public class WebSocketController {
 
-        @RequestMapping("/websocket/connectUser/{name}")
+    @RequestMapping("/websocket/connectUser/{name}")
     public String connectUser(@PathVariable("name") String name,
                               Model model) {
         try {

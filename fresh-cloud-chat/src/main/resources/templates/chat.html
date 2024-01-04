@@ -62,6 +62,7 @@
     <hr/>
     <div id="message" style="text-align: center;"></div>
     <input type="text" th:value="${username}" id="username" style="display: none"/>
+    <input type="text" th:value="${uid}" id="uid" style="display: none"/>
     <input type="text" th:value="${manager}" id="manager" style="display: none"/>
 
 
@@ -180,7 +181,7 @@
                     "message": this.textarea,
                     "username": this.currentUser,
                     "to": this.chooseUser,
-                    "url": this.webSocket.url
+                    "url": this.webSocket.url,
                 };
                 this.webSocket.send(JSON.stringify(message));
                 this.textarea = '';

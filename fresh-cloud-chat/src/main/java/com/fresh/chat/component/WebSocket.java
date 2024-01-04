@@ -327,6 +327,7 @@ public class WebSocket {
 //        String role = session.getRequestURI().toString();
         log.info("现在来连接的客户id：{},用户名: {}, 角色: {}", session.getId(), username, role);
         this.username = username;
+        log.info("[username]: {}", username);
         this.session = session;
         log.info("有新连接加入！ 当前在线人数" + onlineNumber);
         try {
@@ -412,18 +413,18 @@ public class WebSocket {
         for (WebSocket webSocket : all) {
             if (ToUserName.equals(webSocket.username)) {
                 webSocket.session.getAsyncRemote().sendText(message);
-                Record record = new Record();
-                record.setText(message);
-                // TODO 发送者id name
-                record.setUid(1);
-                record.setName("");
-
-                record.setReceive(ToUserName);
-                // TODO 管理员id
-                record.setObjId(1);
-                record.setSendTime(new Date());
-                // 插入聊天
-                recordService.insertRecord(record);
+//                Record record = new Record();
+//                record.setText(message);
+//                // TODO 发送者id name
+//                record.setUid(1);
+//                record.setName("");
+//
+//                record.setReceive(ToUserName);
+//                // TODO 管理员id
+//                record.setObjId(1);
+//                record.setSendTime(new Date());
+//                // 插入聊天
+//                recordService.insertRecord(record);
                 return;
             }
         }

@@ -32,7 +32,7 @@
                 <div class="login_btn fl" v-if="onlogin">
                     <span> | </span> <a href="register">注册</a>
                 </div>
-                <div class="login_btn fl"  v-if="outlogin" >
+                <div class="login_btn fl" v-if="outlogin">
                     <a href="login">登录</a><span> | </span><a href="register">注册</a>
                 </div>
                 <div class="user_link fl">
@@ -45,14 +45,14 @@
         </div>
     </div>
     <div style="width: 100%; display: inline-block; " v-if="CouponStatus===2">
-        <el-statistic :value="deadline2"  @finish="hilarity" time-indices :title="info" >
+        <el-statistic :value="deadline2" @finish="hilarity" time-indices :title="info">
             <template slot="suffix">
                 抢卷活动即将开始
             </template>
         </el-statistic>
     </div>
     <div style="width: 100%; display: inline-block; " v-if="CouponStatus===1">
-        <el-statistic  :title="info">
+        <el-statistic :title="info">
             <template slot="suffix">
                 抢卷活动进行中
                 <el-button @click="qiangCoupon">点击抢卷</el-button>
@@ -126,7 +126,8 @@
             <h3 class="fl" id="model01">{{type.tname}}</h3>
             <div class="subtitle fl">
                 <span>|</span>
-                <a :href="'details#'+good.gno" v-for="good in goods" v-if="good.tno == type.tno" target="_blank">{{good.gname}}</a>
+                <a :href="'details#'+good.gno" v-for="good in goods" v-if="good.tno == type.tno"
+                   target="_blank">{{good.gname}}</a>
             </div>
             <a :href="'igoods#'+type.tno+'&' + type.tname" class="goods_more fr" target="_blank">查看更多</a>
         </div>
@@ -144,7 +145,7 @@
     </div>
 
     <div id="service">
-        <el-button type="info" icon="el-icon-service" circle></el-button>
+        <el-button type="info" icon="el-icon-service" circle @click="chat"></el-button>
     </div>
 </div>
 <!-- 版权所有 -->
@@ -168,11 +169,11 @@
             outlogin: true,
             deadline2: null,
             deadline: null,
-            CouponStatus:0, //优惠卷状态 0 未开始 1 一开始 2 未开始
+            CouponStatus: 0, //优惠卷状态 0 未开始 1 一开始 2 未开始
             loginName: "匿名",
-            limit:"",
-            money:"",
-            info:"",
+            limit: "",
+            money: "",
+            info: "",
             goods: {  // 商品信息
             },
             types: { // 商品类型信息
@@ -183,15 +184,23 @@
             carts: {} // 购物车信息
         },
         methods: {
+            chat(){
+                if (this.onlogin == false && this.outlogin==true){
+                    alert("请先登录");
+                    return ;
+                }
+                let url = "http://localhost:8005/websocket/connectUser/"+this.loginName;
+                location.href = url;
+            },
             //时间到
             hilarity() {
-                this.CouponStatus=1
+                this.CouponStatus = 1
             },
-            qiangCoupon(){
-                var param=new URLSearchParams();
-                param.append("uid",this.uid)
-                param.append("cid",this.cid)
-                axios.post("/coupon/qiangCoupon",param).then(res=>{
+            qiangCoupon() {
+                var param = new URLSearchParams();
+                param.append("uid", this.uid)
+                param.append("cid", this.cid)
+                axios.post("/coupon/qiangCoupon", param).then(res => {
                     this.$message({
                         message: res.data.msg,
                         type: 'info'
@@ -199,21 +208,21 @@
                 })
             },
             //查询活动剩余时间
-            selectFirstCoupon(){
-                axios.post("/coupon/selectFirstCoupon").then(res=>{
-                    this.cid=res.data.data.id
-                    if (res.data.code==2){
+            selectFirstCoupon() {
+                axios.post("/coupon/selectFirstCoupon").then(res => {
+                    this.cid = res.data.data.id
+                    if (res.data.code == 2) {
 
-                        this.info="🎉 满"+res.data.data.limit+"减"+res.data.data.money+"的优惠卷发放🎉"
-                        var date = new Date(res.data.data.start+"");
-                        this.deadline2=date.getTime()
-                        this.CouponStatus=2
+                        this.info = "🎉 满" + res.data.data.limit + "减" + res.data.data.money + "的优惠卷发放🎉"
+                        var date = new Date(res.data.data.start + "");
+                        this.deadline2 = date.getTime()
+                        this.CouponStatus = 2
                         // this.CouponStatus=1
-                    }else if (res.data.code==1){
-                        this.info="🎉 满"+res.data.data.limit+"减"+res.data.data.money+"的优惠卷发放🎉"
-                        this.CouponStatus=1
-                    }else{
-                        this.CouponStatus=0
+                    } else if (res.data.code == 1) {
+                        this.info = "🎉 满" + res.data.data.limit + "减" + res.data.data.money + "的优惠卷发放🎉"
+                        this.CouponStatus = 1
+                    } else {
+                        this.CouponStatus = 0
                     }
                 })
             }
@@ -225,7 +234,7 @@
                     if (fn1.data.member) { // 说明登录了
                         this.onlogin = true;
                         this.outlogin = false;
-                        this.uid=fn1.data.member.mno
+                        this.uid = fn1.data.member.mno
                         this.loginName = fn1.data.member.nickName;
                         if (fn1.data.carts) {
                             this.carts = fn1.data.carts;
@@ -240,10 +249,11 @@
                     this.goods = fn2.data.goods;
                     this.types = fn2.data.types;
                 })),
-            this.selectFirstCoupon()
+                this.selectFirstCoupon()
         },
 
     })
+
     // 检查登录的方法
     function checkLogin() {
         return axios.get("/member/check");

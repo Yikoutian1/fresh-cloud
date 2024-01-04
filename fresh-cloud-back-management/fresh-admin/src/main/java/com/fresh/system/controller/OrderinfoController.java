@@ -2,6 +2,7 @@ package com.fresh.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +24,13 @@ import com.fresh.common.core.page.TableDataInfo;
 
 /**
  * 订单信息Controller
- * 
+ *
  * @author calyee
  * @date 2024-01-03
  */
 @RestController
 @RequestMapping("/system/orderinfo")
-public class OrderinfoController extends BaseController
-{
+public class OrderinfoController extends BaseController {
     @Autowired
     private IOrderinfoService orderinfoService;
 
@@ -39,8 +39,7 @@ public class OrderinfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:orderinfo:list')")
     @GetMapping("/list")
-    public TableDataInfo list(Orderinfo orderinfo)
-    {
+    public TableDataInfo list(Orderinfo orderinfo) {
         startPage();
         List<Orderinfo> list = orderinfoService.selectOrderinfoList(orderinfo);
         return getDataTable(list);
@@ -52,8 +51,7 @@ public class OrderinfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:orderinfo:export')")
     @Log(title = "订单信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Orderinfo orderinfo)
-    {
+    public void export(HttpServletResponse response, Orderinfo orderinfo) {
         List<Orderinfo> list = orderinfoService.selectOrderinfoList(orderinfo);
         ExcelUtil<Orderinfo> util = new ExcelUtil<Orderinfo>(Orderinfo.class);
         util.exportExcel(response, list, "订单信息数据");
@@ -64,8 +62,7 @@ public class OrderinfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:orderinfo:query')")
     @GetMapping(value = "/{ono}")
-    public AjaxResult getInfo(@PathVariable("ono") String ono)
-    {
+    public AjaxResult getInfo(@PathVariable("ono") String ono) {
         return success(orderinfoService.selectOrderinfoByOno(ono));
     }
 
@@ -75,8 +72,7 @@ public class OrderinfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:orderinfo:add')")
     @Log(title = "订单信息", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Orderinfo orderinfo)
-    {
+    public AjaxResult add(@RequestBody Orderinfo orderinfo) {
         return toAjax(orderinfoService.insertOrderinfo(orderinfo));
     }
 
@@ -86,8 +82,7 @@ public class OrderinfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:orderinfo:edit')")
     @Log(title = "订单信息", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Orderinfo orderinfo)
-    {
+    public AjaxResult edit(@RequestBody Orderinfo orderinfo) {
         return toAjax(orderinfoService.updateOrderinfo(orderinfo));
     }
 
@@ -96,9 +91,8 @@ public class OrderinfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:orderinfo:remove')")
     @Log(title = "订单信息", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{onos}")
-    public AjaxResult remove(@PathVariable String[] onos)
-    {
+    @DeleteMapping("/{onos}")
+    public AjaxResult remove(@PathVariable String[] onos) {
         return toAjax(orderinfoService.deleteOrderinfoByOnos(onos));
     }
 }
