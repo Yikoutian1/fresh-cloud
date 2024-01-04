@@ -2,9 +2,11 @@ package com.fresh.chat.component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fresh.chat.bean.Record;
 import com.fresh.chat.service.Impl.MemberInfoServiceImpl;
 import com.fresh.chat.service.Impl.SysUserServiceImpl;
 import com.fresh.chat.service.MemberInfoService;
+import com.fresh.chat.service.RecordService;
 import com.fresh.chat.service.SysUserService;
 import com.fresh.client.ChatClient;
 import lombok.extern.slf4j.Slf4j;
@@ -400,6 +402,9 @@ public class WebSocket {
         }
     }
 
+    @Autowired
+    private RecordService recordService;
+
     public void sendMessageTo(String message, String ToUserName, String role) throws IOException {
         List<WebSocket> all = new ArrayList<>();
         all.addAll(clients.values());
@@ -407,6 +412,18 @@ public class WebSocket {
         for (WebSocket webSocket : all) {
             if (ToUserName.equals(webSocket.username)) {
                 webSocket.session.getAsyncRemote().sendText(message);
+                Record record = new Record();
+                record.setText(message);
+                // TODO 发送者id name
+                record.setUid(1);
+                record.setName("");
+
+                record.setReceive(ToUserName);
+                // TODO 管理员id
+                record.setObjId(1);
+                record.setSendTime(new Date());
+                // 插入聊天
+                recordService.insertRecord(record);
                 return;
             }
         }

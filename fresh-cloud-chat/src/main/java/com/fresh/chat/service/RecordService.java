@@ -34,10 +34,10 @@ public class RecordService {
     /**
      * 获取两人间的聊天记录
      *
-     * @param id 消息发送者，接受者
+     * @param uid 消息发送者，接受者
      * @return 二者的聊天记录
      */
-    public Map<String, List<Record>> getRecords(Integer id, Integer objId) {
+    public List<Record> getRecords(Integer uid, Integer objId) {
 
         // select (fromName = a and toName = b) || (fromName = b and toName = a)
 
@@ -46,13 +46,15 @@ public class RecordService {
         // or Operator ...
         Query query = new Query();
         Criteria criteria = new Criteria();
-        criteria.orOperator(Criteria.where("fromName").is(id).and("toName").is(objId),
-                Criteria.where("fromName").is(objId).and("toName").is(id));
+        if (null == objId) {
+            criteria.orOperator(Criteria.where("uid").is(uid));
+        } else {
+            criteria.orOperator(Criteria.where("uid").is(uid).and("objId").is(objId),
+                    Criteria.where("objId").is(objId).and("uid").is(uid));
+        }
         query.addCriteria(criteria);
-
         List<Record> records = mongoTemplate.find(query, Record.class, "record");
-
-        return null;
+        return records;
     }
 
 
