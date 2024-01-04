@@ -72,8 +72,11 @@ public class MemberQiangCouponServiceImpl extends ServiceImpl<MemberQiangCouponM
             Date date=new Date();
             long nowTime = date.getTime();
             long endTime = couponModel.getCoupon().getEnd().getTime();
-            if (nowTime>endTime){
-                this.memberQiangCouponMapper.updateCouponStatus(uid,cid,2);
+            int i = this.memberQiangCouponMapper.SelectCouponStatus(uid, cid);
+            if (i==0){
+                if (nowTime>endTime){
+                    this.memberQiangCouponMapper.updateCouponStatus(uid,cid,2);
+                }
             }
             modelList.add(couponModel);
         });

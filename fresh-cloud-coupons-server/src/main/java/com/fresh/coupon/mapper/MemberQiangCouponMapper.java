@@ -21,4 +21,6 @@ public interface MemberQiangCouponMapper extends BaseMapper<MemberQiangCoupon> {
                            @Param("status") Integer status);
     @Select("select * from coupon where id = (select max(id) from coupon)")
     Coupon selectFirstCoupon();
+    @Select("select status from memberqiangcoupon where uid=#{uid} and cid=#{cid}")
+    int SelectCouponStatus(@Param("uid") Integer uid ,@Param("cid") Integer cid);
 }
