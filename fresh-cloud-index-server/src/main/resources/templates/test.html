@@ -170,7 +170,7 @@
                 axios.post("order/queryGoodsNumAndName",param).then(res=>{
                     this.option2.xAxis.data=res.data.gname
                     this.option2.series[0].data=res.data.num
-                    this.option2.title.text=this.value+"月商品出售情况"
+                    this.option2.title.text=this.value2+"月商品出售情况"
                     this.options2=res.data.options
                     myChart2.setOption(this.option2);
                 })
