@@ -1,6 +1,4 @@
 /.txlcn
-/doc
-
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
