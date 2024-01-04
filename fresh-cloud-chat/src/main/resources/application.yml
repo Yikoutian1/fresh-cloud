@@ -25,3 +25,19 @@ spring:
     maxWait: 60000
     # 配置多久进行一次检测，检测需要关闭的空闲连接 单位毫秒
     timeBetweenEvictionRunsMillis: 60000
+  # mongodb
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: fresh-chat
+      option:
+        max-connection-idle-time: 1500
+        max-connection-per-host: 200
+        max-wait-time: 60000
+        max-connection-life-time: 0
+        connect-timeout: 10000
+        socket-timeout: 60000
+      password: '123456'
+      username: root
+      authentication-database: admin

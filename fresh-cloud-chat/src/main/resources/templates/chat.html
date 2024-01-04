@@ -3,283 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <!--引入 element-ui 的样式，-->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
     <!-- 必须先引入vue，  后使用element-ui -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <!-- 引入element 的组件库-->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>
-    <script src="http://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--引入 element-ui 的样式，-->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
-
-    <style>
-        main{
-            width: 800px;
-            margin:auto;/*居中*/
-        }
-        body{
-            margin: 0px;
-            padding: 0px;
-        }
-        .el-header, .el-footer {
-            background-color: #B3C0D1;
-            color: #333;
-            text-align: center;
-            line-height: 60px;
-        }
-
-        .el-aside {
-            background-color: #D3DCE6;
-            color: #333;
-            text-align: center;
-        }
-
-        .el-main {
-            background-color: #E9EEF3;
-            color: #333;
-            text-align: center;
-            height: 400px;
-            max-height: 400px;
-        }
-
-        body > .el-container {
-            margin-bottom: 40px;
-        }
-
-        .el-container:nth-child(5) .el-aside,
-        .el-container:nth-child(6) .el-aside {
-            line-height: 260px;
-        }
-
-        .el-container:nth-child(7) .el-aside {
-            line-height: 320px;
-        }
-        .choose:hover{
-            cursor: pointer;
-            background-color: #E9EEF3;
-        }
-
-        .selected {
-            color: green;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
-    <div id="app">
-        <el-container width="800px">
-            <el-header style="display: flex">
-                <span style="margin-left: 700px">客服中心</span>
-                <span style="margin-left: 500px">欢迎您{{currentUser}}</span>
-            </el-header>
+<div id="app">
+    <el-container width="800px">
+        <el-header style="display: flex">
+            <span style="margin-left: 700px">客服中心</span>
+            <span style="margin-left: 500px">欢迎您{{currentUser}}</span>
+        </el-header>
 
-            <el-container>
-                <el-aside width="200px" >
-                    <div v-for="u in users" class="choose" @click="choose(u)" :class="{ 'choose': true, 'selected': u == chooseUser }">
-                        <i class="el-icon-user"></i><span>{{u}}<br></span>
+        <el-container>
+            <el-aside width="200px">
+                <div v-for="u in users" class="choose" @click="choose(u)"
+                     :class="{ 'choose': true, 'selected': u == chooseUser }">
+                    <i class="el-icon-user"></i><span>{{u}}<br></span>
+                </div>
+            </el-aside>
+            <el-main>
+                <article>
+                    <div v-for="m in msg" style="color: green;display: flex; position: relative;">
+                        <span v-if="m.type==2" style="margin-left: 50px"><i class="el-icon-user-solid"></i>{{m.content}}<br></span>
+                        <span v-if="m.type==1" style="position: absolute; right: 50px;">{{m.content}}<i
+                                class="el-icon-user-solid"></i></span><br>
+                        <span v-if="m.type==3" style="margin-left: 450px">{{m.content}}<br></span>
                     </div>
-                </el-aside>
-                <el-main>
-                    <article>
-                        <div v-for="m in msg" style="color: green;display: flex; position: relative;">
-                            <span v-if="m.type==2" style="margin-left: 50px"><i class="el-icon-user-solid"></i>{{m.content}}<br></span>
-                            <span v-if="m.type==1" style="position: absolute; right: 50px;">{{m.content}}<i class="el-icon-user-solid"></i></span><br>
-                            <span v-if="m.type==3" style="margin-left: 450px">{{m.content}}<br></span>
-                        </div>
-                    </article>
-                </el-main>
-            </el-container>
+                </article>
+            </el-main>
         </el-container>
-        <div style="display: flex">
-            <div style="width: 230px;background-color: rgb(211,220,230)">
+    </el-container>
+    <div style="display: flex">
+        <div style="width: 230px;background-color: rgb(211,220,230)">
 
-            </div>
-            <div style="width: 100%;">
-                <el-input
-                        type="textarea"
-                        placeholder="请输入内容"
-                        v-model="textarea"
-                        maxlength="50"
-                        show-word-limit
-                >
-                </el-input>
-            </div>
         </div>
-
-        <div style="margin: auto;text-align: center">
-            <button @click="send1">发送消息</button>
-            <button @click="closeWebSocket">关闭连接</button>
+        <div style="width: 100%;">
+            <el-input
+                    type="textarea"
+                    placeholder="请输入内容"
+                    v-model="textarea"
+                    maxlength="50"
+                    show-word-limit
+            >
+            </el-input>
         </div>
-        <hr/>
-        <div id="message" style="text-align: center;"></div>
-        <input type="text" th:value="${username}" id="username" style="display: none"/>
-        <input type="text" th:value="${manager}" id="manager" style="display: none"/>
-
-
-
-
     </div>
+
+    <div style="margin: auto;text-align: center">
+        <button @click="send1">发送消息</button>
+        <button @click="closeWebSocket">关闭连接</button>
+    </div>
+    <hr/>
+    <div id="message" style="text-align: center;"></div>
+    <input type="text" th:value="${username}" id="username" style="display: none"/>
+    <input type="text" th:value="${manager}" id="manager" style="display: none"/>
+
+
+</div>
 </body>
 <script>
+    // ===== //
+    const getNowOnlineUserName = 1
+    const serviceStatus = 2
+    const getOnlineList = 3
+    const sendMsg = 4
+    // ===== //
+    const receiveMsg = 2  // 接收消息
+    // ===== //
     var v = new Vue({
-        el:"#app",
-        data:{
+        el: "#app",
+        data: {
             textarea: '',
-            webSocket:null,
+            webSocket: null,
             //msg type: 1:我的消息 2:别人的消息 3: 提示消息
-            msg:[],
-            currentUser:'',
-            users:[],
-            chooseUser:'',
-            allUsers:[],
-            allManagers:[]
-
+            msg: [],
+            currentUser: '',
+            users: [],
+            chooseUser: '',
         },
-        methods:{
-            choose(u){
+        methods: {
+            choose(u) {
                 this.chooseUser = u;
             },
-            init(){
-                // 用户端
-                if (document.getElementById('username').value){
-                    this.webSocket = new WebSocket("ws://localhost:8005/websocket/" + document.getElementById('username').value+"/1");
+            init() {
+                // 前台
+                if (document.getElementById('username').value) {
+                    this.webSocket = new WebSocket("ws://localhost:8005/websocket/connectUser/" + document.getElementById('username').value);
                     this.currentUser = document.getElementById('username').value;
-                    this.webSocket.onopen = ()=>{
+                    console.info("this.currentUser: " + this.currentUser)
+                    this.webSocket.onopen = () => {
                         console.log("已经连通了websocket");
-                        this.msg.push({content: "已经连通了websocket",type: 3});
+                        // this.setMessageInnerHTML("已经连通了websocket");
+                        this.msg.push({content: "已经连通了websocket", type: 3});
                     }
-                    this.webSocket.onmessage = (evt) =>{
-                        var received_msg = evt.data;
-                        console.log("数据已接收:" + received_msg);
-                        var obj = JSON.parse(received_msg);
-                        console.log("user可以解析成json:" + obj.messageType +",username: "+obj.username);
+                    this.webSocket.onmessage = (evt) => {
+                        let received_msg = evt.data;
+                        let obj = JSON.parse(received_msg);
+                        console.log("数据已接收:" + received_msg); // 消息
+                        // onlineName = obj.onlineUsers
                         //1代表上线 2代表下线 3代表在线名单 4代表普通消息
-                        if (obj.messageType == 1) {
-                            // alert("user1");
-                            //把名称放入到selection当中供选择
-                            var onlineName = obj.username;
-                            for (let i = 0;i < this.users.length;i++){
-                                if (this.users[i] == onlineName){
-                                    return;
-                                }
-                            }
-                            this.users.push(onlineName);
-                            this.msg.push({content: onlineName + "上线了",type: 3});
-                        } else if (obj.messageType == 2) {
-                            // alert("user2");
-                            $("#onLineManagers").empty();
-                            var onlineName = obj.onlineManagers;
-                            var offlineName = obj.username;
-                            for (var i = 0; i < onlineName.length; i++) {
-                                if (!(onlineName[i] == document.getElementById('username').value)) {
-                                    this.users.push(onlineName[i]);
-                                }
-                            }
-                            this.msg.push({content: offlineName + "下线了",type: 3});
-                            location.reload();
-                        } else if (obj.messageType == 3) {
-                            // alert("user3");
-                            // var onlineName = obj.onlineManagers;
-                            // console.info(obj.onlineManagers)
-                            // // var option = null;
-                            // for (var i = 0; i < onlineName.length; i++) {
-                            //     if (!(onlineName[i] == document.getElementById('username').value)) {
-                            //         this.users.push(onlineName[i]);
-                            //     }
-                            // }
-                            // console.log("获取了在线的名单" + onlineName.toString());
-                        } else {
-                            this.msg.push({content: obj.fromusername  + " : " + obj.textMessage,type: 2});
+                        if (obj.messageType == getNowOnlineUserName) {
+                            // 通知  alert(obj.username)
+                            this.users = obj.onlineManagers
+                        } else if (obj.messageType == getOnlineList) { // 更新在线列表
+                            // 用户列表 alert(obj.onlineUsers) 过滤自己
+                            // this.users = obj.onlineUsers.filter(i => i !== this.currentUser)
+                            this.users = obj.onlineManagers
+                        } else if (obj.messageType == sendMsg) { // 发送消息
+                            this.msg.push({content: obj.textMessage, type: receiveMsg})
                         }
+                        // console.info("在线用户:" + this.users)
+                        // this.users.forEach(item => console.info("iitem: " + item))
                     }
-                    var onlineName = obj.onlineManagers;
-                    console.info(obj.onlineManagers)
-                    // var option = null;
-                    for (var i = 0; i < onlineName.length; i++) {
-                        if (!(onlineName[i] == document.getElementById('username').value)) {
-                            this.users.push(onlineName[i]);
-                        }
-                    }
-                    console.log("获取了在线的名单" + onlineName.toString());
-
-                    this.webSocket.onclose = ()=>{
+                    this.webSocket.onclose = () => {
                         console.log("连接已关闭...");
                         this.msg.push({content: "连接已经关闭....", type: 3});
-                        // this.users='';
+                        this.users = '';
                     }
-                }else {
-                    // 管理员端
-                    this.webSocket = new WebSocket("ws://localhost:8005/websocket/" + document.getElementById('manager').value+"/0");
+
+                } else {
+                    // 后台端
+                    this.webSocket = new WebSocket("ws://localhost:8005/websocket/connectManager/" + document.getElementById('manager').value);
                     this.currentUser = document.getElementById('manager').value;
-                    this.webSocket.onopen = ()=>{
+                    this.webSocket.onopen = () => {
                         console.log("已经连通了websocket");
-                        this.msg.push({content: "已经连通了websocket",type: 3});
+                        this.msg.push({content: "已经连通了websocket", type: 3});
                     }
-                    this.webSocket.onmessage = (evt) =>{
-                        var received_msg = evt.data;
-                        var obj = JSON.parse(received_msg);
-                        console.log("数据已接收:" + received_msg + ", obj="+obj);
-
-                        console.log("admin可以解析成json:" + obj.messageType +",username: "+obj.username);
+                    this.webSocket.onmessage = (evt) => {
+                        let received_msg = evt.data;
+                        let obj = JSON.parse(received_msg);
+                        console.log("数据已接收:" + received_msg); // 消息
+                        console.log("messageType: " + obj.messageType);
+                        // onlineName = obj.onlineUsers
                         //1代表上线 2代表下线 3代表在线名单 4代表普通消息
-                        if (obj.messageType == 1) {
-                            // alert("manager1");
-                            //把名称放入到selection当中供选择
-                            var onlineName = obj.username;
-                            for (let i = 0;i < this.users.length;i++){
-                                    if (this.users[i] == onlineName){
-                                        return;
-                                    }
-                            }
-                            this.users.push(onlineName);
-                            this.msg.push({content: onlineName + "上线了",type: 3});
-                        } else if (obj.messageType == 2) {
-                            // alert("manager2");
-                            $("#onLineUser").empty();
-                            var onlineName = obj.onlineUsers;
-                            var offlineName = obj.username;
-                            for (var i = 0; i < onlineName.length; i++) {
-                                    if ((onlineName[i] != document.getElementById('manager').value)) {
-                                        this.users.push(onlineName[i]);
-                                }
-
-                            }
-                            this.msg.push({content: offlineName + "下线了",type: 3});
-                            location.reload();
-                        } else if (obj.messageType == 3) {
-                            // alert("manager3");
-                            var onlineName = obj.onlineUsers;
-                            console.info(obj)
-                            // var option = null;
-                            for (var i = 0; i < onlineName.length; i++) {
-                                if ((onlineName[i] != document.getElementById('manager').value)) {
-                                    this.users.push(onlineName[i]);
-                                }
-                            }
-                        } else {
-                            this.msg.push({content: obj.fromusername  + " : " + obj.textMessage,type: 2});
+                        if (obj.messageType == getNowOnlineUserName) {
+                            // 通知  alert(obj.username)
+                            this.users = obj.onlineUsers
+                        } else if (obj.messageType == getOnlineList) { // 更新在线列表
+                            // 用户列表 alert(obj.onlineUsers) 过滤自己
+                            // this.users = obj.onlineUsers.filter(i => i !== this.currentUser)
+                            this.users = obj.onlineUsers
+                        } else if (obj.messageType == sendMsg) { // 发送消息
+                            this.msg.push({content: obj.textMessage, type: receiveMsg})
                         }
+                        // console.info("在线用户:" + this.users)
+                        // this.users.forEach(item => console.info("iitem: " + item))
                     }
-                    // alert(1)
-
-                    console.log("获取了在线的名单" + onlineName.toString());
-
-
-                    this.webSocket.onclose = ()=>{
+                    this.webSocket.onclose = () => {
                         console.log("连接已关闭...");
                         this.msg.push({content: "连接已经关闭....", type: 3});
-                        // this.users='';
+                        this.users = '';
                     }
                 }
             },
 
             closeWebSocket() {
-            //直接关闭websocket的连接
-            this.webSocket.close();
-             },
+                //直接关闭websocket的连接
+                this.webSocket.close();
+            },
 
             send1() {
                 if (this.chooseUser == '') {
@@ -287,7 +174,7 @@
                     return;
                 } else {
                     // this.setMessageInnerHTML(document.getElementById('username').value + "对" + selectText + "说：" + $("#text").val());
-                    this.msg.push({content: this.textarea + " : " + this.currentUser,type: 1});
+                    this.msg.push({content: this.textarea + " : " + this.currentUser, type: 1});
                 }
                 var message = {
                     "message": this.textarea,
@@ -298,24 +185,67 @@
                 this.webSocket.send(JSON.stringify(message));
                 this.textarea = '';
             },
-            // findAllUsers(){
-            //     axios.get('http://localhost:8005/chat/findAllUsers').then(res=>{
-            //         this.allUsers =  res.data.data;
-            //     })
-            // },
-            // findAllManagers(){
-            //     axios.get('http://localhost:8005/chat/findAllUsers').then(res=>{
-            //         this.allManagers =  res.data.data;
-            //     })
-            // }
 
 
         },
-        mounted(){
-            // this.findAllManagers();
-            // this.findAllUsers();
+        mounted() {
             this.init();
         }
     })
 </script>
 </html>
+<style>
+    main {
+        width: 800px;
+        margin: auto; /*居中*/
+    }
+
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .el-header, .el-footer {
+        background-color: #B3C0D1;
+        color: #333;
+        text-align: center;
+        line-height: 60px;
+    }
+
+    .el-aside {
+        background-color: #D3DCE6;
+        color: #333;
+        text-align: center;
+    }
+
+    .el-main {
+        background-color: #E9EEF3;
+        color: #333;
+        text-align: center;
+        height: 400px;
+        max-height: 400px;
+    }
+
+    body > .el-container {
+        margin-bottom: 40px;
+    }
+
+    .el-container:nth-child(5) .el-aside,
+    .el-container:nth-child(6) .el-aside {
+        line-height: 260px;
+    }
+
+    .el-container:nth-child(7) .el-aside {
+        line-height: 320px;
+    }
+
+    .choose:hover {
+        cursor: pointer;
+        background-color: #E9EEF3;
+    }
+
+    .selected {
+        color: green;
+        font-weight: bold;
+    }
+</style>
