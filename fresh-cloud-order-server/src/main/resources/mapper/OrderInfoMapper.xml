@@ -11,4 +11,5 @@
 	<insert id="addOrder" parameterType="com.fresh.common.entity.OrderInfo">
 		insert into orderInfo values(#{ono}, now(), #{ano} ,null, null, 1, #{price}, 0,null,null,#{realprice});
 	</insert>
+
 </mapper>

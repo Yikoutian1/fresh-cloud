@@ -2,14 +2,9 @@ package com.fresh.order.service.impl;
 
 
 import com.fresh.client.CartInfoClient;
-import com.fresh.client.GoodsClient;
-import com.fresh.common.entity.CartInfo;
-import com.fresh.common.entity.MemberInfo;
-import com.fresh.common.entity.OrderInfo;
-import com.fresh.common.entity.OrderItemInfo;
+import com.fresh.common.entity.*;
 import com.fresh.common.model.GoodModel;
 import com.fresh.common.util.StringUtil;
-import com.fresh.coupon.mapper.CouponMapper;
 import com.fresh.coupon.mapper.MemberQiangCouponMapper;
 import com.fresh.goods.mapper.IGoodsInfoMapper;
 import com.fresh.order.mapper.IOrderInfoMapper;
@@ -22,9 +17,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
-import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @program: fresh-cloud
@@ -36,6 +30,8 @@ public class  OrderServiceImpl implements IOrderService {
 
     @Autowired
     private IOrderInfoMapper orderMapper;
+    @Autowired
+    private IOrderItemInfoMapper iOrderItemInfoMapper;
 
     @Autowired
     private IOrderItemInfoMapper itemMapper;
@@ -123,5 +119,81 @@ public class  OrderServiceImpl implements IOrderService {
         map.put("msg","下单成功");
         return map;
     }
+    @Override
+    public Map<String, Object> queryEcharts(String date) {
+        Map<String,Object> map=new HashMap<>();
+        List<String> Times = orderMapper.queryTime(date);
+        List<String> DateTimes = orderMapper.queryDateTime();
+        List<Integer> nums=new ArrayList<>();
+        List<Long> prices=new ArrayList<>();
+        List<Map<String,Object>> option=new ArrayList<>();
+        for (String dateTime : DateTimes) {
+            Map<String,Object> op=new HashMap<>();
+            op.put("value",dateTime);
+            op.put("label",dateTime+"月");
+            option.add(op);
+        }
+        for (String Time : Times) {
+            List<String> list = orderMapper.queryOno(Time);
+            Integer numTotal=0;
+            Long price=orderMapper.queryPrice(Time);
+            for (int i = 0; i < list.size(); i++) {
 
+                Integer num = iOrderItemInfoMapper.queryNum(list.get(i));
+                numTotal+=num;
+            }
+            nums.add(numTotal);
+            prices.add(price);
+        }
+        map.put("Times",Times);
+        map.put("nums",nums);
+        map.put("prices",prices);
+        map.put("options",option);
+        return  map;
+    }
+
+    @Override
+    public Map<String, Object> queryGoodsNum(String date) {
+        Map<String,Object> map=new HashMap<>();
+        List<String> Times = orderMapper.queryTime(date);  //查询每日
+        List<String> DateTimes = orderMapper.queryDateTime(); //查询每月
+        List<Integer> gnoNow=new ArrayList<>();
+        Map<String,Integer> gnoAndNummap=new HashMap<>();
+        List<Map<String,Object>> option=new ArrayList<>();
+        for (String dateTime : DateTimes) {
+            Map<String,Object> op=new HashMap<>();
+            op.put("value",dateTime); //传给前端的选项
+            op.put("label",dateTime+"月");
+            option.add(op);
+        }
+        for (String Time : Times) {
+            List<String> list = orderMapper.queryOno(Time); //当前时间的订单号
+             //存查到的gno 为了后面遍历map
+            for (int i = 0; i < list.size(); i++) {
+                List<Integer> gnos = iOrderItemInfoMapper.queryGno(list.get(i)); //查询该订单购买的商品
+                for (Integer gno : gnos) {
+                    Integer numsByGnoAndOno = iOrderItemInfoMapper.queryNumsByGnoAndOno(list.get(i), gno);//根据订单和商品编号查数量
+                    if (gnoAndNummap.get(gno+"") != null) { //判断map里是否查过这个gno
+                        gnoAndNummap.put(gno+"", numsByGnoAndOno + gnoAndNummap.get(gno+""));
+                    } else {
+                        gnoAndNummap.put(gno+"", numsByGnoAndOno);
+                        gnoNow.add(gno);
+                    }
+                }
+            }
+        }
+        List<String > GoodsName=new ArrayList<>(); //存放热销商品名称
+        List<Integer > GoodsNum=new ArrayList<>(); //存放热销商品数量
+        for (Integer s : gnoNow) {
+            GoodsInfo byGno = iGoodsInfoMapper.findByGno(s);
+            String gname = byGno.getGname();
+            Integer num = gnoAndNummap.get(s+"");
+            GoodsName.add(gname);
+            GoodsNum.add(num);
+        }
+        map.put("num",GoodsNum);
+        map.put("gname",GoodsName);
+        map.put("options",option);
+        return map;
+    }
 }

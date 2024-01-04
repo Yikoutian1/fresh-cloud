@@ -18,14 +18,14 @@ export default {
   },
   data() {
     return {
-      
+
     };
   },
   created() {
-    
+
   },
   methods: {
-    
+
   },
 };
 </script>
@@ -47,3 +47,4 @@ export default {
     padding: 8px;
   }
 }
+

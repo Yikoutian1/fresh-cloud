@@ -16,5 +16,17 @@ public interface IOrderService {
      * @return
      */
     public Map<String,Object> add(OrderInfo of, HttpSession session);
+    /**
+     * 查询年销售额
+     */
+    public Map<String,Object>  queryEcharts(String date);
+
+    /**
+     * 查询热销商品
+     * @param date
+     * @return
+     */
+    public Map<String,Object>  queryGoodsNum(String date);
+
 
 }

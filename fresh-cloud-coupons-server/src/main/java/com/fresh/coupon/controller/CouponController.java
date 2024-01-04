@@ -36,6 +36,11 @@ public class CouponController {
     @RequestMapping(value = "/qiangCoupon",method ={RequestMethod.POST,RequestMethod.GET})
     public Map<String,Object> CouponService( Integer uid, String cid) {
         Map<String, Object> map = new HashMap<>();
+        if (uid==null){
+            map.put("msg","请登录后再参加抢卷活动");
+            return map;
+        }
+
         if (!redisTemplate.hasKey(this.couponConfig.COUPON_CID_+cid)){
             map.put("msg","暂未该优惠卷相关的活动");
             return map;

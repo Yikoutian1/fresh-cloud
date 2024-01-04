@@ -73,4 +73,8 @@ public class HtmlController {
     public String coupon(){
         return "coupon";
     }
+    @RequestMapping("/test")
+    public String test(){
+        return "test";
+    }
 }

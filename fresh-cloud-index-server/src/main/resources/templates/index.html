@@ -173,6 +173,8 @@
             },
             types: { // 商品类型信息
             },
+            uid: null,
+            cid: null,
             goodsCount: 0,
             carts: {} // 购物车信息
         },
@@ -182,7 +184,10 @@
                 this.CouponStatus=1
             },
             qiangCoupon(){
-                axios.post("/coupon/qiangCoupon").then(res=>{
+                var param=new URLSearchParams();
+                param.append("uid",this.uid)
+                param.append("cid",this.cid)
+                axios.post("/coupon/qiangCoupon",param).then(res=>{
                     this.$message({
                         message: res.data.msg,
                         type: 'info'
@@ -192,7 +197,9 @@
             //查询活动剩余时间
             selectFirstCoupon(){
                 axios.post("/coupon/selectFirstCoupon").then(res=>{
+                    this.cid=res.data.data.id
                     if (res.data.code==2){
+
                         this.info="🎉 满"+res.data.data.limit+"减"+res.data.data.money+"的优惠卷发放🎉"
                         var date = new Date(res.data.data.start+"");
                         this.deadline2=date.getTime()
@@ -214,6 +221,7 @@
                     if (fn1.data.member) { // 说明登录了
                         this.onlogin = true;
                         this.outlogin = false;
+                        this.uid=fn1.data.member.mno
                         this.loginName = fn1.data.member.nickName;
                         if (fn1.data.carts) {
                             this.carts = fn1.data.carts;

@@ -5,10 +5,7 @@ import com.fresh.common.entity.CartInfo;
 import com.fresh.common.entity.OrderInfo;
 import com.fresh.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -46,7 +43,14 @@ public class OrderInfoController{
         }
 
         return map;
-
+    }
+    @PostMapping("/queryEcharts")
+    public Map<String,Object> queryEcharts(@RequestParam("date") String date) {
+        return  service.queryEcharts(date);
+    }
+    @PostMapping("/queryGoodsNumAndName")
+    public Map<String,Object> queryGoodsNumAndName(@RequestParam("date") String date) {
+        return  service.queryGoodsNum(date);
     }
 }
 

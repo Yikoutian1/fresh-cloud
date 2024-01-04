@@ -5,7 +5,7 @@
 <mapper namespace="com.fresh.coupon.mapper.CouponMapper">
 
     <select id="getCouponInfoByCid" resultType="com.fresh.common.entity.Coupon">
-        select `id`,`title`,`img`,`money`,`desc`,`limit`,`start`,`end`,`num` from coupon
+        select `id`,`title`,`img`,`money`,`desc`,`limit`,`start`,`end`,`num`,`total` from coupon
         where `id`=#{cid}
     </select>
 </mapper>
