@@ -103,10 +103,10 @@
             <if test="title != null">title = #{title},</if>
             <if test="img != null">img = #{img},</if>
             <if test="money != null">money = #{money},</if>
-            <if test="desc != null">desc = #{desc},</if>
-            <if test="limit != null">limit = #{limit},</if>
-            <if test="start != null">start = #{start},</if>
-            <if test="end != null">end = #{end},</if>
+            <if test="desc != null">`desc` = #{desc},</if>
+            <if test="limit != null">`limit` = #{limit},</if>
+            <if test="start != null">`start` = #{start},</if>
+            <if test="end != null">`end` = #{end},</if>
             <if test="num != null">num = #{num},</if>
         </trim>
         where id = #{id}

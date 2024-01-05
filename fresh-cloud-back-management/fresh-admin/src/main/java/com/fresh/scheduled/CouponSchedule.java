@@ -39,7 +39,7 @@ public class CouponSchedule {
     /**
      * 优惠券列表,如果有满足条件则添加到Redis预热
      */
-    @Scheduled(cron = StaticEnums.cron_string)
+    @Scheduled(cron = StaticEnums.cron_test)
     public void addMatchConditionCouponToRedis() {
         log.info("[CouponSchedule Start]");
         List<Coupon> couponList = couponMapper.getMatchConditionCouponList(matchConditionTime);
@@ -49,33 +49,33 @@ public class CouponSchedule {
         for (Coupon coupon : couponList) {
             Long judgeAddRedisEndTime = coupon.getEnd().getTime();
             // 如果优惠券超过时间则不需要添加到缓存
-            if (judgeAddRedisNowTime > judgeAddRedisEndTime) {
-                break;
-            } else {
-                // Redis中判断没有存在此优惠券
-                if (!redisTemplate.hasKey(StaticEnums.c_cid + coupon.getId())) {
-                    // 空置零
-                    if (coupon.getNum() == null) {
-                        coupon.setNum(0);
-                    }
-                    // 最外层唯一标识
-                    String unique = StaticEnums.c_cid + coupon.getId();
-                    // 如果数据库中此优惠券数量不为0
-                    if (coupon.getNum() != 0) {
-                        // 存放数量
-                        redisTemplate.opsForHash().put(unique,
-                                StaticEnums.c_num, coupon.getNum());
-                        // 开始时间
-                        redisTemplate.opsForHash().put(unique,
-                                StaticEnums.start_time, coupon.getStart().getTime());
-                        // 结束时间
-                        redisTemplate.opsForHash().put(unique,
-                                StaticEnums.end_time, coupon.getEnd().getTime());
-                        log.info("[CouponSchedule Success], put coupon id:{}, num:{}, start time:{}, end time:{}.",
-                                coupon.getId(), coupon.getNum(), coupon.getStart().getTime(), coupon.getEnd().getTime());
-                    }
+//            if (judgeAddRedisNowTime > judgeAddRedisEndTime) {
+//                break;
+//            } else {
+            // Redis中判断没有存在此优惠券
+            if (!redisTemplate.hasKey(StaticEnums.c_cid + coupon.getId())) {
+                // 空置零
+                if (coupon.getNum() == null) {
+                    coupon.setNum(0);
+                }
+                // 最外层唯一标识
+                String unique = StaticEnums.c_cid + coupon.getId();
+                // 如果数据库中此优惠券数量不为0
+                if (coupon.getNum() != 0) {
+                    // 存放数量
+                    redisTemplate.opsForHash().put(unique,
+                            StaticEnums.c_num, coupon.getNum());
+                    // 开始时间
+                    redisTemplate.opsForHash().put(unique,
+                            StaticEnums.start_time, coupon.getStart().getTime());
+                    // 结束时间
+                    redisTemplate.opsForHash().put(unique,
+                            StaticEnums.end_time, coupon.getEnd().getTime());
+                    log.info("[CouponSchedule Success], put coupon id:{}, num:{}, start time:{}, end time:{}.",
+                            coupon.getId(), coupon.getNum(), coupon.getStart().getTime(), coupon.getEnd().getTime());
                 }
             }
+//            }
         }
     }
 
